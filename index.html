@@ -354,63 +354,188 @@
           </a>
         </div>
 
-        <!-- Formulário do Calouro -->
+        <!-- Formulário Completo do Calouro (5 Seções Oficiais) -->
         <div class="form-card">
-          <form id="calouro-presentation-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="calouro-nome">Seu Nome Completo <span class="req">*</span></label>
-                <input type="text" id="calouro-nome" name="nome" class="form-input" placeholder="Ex: Ana Luísa Soares" required>
+          <form id="calouro-presentation-form" class="calouro-presentation-form">
+            
+            <!-- SEÇÃO 1: SOBRE VOCÊ -->
+            <div class="form-section-card">
+              <div class="form-section-header">
+                <span class="form-section-badge">1</span>
+                <div>
+                  <h4 class="form-section-title">Sobre Você</h4>
+                  <p class="form-section-sub">Queremos te conhecer melhor antes de começarem as aulas</p>
+                </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="calouro-whatsapp">Seu WhatsApp (com DDD) <span class="req">*</span></label>
-                <input type="tel" id="calouro-whatsapp" name="whatsapp" class="form-input" placeholder="(87) 99999-9999" required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="calouro-instagram">Instagram (@)</label>
-                <input type="text" id="calouro-instagram" name="instagram" class="form-input" placeholder="@seu.perfil">
+                <label class="form-label" for="calouro-nome">Qual é o seu nome completo? <span class="req">*</span></label>
+                <input type="text" id="calouro-nome" name="nome" class="form-input" placeholder="Ex: Ana Luísa Soares" required autocomplete="name">
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="calouro-hogwarts">Sua Casa de Hogwarts favorita</label>
-                <select id="calouro-hogwarts" name="casaHogwarts" class="form-select">
-                  <option value="Grifinória">Grifinória (Corajosos e Determinados)</option>
-                  <option value="Corvinal">Corvinal (Curiosos e Estratégicos)</option>
-                  <option value="Sonserina">Sonserina (Ambiciosos e Focados)</option>
-                  <option value="Lufa-Lufa">Lufa-Lufa (Leais e Acolhedores)</option>
-                  <option value="Ainda não sei">Ainda não sei / Indeciso</option>
-                </select>
+                <label class="form-label" for="calouro-animacao">O que mais te deixou animado(a) quando soube que tinha entrado no curso? <span class="req">*</span></label>
+                <textarea id="calouro-animacao" name="animacao" class="form-textarea" rows="2" placeholder="Conte o que sentiu e o que te motivou..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-sobre-voce">O que você gostaria que seu futuro padrinho/madrinha soubesse sobre você? <span class="req">*</span></label>
+                <textarea id="calouro-sobre-voce" name="sobreVoce" class="form-textarea" rows="2" placeholder="Seus hábitos, jeito de ser, interesses ou o que considerar importante..." required></textarea>
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="calouro-hobbies">O que você mais gosta de fazer no tempo livre?</label>
-              <input type="text" id="calouro-hobbies" name="hobbies" class="form-input" placeholder="Ex: Séries, academia, café com amigos, jogos...">
+            <!-- SEÇÃO 2: O COMEÇO DA FACULDADE -->
+            <div class="form-section-card">
+              <div class="form-section-header">
+                <span class="form-section-badge">2</span>
+                <div>
+                  <h4 class="form-section-title">O Começo da Faculdade</h4>
+                  <p class="form-section-sub">Suas expectativas e afinidades com o curso</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-expectativa-periodo">Qual é a sua maior expectativa para o primeiro período? <span class="req">*</span></label>
+                <textarea id="calouro-expectativa-periodo" name="expectativaPeriodo" class="form-textarea" rows="2" placeholder="Ex: Fazer amizades, entender a dinâmica das aulas, me organizar..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Você acha que vai se identificar mais com quais matérias? <span class="req">*</span></label>
+                <div class="form-radio-group">
+                  <label class="form-radio-card">
+                    <input type="radio" name="afinidadeMaterias" value="exatas" required>
+                    <span>Exatas (Matemática Financeira, Cálculo, Estatística)</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="afinidadeMaterias" value="humanas_gestao">
+                    <span>Humanas e Gestão (Teorias da Administração, Comportamento, Liderança)</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="afinidadeMaterias" value="ambos">
+                    <span>Curiosidade e interesse por ambos os lados</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-area-interesse">Tem alguma área da Administração que já desperta seu interesse? <span class="hint-text">(Não precisa saber ainda!)</span></label>
+                <input type="text" id="calouro-area-interesse" name="areaInteresse" class="form-input" placeholder="Ex: Finanças, Marketing, Recursos Humanos, Empreendedorismo ou 'Ainda descobrindo'">
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="calouro-expectativa">Sua maior expectativa ou receio sobre o 1º período de ADM:</label>
-              <textarea id="calouro-expectativa" name="expectativa" class="form-textarea" placeholder="Ex: Quero muito aprender sobre liderança e fazer amigos..."></textarea>
+            <!-- SEÇÃO 3: SOBRE SEU PADRINHO / MADRINHA -->
+            <div class="form-section-card">
+              <div class="form-section-header">
+                <span class="form-section-badge">3</span>
+                <div>
+                  <h4 class="form-section-title">Sobre seu Padrinho / Madrinha</h4>
+                  <p class="form-section-sub">Apoio mútuo e integração na vida acadêmica</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-expectativa-mentor">O que você espera do seu padrinho/madrinha durante esse início? <span class="req">*</span></label>
+                <textarea id="calouro-expectativa-mentor" name="expectativaMentor" class="form-textarea" rows="2" placeholder="Ex: Um acolhimento tranquilo, tirar dúvidas sem vergonha e ter um ponto de apoio..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Qual é o foco principal de suporte que você busca? <span class="req">*</span></label>
+                <div class="form-radio-group">
+                  <label class="form-radio-card">
+                    <input type="radio" name="tipoApoio" value="academicas" required>
+                    <span>Dúvidas acadêmicas (matérias, provas, professores e rotina de estudos)</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="tipoApoio" value="vida_universitaria">
+                    <span>Conversar sobre vida universitária, convivência no campus e dicas práticas</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="tipoApoio" value="ambos">
+                    <span>Ambos (parceria tanto acadêmica quanto na vida universitária)</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-assuntos-ajuda">Em quais assuntos você gostaria de receber ajuda? <span class="req">*</span></label>
+                <input type="text" id="calouro-assuntos-ajuda" name="assuntosAjuda" class="form-input" placeholder="Ex: matérias, organização, professores, rotina, trabalhos, provas..." required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-aprender-mentor">Tem alguma coisa que você gostaria de aprender com seu padrinho/madrinha?</label>
+                <input type="text" id="calouro-aprender-mentor" name="aprenderMentor" class="form-input" placeholder="Ex: Como lidar com prazos, como aproveitar projetos de extensão...">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-mensagem">Se pudesse deixar uma mensagem antes de conhecê-lo(a), o que diria? <span class="req">*</span></label>
+                <textarea id="calouro-mensagem" name="mensagem" class="form-textarea" rows="3" placeholder="Deixe um recado com suas próprias palavras para seu padrinho/madrinha..." required></textarea>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="calouro-meme">Frase ou referência que define sua personalidade:</label>
-              <input type="text" id="calouro-meme" name="meme" class="form-input" placeholder="Ex: 'Não sei exatamente o que me espera, mas vai dar certo!'">
+            <!-- SEÇÃO 4: CONTATO -->
+            <div class="form-section-card">
+              <div class="form-section-header">
+                <span class="form-section-badge">4</span>
+                <div>
+                  <h4 class="form-section-title">Contato & Comunicação</h4>
+                  <p class="form-section-sub">Por onde seu padrinho/madrinha entrará em contato com você</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Por onde você prefere conversar? <span class="req">*</span></label>
+                <div class="form-radio-group">
+                  <label class="form-radio-card">
+                    <input type="radio" name="canalPreferido" value="whatsapp" checked required>
+                    <span>WhatsApp</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="canalPreferido" value="instagram">
+                    <span>Instagram</span>
+                  </label>
+                  <label class="form-radio-card">
+                    <input type="radio" name="canalPreferido" value="tanto_faz">
+                    <span>Tanto faz</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="calouro-whatsapp">Seu WhatsApp (com DDD) <span class="req">*</span></label>
+                  <input type="tel" id="calouro-whatsapp" name="whatsapp" class="form-input" placeholder="(87) 99999-9999" required autocomplete="tel">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="calouro-instagram">Instagram (@)</label>
+                  <input type="text" id="calouro-instagram" name="instagram" class="form-input" placeholder="@seu.perfil">
+                </div>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="calouro-mensagem">Recado direto para seu Padrinho / Madrinha <span class="req">*</span>:</label>
-              <textarea id="calouro-mensagem" name="mensagem" class="form-textarea" placeholder="Deixe uma mensagem para ele(a) ler..." required></textarea>
+            <!-- SEÇÃO 5: ESPAÇO LIVRE -->
+            <div class="form-section-card">
+              <div class="form-section-header">
+                <span class="form-section-badge">5</span>
+                <div>
+                  <h4 class="form-section-title">Espaço Livre</h4>
+                  <p class="form-section-sub">Dúvidas, comentários ou curiosidades adicionais</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="calouro-espaco-livre">Tem algo que você gostaria de contar ou perguntar que não apareceu antes?</label>
+                <textarea id="calouro-espaco-livre" name="espacoLivre" class="form-textarea" rows="2" placeholder="Fique à vontade para escrever o que quiser..."></textarea>
+              </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block-mobile">
-              <span>Confirmar Apadrinhamento</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
+            <!-- Botão de Confirmação com Estado de Loading -->
+            <div class="form-submit-container">
+              <button type="submit" id="btn-submit-apadrinhamento" class="btn btn-primary btn-lg btn-block-mobile">
+                <span id="btn-submit-text">Confirmar Escolha de Padrinho</span>
+                <svg id="btn-submit-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -541,8 +666,13 @@
   <!-- Confetti CDN com Fallback Graceful -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+  <!-- Supabase JS CDN Oficial -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Scripts do Projeto (Módulos ES6) -->
   <script type="module" src="js/data.js"></script>
+  <script type="module" src="js/error-handler.js"></script>
+  <script type="module" src="js/supabase-client.js"></script>
   <script type="module" src="js/quiz-engine.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>

@@ -5,6 +5,8 @@
 
 import { QUIZ_CONFIG, QUIZ_QUESTIONS, PADRINHOS } from './data.js';
 import { QuizEngine } from './quiz-engine.js';
+import { supabaseService } from './supabase-client.js';
+import { httpErrorHandler } from './error-handler.js';
 
 class ApadrinhamentoApp {
   constructor() {
@@ -180,10 +182,20 @@ class ApadrinhamentoApp {
     });
 
     // Formulário do Calouro
-    this.calouroForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.handleFormSubmit();
-    });
+    if (this.calouroForm) {
+      this.calouroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleFormSubmit();
+      });
+
+      this.calouroForm.addEventListener('input', () => {
+        this.salvarRascunhoFormulario();
+      });
+
+      this.calouroForm.addEventListener('change', () => {
+        this.salvarRascunhoFormulario();
+      });
+    }
 
     // Botão reset quiz
     document.getElementById('btn-reset-quiz')?.addEventListener('click', () => {
@@ -567,43 +579,43 @@ class ApadrinhamentoApp {
     this.abrirSecaoApresentacao();
   }
 
+  salvarRascunhoFormulario() {
+    if (!this.calouroForm) return;
+    const formData = new FormData(this.calouroForm);
+    const dados = {};
+    for (const [key, value] of formData.entries()) {
+      dados[key] = value;
+    }
+    supabaseService.salvarRascunho(dados);
+  }
+
   abrirSecaoApresentacao() {
     if (!this.selectedPadrinho) return;
 
     this.chosenMentorName.textContent = this.selectedPadrinho.nome;
     this.chosenMentorAvatar.textContent = this.selectedPadrinho.iniciais;
-    this.chosenMentorArea.textContent = `${this.selectedPadrinho.casaHogwarts} • ${this.selectedPadrinho.areaDestaque}`;
+    this.chosenMentorArea.textContent = `${this.selectedPadrinho.periodo || '2º Período'} • ADM`;
 
     const formHeading = document.getElementById('form-calouro-heading');
     if (formHeading) {
       formHeading.textContent = `Apresente-se para ${this.selectedPadrinho.nome.split(' ')[0]}!`;
     }
 
-    if (this.calouroData && this.calouroForm) {
-      if (this.calouroForm.elements['nome'] && this.calouroData.nome) {
-        this.calouroForm.elements['nome'].value = this.calouroData.nome;
-      }
-      if (this.calouroForm.elements['whatsapp'] && this.calouroData.whatsapp) {
-        this.calouroForm.elements['whatsapp'].value = this.calouroData.whatsapp;
-      }
-      if (this.calouroForm.elements['instagram'] && this.calouroData.instagram) {
-        this.calouroForm.elements['instagram'].value = this.calouroData.instagram;
-      }
-      if (this.calouroForm.elements['casaHogwarts'] && this.calouroData.casaHogwarts) {
-        this.calouroForm.elements['casaHogwarts'].value = this.calouroData.casaHogwarts;
-      }
-      if (this.calouroForm.elements['hobbies'] && this.calouroData.hobbies) {
-        this.calouroForm.elements['hobbies'].value = this.calouroData.hobbies;
-      }
-      if (this.calouroForm.elements['expectativa'] && this.calouroData.expectativa) {
-        this.calouroForm.elements['expectativa'].value = this.calouroData.expectativa;
-      }
-      if (this.calouroForm.elements['meme'] && this.calouroData.meme) {
-        this.calouroForm.elements['meme'].value = this.calouroData.meme;
-      }
-      if (this.calouroForm.elements['mensagem'] && this.calouroData.mensagem) {
-        this.calouroForm.elements['mensagem'].value = this.calouroData.mensagem;
-      }
+    // Restaura dados do rascunho salvo no localStorage ou memória
+    const rascunho = supabaseService.obterRascunho() || this.calouroData;
+    if (rascunho && this.calouroForm) {
+      Object.keys(rascunho).forEach(key => {
+        const field = this.calouroForm.elements[key];
+        if (field) {
+          if (field instanceof RadioNodeList) {
+            field.value = rascunho[key];
+          } else if (field.type === 'radio') {
+            field.checked = (field.value === rascunho[key]);
+          } else {
+            field.value = rascunho[key];
+          }
+        }
+      });
     }
 
     this.selectionSection.style.display = 'block';
@@ -618,41 +630,125 @@ class ApadrinhamentoApp {
     }
   }
 
-  handleFormSubmit() {
+  async handleFormSubmit() {
+    const submitBtn = document.getElementById('btn-submit-apadrinhamento');
+    const submitText = document.getElementById('btn-submit-text');
+
     const formData = new FormData(this.calouroForm);
-    this.calouroData = {
-      nome: formData.get('nome'),
-      whatsapp: formData.get('whatsapp'),
-      instagram: formData.get('instagram'),
-      casaHogwarts: formData.get('casaHogwarts'),
-      hobbies: formData.get('hobbies'),
-      expectativa: formData.get('expectativa'),
-      meme: formData.get('meme'),
-      mensagem: formData.get('mensagem')
+    const nome = formData.get('nome')?.trim() || '';
+    const whatsapp = formData.get('whatsapp')?.trim() || '';
+    const instagram = formData.get('instagram')?.trim() || '';
+    const canalPreferido = formData.get('canalPreferido') || 'whatsapp';
+
+    const respostas = {
+      animacao: formData.get('animacao')?.trim() || '',
+      sobreVoce: formData.get('sobreVoce')?.trim() || '',
+      expectativaPeriodo: formData.get('expectativaPeriodo')?.trim() || '',
+      afinidadeMaterias: formData.get('afinidadeMaterias') || '',
+      areaInteresse: formData.get('areaInteresse')?.trim() || '',
+      expectativaMentor: formData.get('expectativaMentor')?.trim() || '',
+      tipoApoio: formData.get('tipoApoio') || '',
+      assuntosAjuda: formData.get('assuntosAjuda')?.trim() || '',
+      aprenderMentor: formData.get('aprenderMentor')?.trim() || '',
+      mensagem: formData.get('mensagem')?.trim() || '',
+      espacoLivre: formData.get('espacoLivre')?.trim() || ''
     };
 
-    this.saveStateToStorage();
+    this.calouroData = {
+      nome,
+      whatsapp,
+      instagram,
+      canalPreferido,
+      ...respostas
+    };
 
-    this.selectionSection.style.display = 'none';
-    this.connectionSuccessCard.style.display = 'block';
+    // Salva rascunho no localStorage
+    supabaseService.salvarRascunho(this.calouroData);
 
-    this.successMentorName.textContent = this.selectedPadrinho.nome;
-    this.successCalouroName.textContent = this.calouroData.nome;
+    // Ativa loading no botão
+    if (submitBtn) {
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      if (submitText) submitText.textContent = 'Gravando vínculo...';
+    }
 
-    const matchObj = this.matchResults.find(m => m.padrinho.id === this.selectedPadrinho.id);
-    const matchPercent = matchObj ? matchObj.matchPercentual : 90;
+    try {
+      const payload = {
+        padrinhoId: this.selectedPadrinho.id,
+        padrinhoNome: this.selectedPadrinho.nome,
+        calouroNome: nome,
+        calouroWhatsapp: whatsapp,
+        calouroInstagram: instagram,
+        canalPreferido: canalPreferido,
+        respostas: respostas
+      };
 
-    const textoMensagem = encodeURIComponent(
-      `Olá, ${this.selectedPadrinho.nome}! Meu nome é ${this.calouroData.nome}, sou calouro(a) do 1º período de Administração da UFAPE.\n\n` +
-      `Fiz o quiz no site de Apadrinhamento e nosso perfil deu ${matchPercent}% de compatibilidade! Escolhi você como meu(minha) veterano(a) para essa jornada.\n\n` +
-      `Meu recado para você: "${this.calouroData.mensagem}"\n\n` +
-      `Ansioso(a) para nos conhecermos no campus!`
-    );
+      const resultado = await supabaseService.registrarApadrinhamento(payload);
 
-    this.btnWhatsappShare.href = `https://api.whatsapp.com/send?text=${textoMensagem}`;
+      if (resultado && resultado.success) {
+        supabaseService.limparRascunho();
+        this.saveStateToStorage();
 
-    this.connectionSuccessCard.scrollIntoView({ behavior: 'smooth' });
-    this.dispararConfetes();
+        this.selectionSection.style.display = 'none';
+        this.connectionSuccessCard.style.display = 'block';
+
+        this.successMentorName.textContent = this.selectedPadrinho.nome;
+        this.successCalouroName.textContent = this.calouroData.nome;
+
+        const matchObj = this.matchResults.find(m => m.padrinho.id === this.selectedPadrinho.id);
+        const matchPercent = matchObj ? matchObj.matchPercentual : 90;
+
+        const textoMensagem = encodeURIComponent(
+          `Olá, ${this.selectedPadrinho.nome}! Meu nome é ${this.calouroData.nome}, sou calouro(a) do 1º período de Administração da UFAPE.\n\n` +
+          `Fiz o quiz no site de Apadrinhamento e nosso perfil deu ${matchPercent}% de compatibilidade! Escolhi você como meu(minha) veterano(a) para essa jornada.\n\n` +
+          `Meu recado para você: "${this.calouroData.mensagem}"\n\n` +
+          `Ansioso(a) para nos conhecermos no campus!`
+        );
+
+        this.btnWhatsappShare.href = `https://api.whatsapp.com/send?text=${textoMensagem}`;
+        this.connectionSuccessCard.scrollIntoView({ behavior: 'smooth' });
+        this.dispararConfetes();
+
+      } else if (resultado && resultado.code === 'VAGAS_ESGOTADAS') {
+        httpErrorHandler.show(403, {
+          title: 'Vagas Esgotadas para este Mentor',
+          message: resultado.message || 'As vagas para este padrinho/madrinha acabaram de ser preenchidas por outro estudante. Por favor, selecione outro mentor disponível no mural.',
+          primaryBtn: {
+            text: 'Escolher Outro Mentor',
+            action: () => {
+              const mural = document.getElementById('mural-padrinhos');
+              if (mural) mural.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      } else if (resultado && resultado.code === 'CALOURO_JA_CADASTRADO') {
+        httpErrorHandler.show(403, {
+          title: 'Você Já Escolheu um Mentor',
+          message: 'Constatamos que você já possui uma escolha de padrinho/madrinha registrada no sistema. Caso precise alterar, procure a coordenação do programa.',
+          primaryBtn: {
+            text: 'Entendido',
+            action: () => {}
+          }
+        });
+      } else {
+        throw new Error(resultado?.message || 'Falha ao processar apadrinhamento.');
+      }
+
+    } catch (err) {
+      console.error('[ApadrinhamentoApp] Erro na submissão:', err);
+      httpErrorHandler.show(500, {
+        title: 'Não foi possível confirmar o apadrinhamento',
+        message: 'Ocorreu uma instabilidade momentânea na conexão. <strong>Suas respostas foram salvas no navegador</strong> e não foram perdidas.',
+        preserveData: true,
+        onRetry: () => this.handleFormSubmit()
+      });
+    } finally {
+      if (submitBtn) {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        if (submitText) submitText.textContent = 'Confirmar Escolha de Padrinho';
+      }
+    }
   }
 }
 

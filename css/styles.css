@@ -1373,6 +1373,128 @@ svg {
   resize: vertical;
 }
 
+/* Estilos das 5 Seções Oficiais do Formulário */
+.form-section-card {
+  background: #fafbfc;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.4rem 1.1rem;
+  margin-bottom: 1.5rem;
+  transition: border-color var(--transition-fast);
+}
+
+.form-section-card:focus-within {
+  border-color: var(--sapphire-blue-light);
+}
+
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.form-section-badge {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: var(--royal-navy);
+  color: var(--warm-gold);
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--warm-gold);
+}
+
+.form-section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--royal-navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.form-section-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0.2rem 0 0 0;
+  line-height: 1.35;
+}
+
+.hint-text {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.form-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.form-radio-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.95rem;
+  background: var(--pure-white);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.86rem;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.form-radio-card:hover {
+  border-color: var(--warm-gold);
+  background-color: var(--warm-gold-light);
+}
+
+.form-radio-card input[type="radio"] {
+  accent-color: var(--royal-navy);
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.form-radio-card:has(input[type="radio"]:checked) {
+  border-color: var(--royal-navy);
+  background-color: rgba(14, 42, 71, 0.04);
+  font-weight: 600;
+}
+
+.form-submit-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn.loading {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.btn.loading svg {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* ==========================================================================
    CARTÃO DE CONEXÃO & COMPARTILHAMENTO
    ========================================================================== */
