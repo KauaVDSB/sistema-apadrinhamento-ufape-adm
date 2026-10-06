@@ -9,7 +9,7 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 
 | Sprint | Branch | Foco / Entregável | Status |
 | :---: | :--- | :--- | :---: |
-| **01** | `feat/supabase-schema-rls` | Modelagem DDL, RLS estrita e RPC anti-race condition | [ ] |
+| **01** | `feat/supabase-schema-rls` | Modelagem DDL, RLS estrita e RPC anti-race condition | [x] |
 | **02** | `feat/http-error-states` | Design System de Telas e Modais de Erro HTTP (401, 403, 404, 500) | [ ] |
 | **03** | `feat/calouro-form-questions` | Formulário completo do calouro (Perguntas acadêmicas e contato) | [ ] |
 | **04** | `feat/calouros-validation-pipeline` | Ingestão de PDFs UFAPE, normalização nominal e fallback em 12/10 | [ ] |
