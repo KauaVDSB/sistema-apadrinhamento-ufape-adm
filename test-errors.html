@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditoria de Estados de Erro HTTP • Apadrinhamento UFAPE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .test-wrapper {
+      padding: 1.25rem 0.75rem;
+      background: var(--swan-offwhite);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .test-box {
+      background: var(--pure-white);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 580px;
+      box-sizing: border-box;
+    }
+    .test-action-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .test-action-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.85rem 0.95rem;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--pure-white);
+      text-align: left;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .test-action-card:hover {
+      border-color: var(--warm-gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .test-action-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--royal-navy);
+      line-height: 1.35;
+      flex: 1;
+      min-width: 0;
+    }
+    .test-action-card .error-status-badge {
+      flex-shrink: 0;
+      font-size: 0.68rem;
+      padding: 0.25rem 0.6rem;
+    }
+    @media (min-width: 640px) {
+      .test-wrapper {
+        padding: 2.5rem 1rem;
+      }
+      .test-box {
+        padding: 2.2rem 2rem;
+      }
+      .test-action-title {
+        font-size: 0.92rem;
+      }
+    }
+  </style>
+</head>
+<body class="test-wrapper">
+  <div class="test-box">
+    <span style="background: var(--royal-navy); color: var(--warm-gold); font-size: 0.72rem; font-weight: 800; padding: 0.35rem 0.8rem; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.05em; display: inline-block;">
+      Sprint 02 • Auditoria Visual
+    </span>
+    <h1 style="font-size: 1.4rem; color: var(--royal-navy); font-weight: 800; margin: 0.9rem 0 0.4rem 0;">
+      Design System de Erros HTTP (ADR-007)
+    </h1>
+    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.4rem;">
+      Teste interativo dos modais de tratamento de exceções (LGPD, isolamento de rotas e tolerância a falhas).
+    </p>
+
+    <div class="test-action-list">
+      <button id="btn-test-401" class="test-action-card">
+        <span class="test-action-title">Simular Erro 401 (Não Autenticado)</span>
+        <span class="error-status-badge badge-navy">401 Auth</span>
+      </button>
+
+      <button id="btn-test-403" class="test-action-card">
+        <span class="test-action-title">Simular Erro 403 (Acesso Proibido / LGPD)</span>
+        <span class="error-status-badge badge-gold">403 RLS</span>
+      </button>
+
+      <button id="btn-test-404" class="test-action-card">
+        <span class="test-action-title">Simular Erro 404 (Recurso Não Encontrado)</span>
+        <span class="error-status-badge badge-slate">404 404</span>
+      </button>
+
+      <button id="btn-test-500" class="test-action-card">
+        <span class="test-action-title">Simular Erro 500 (Falha de Servidor / Rede)</span>
+        <span class="error-status-badge badge-coral">500 Server</span>
+      </button>
+
+      <a href="404.html" class="btn btn-secondary btn-sm" style="justify-content: center; margin-top: 0.4rem; width: 100%;">
+        Ver Página Estática 404.html (Deploy Vercel) ➔
+      </a>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <a href="index.html" class="btn btn-outline btn-sm">
+      Voltar à Página Principal
+    </a>
+  </div>
+
+  <script type="module">
+    import { httpErrorHandler } from './js/error-handler.js';
+
+    document.getElementById('btn-test-401').addEventListener('click', () => {
+      httpErrorHandler.show(401);
+    });
+
+    document.getElementById('btn-test-403').addEventListener('click', () => {
+      httpErrorHandler.show(403);
+    });
+
+    document.getElementById('btn-test-404').addEventListener('click', () => {
+      httpErrorHandler.show(404);
+    });
+
+    document.getElementById('btn-test-500').addEventListener('click', () => {
+      httpErrorHandler.show(500, {
+        preserveData: true,
+        onRetry: () => {
+          alert('Callback de repetição (Retry) disparado com sucesso!');
+          httpErrorHandler.hide();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
