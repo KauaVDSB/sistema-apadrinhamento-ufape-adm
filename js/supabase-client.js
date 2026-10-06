@@ -10,10 +10,11 @@
 import { PADRINHOS_DATA } from './data.js';
 
 // Configuração de Credenciais do Supabase
-// Substitua ou configure via window.SUPABASE_CONFIG se necessário
+// Injetadas em runtime via window.SUPABASE_URL e window.SUPABASE_ANON_KEY (ex: Vercel / index.html)
+// Nenhuma credencial ou URL padrão fica exposta no repositório público.
 export const SUPABASE_CONFIG = {
-  url: window.SUPABASE_URL || 'https://seu-projeto.supabase.co',
-  anonKey: window.SUPABASE_ANON_KEY || 'sua-chave-publica-anon'
+  url: window.SUPABASE_URL || '',
+  anonKey: window.SUPABASE_ANON_KEY || ''
 };
 
 class SupabaseService {
@@ -29,8 +30,10 @@ class SupabaseService {
   initClient() {
     try {
       if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
-        this.client = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-        this.initialized = true;
+        if (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey) {
+          this.client = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+          this.initialized = true;
+        }
       }
     } catch (err) {
       console.warn('[SupabaseService] Falha ao inicializar SDK do Supabase. Operando em modo híbrido:', err);
@@ -42,9 +45,7 @@ class SupabaseService {
    * Verifica se o cliente está configurado com credenciais válidas
    */
   isConfigured() {
-    return this.initialized && 
-      SUPABASE_CONFIG.url !== 'https://seu-projeto.supabase.co' &&
-      !SUPABASE_CONFIG.url.includes('seu-projeto');
+    return Boolean(this.initialized && SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey);
   }
 
   /**
