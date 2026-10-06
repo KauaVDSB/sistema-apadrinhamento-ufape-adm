@@ -10,7 +10,7 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 | Sprint | Branch | Foco / Entregável | Status |
 | :---: | :--- | :--- | :---: |
 | **01** | `feat/supabase-schema-rls` | Modelagem DDL, RLS estrita e RPC anti-race condition | [x] |
-| **02** | `feat/http-error-states` | Design System de Telas e Modais de Erro HTTP (401, 403, 404, 500) | [ ] |
+| **02** | `feat/http-error-states` | Design System de Telas e Modais de Erro HTTP (401, 403, 404, 500) | [x] |
 | **03** | `feat/calouro-form-questions` | Formulário completo do calouro (Perguntas acadêmicas e contato) | [ ] |
 | **04** | `feat/calouros-validation-pipeline` | Ingestão de PDFs UFAPE, normalização nominal e fallback em 12/10 | [ ] |
 | **05** | `feat/portal-padrinho` | Rota autenticada `/padrinho/`, troca de senha e visão isolada de afilhados | [ ] |
@@ -37,7 +37,8 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 * **Micro-Marcos:**
   * Componente modal/view unificado para erros de navegação e requisição;
   * Telas institucionais acolhedoras para 401 (Não Autenticado), 403 (Acesso Proibido a outro padrinho), 404 e 500;
-  * Botões de ação para navegação segura ("Fazer Login", "Voltar ao Meu Painel", "Tentar Novamente").
+  * Botões de ação para navegação segura ("Fazer Login", "Voltar ao Meu Painel", "Tentar Novamente");
+  * Página estática `404.html` com roteamento configurado no `vercel.json` e servidor local.
 * **Critério de Aceite:** Simulação funcional de todos os códigos de erro no navegador com responsividade mobile.
 
 ---
@@ -89,6 +90,7 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 * **Micro-Marcos:**
   * Substituição da logo provisória "UF" pela identidade oficial da UFAPE enviada;
   * Otimização e alocação dos memes/stickers em `assets/img/padrinhos/*.webp`;
+  * **Padronização rigorosa do Footer** em todas as páginas e rotas com dados institucionais e créditos do desenvolvedor;
   * Teste de homologação em dispositivos móveis (Android e iOS);
   * Atualização de apontamento de repositório na Vercel com publicação em produção.
 * **Critério de Aceite:** Site em produção respondendo com performance excelente e zero erros de console.
