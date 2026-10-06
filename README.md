@@ -6,8 +6,10 @@
 ## 1. Identificação Acadêmica e Registro de Autoria
 
 * **Instituição de Ensino Superior:** Universidade Federal do Agreste de Pernambuco (UFAPE)
-* **Desenvolvedor e Responsável Técnico:** **Kauã Vinicius dos Santos Barbosa**
-  * *Vínculo Acadêmico:* Discente do Bacharelado em Ciência da Computação (BCC / UFAPE)
+* **Idealização e Concepção do Projeto:** **Heloísa Pereira Barreto**
+  * *Vínculo Acadêmico:* Discente ingressante em 2026.1 (atualmente no 2º semestre) do Bacharelado em Administração (UFAPE) e Madrinha Designada do Programa
+* **Desenvolvimento e Responsabilidade Técnica:** **Kauã Vinicius dos Santos Barbosa**
+  * *Vínculo Acadêmico:* Discente ingressante em 2025.1 do Bacharelado em Ciência da Computação (BCC / UFAPE)
   * *E-mail Institucional / Contato:* `kauavdsb.jobs@gmail.com`
   * *Perfil GitHub:* [github.com/KauaVDSB](https://github.com/KauaVDSB)
 * **Curso Beneficiário:** Bacharelado em Administração (UFAPE)
@@ -89,7 +91,7 @@ flowchart TD
 ## 5. Estrutura de Permissões (RBAC)
 
 | Papel (*Role*) | Rota de Acesso | Nível de Acesso e Permissões |
-| :--- | :--- | :--- |
+| :--- | :--- | :--- :--- |
 | **Calouro (Público)** | `/` | Validação de ingresso, realização do quiz de perfil, visualização do catálogo anônimo de mentores e seleção de padrinho/madrinha. |
 | **Padrinho / Madrinha** | `/padrinho/` | Autenticação individual via Supabase; visualização restrita e exclusiva dos seus próprios afilhados e contatos. |
 | **Administrador / Coordenação** | `/admin/` | Visão analítica global da ocupação das cotas, relatórios em tempo real e exportação consolidada em planilha (.xlsx / .csv). |
