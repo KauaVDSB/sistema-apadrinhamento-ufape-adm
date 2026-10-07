@@ -36,7 +36,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a href="#quiz-section" class="btn btn-primary btn-sm">Fazer Quiz</a>
+        <a href="#quiz-section" id="nav-action-btn" class="btn btn-primary btn-sm">Fazer Quiz</a>
       </div>
     </div>
   </header>
@@ -44,7 +44,7 @@
   <!-- =========================================================================
        LEMBRETE IMPORTANTE NO INÍCIO DO SITE
        ========================================================================= -->
-  <aside class="calouro-reminder-bar" aria-label="Lembrete importante">
+  <aside id="calouro-reminder-bar" class="calouro-reminder-bar" aria-label="Lembrete importante">
     <div class="container reminder-container">
       <div class="reminder-content-group">
         <div class="reminder-icon-badge">
@@ -562,13 +562,19 @@
           Você agora está oficialmente conectado(a) com <strong id="success-mentor-name" style="color: var(--royal-navy);">Padrinho</strong> no 2º período de Administração da UFAPE.
         </p>
 
+        <div class="ceremony-notice-box" style="background: rgba(14, 42, 71, 0.04); border: 1.5px dashed var(--sapphire-blue); border-radius: var(--radius-md); padding: 1.2rem; margin-bottom: 1.5rem; text-align: center;">
+          <div style="font-weight: 800; color: var(--royal-navy); font-size: 1rem; margin-bottom: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+            <span>🤝</span>
+            <span>Primeiro Encontro no Workshop & Cerimônia Oficial</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+            Para manter o suspense e a emoção do acolhimento, os contatos telefônicos não são expostos previamente. O primeiro encontro entre você e seu padrinho/madrinha acontecerá presencialmente na <strong>Cerimônia Oficial de Apadrinhamento</strong> da UFAPE!
+          </p>
+        </div>
+
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-          <a id="btn-whatsapp-share" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg btn-block-mobile" style="background-color: #25D366; color: #fff;">
-            <span>Mandar Mensagem no WhatsApp</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/></svg>
-          </a>
           <a href="#mural-padrinhos" class="btn btn-outline btn-lg btn-block-mobile">
-            <span>Explorar Outros Perfis</span>
+            <span>Ver Mural de Padrinhos</span>
           </a>
         </div>
       </div>

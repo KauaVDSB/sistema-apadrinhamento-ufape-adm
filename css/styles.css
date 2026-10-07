@@ -1072,6 +1072,41 @@ svg {
   border-radius: var(--radius-full);
 }
 
+.card-quota-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--royal-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.card-quota-badge .quota-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  display: inline-block;
+}
+
+.card-quota-badge.quota-exhausted {
+  background: rgba(220, 38, 38, 0.95);
+  color: #ffffff;
+}
+
+.card-quota-badge.quota-exhausted .quota-dot {
+  background-color: #ffffff;
+}
+
 .padrinho-card-avatar {
   position: absolute;
   bottom: -38px;
