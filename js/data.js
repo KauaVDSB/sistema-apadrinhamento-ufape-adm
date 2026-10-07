@@ -176,418 +176,841 @@ export const QUIZ_QUESTIONS = [
 
 export const PADRINHOS = [
   {
-    id: 1,
-    nome: "Lucas Andrade",
-    iniciais: "LA",
-    genero: "ele",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Grifinória",
-    casaSlug: "grifinoria",
-    areaDestaque: "Marketing & Gestão de Pessoas",
-    lemas: "Minha bateria social acaba às 22h, mas até lá dou total dedicação e apoio para a turma!",
-    resumo: "Divertido, sincero e focado em comportamento humano e comunicação. Adora séries, jogos e tem ótimas histórias sobre o 1º período.",
-    respostasEsperadas: {
-      1: ["B", "C"],
-      2: ["B", "C"],
-      3: ["B", "C"],
-      4: ["B"],
-      5: ["B", "C"],
-      6: ["A", "B"],
-      7: ["B", "D"],
-      8: ["B", "C"],
-      9: ["A", "C"],
-      10: ["B", "C"],
-      11: ["D", "A"],
-      12: ["B", "C"]
+    "id": 1,
+    "nome": "Adelmo Felix de Brito Leite",
+    "iniciais": "AF",
+    "genero": "ele",
+    "email_institucional": "adelmo.felix@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Lufa-Lufa",
+    "casaSlug": "lufalufa",
+    "areaDestaque": "Economia & Gestão Geral",
+    "lemas": "Determinado e parceiro: o aprendizado é construído passo a passo com dedicação!",
+    "resumo": "Praticante de esportes e focado no crescimento acadêmico. Enfrentou a matemática aplicada com garra e acolhe com energia positiva.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "C",
+        "A"
+      ],
+      "2": [
+        "D",
+        "C"
+      ],
+      "3": [
+        "B",
+        "C"
+      ],
+      "4": [
+        "C",
+        "A"
+      ],
+      "5": [
+        "C",
+        "B"
+      ],
+      "6": [
+        "D",
+        "B"
+      ],
+      "7": [
+        "B",
+        "C"
+      ],
+      "8": [
+        "B",
+        "C"
+      ],
+      "9": [
+        "B",
+        "C"
+      ],
+      "10": [
+        "C",
+        "B"
+      ],
+      "11": [
+        "C",
+        "D"
+      ],
+      "12": [
+        "B",
+        "C"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Grifinória",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Gosto de jogar, assistir séries, sair para comer com meus amigos e passar tempo navegando em vídeos e novidades na internet.",
-      meme_que_representa_sua_personalidade: "O meme do 'eu simplesmente não existo mais depois das 22h'. Minha bateria social acaba rápido, mas no horário útil dou 100% de energia.",
-      figurinha_que_representou_o_primeiro_periodo: "Aquela figurinha do gatinho olhando para o nada com a frase 'não sei mais o que está acontecendo'.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Ryan Reynolds. Acho que eu não prestaria atenção em absolutamente nada da aula, mas com certeza seria divertido."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Lufa-Lufa",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Praticar esportes.",
+      "meme_que_representa_sua_personalidade": "Agostinho Carrara da Grande Família, falando que todas as classes odeiam ele.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não sou muito de usar figurinhas (foco no papo direto!).",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Mano Brown (Racionais MC's)."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Introdução à Administração. Foi a matéria que mais me fez ter certeza de que eu tinha escolhido o curso certo.",
-      materia_que_mais_testou_a_sanidade: "Matemática. Eu entrava na sala confiante e saía questionando todas as escolhas que fiz na vida.",
-      area_da_administracao_que_mais_chama_atencao: "Marketing e Gestão de Pessoas. Gosto muito da parte de comportamento, comunicação e de entender o que faz uma empresa funcionar bem com as pessoas.",
-      maior_choque_de_realidade: "Perceber que ninguém vai ficar lembrando você de estudar, entregar trabalho ou organizar sua rotina. Se você deixar tudo para depois, o problema chega com juros."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
+      "materia_que_mais_testou_a_sanidade": "Matemática Aplicada.",
+      "area_da_administracao_que_mais_chama_atencao": "Economia.",
+      "maior_choque_de_realidade": "Matemática é cruel, mas com estudo em grupo a gente vence!"
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Uma apresentação em que nosso grupo esqueceu completamente quem começaria falando. Ficamos uns cinco segundos olhando um para a cara do outro até alguém começar a rir. Depois disso, ninguém conseguia mais falar sério.",
-      momento_em_que_percebeu_que_virou_universitario: "Quando percebi que estava almoçando um salgado às 15h enquanto terminava um trabalho que precisava entregar no mesmo dia.",
-      coisa_que_eliminaria_da_vida_universitaria: "Trabalhos em grupo com prazo curto. Principalmente quando cinco pessoas precisam encontrar um horário em comum. É praticamente um desafio de sobrevivência."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Contar os décimos das notas, tipo contando migalhas para ver se passo.",
+      "momento_em_que_percebeu_que_virou_universitario": "Apresentação de seminário e entregas de trabalhos com prazos apertados.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Aula na sexta-feira à noite."
     },
-    hobbies: ["Jogos Online", "Séries", "Gastronomia com amigos", "Mídias Digitais"],
-    habilidades_mentoria: ["Dicas de TGA e Introdução à ADM", "Comunicação e Apresentações", "Como não surtar com prazos"]
+    "hobbies": [
+      "Prática de Esportes",
+      "Futebol",
+      "Música Nacional",
+      "Resenha Universitária"
+    ],
+    "habilidades_mentoria": [
+      "Sobrevivência em Matemática",
+      "Dicas de Introdução à Administração",
+      "Apoio e acolhimento prático"
+    ]
   },
   {
-    id: 2,
-    nome: "Mariana Alves",
-    iniciais: "MA",
-    genero: "ela",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Corvinal",
-    casaSlug: "corvinal",
-    areaDestaque: "Gestão de Pessoas & Marketing",
-    lemas: "Organizada, atenta e sempre com foco e serenidade para superar os desafios acadêmicos!",
-    resumo: "Criativa, equilibrada e atenta aos detalhes. Apaixonada por leitura, organização estética e relações humanas no ambiente de trabalho.",
-    respostasEsperadas: {
-      1: ["A", "B"],
-      2: ["A", "C"],
-      3: ["B", "C"],
-      4: ["C", "B"],
-      5: ["B", "C"],
-      6: ["A", "B"],
-      7: ["B", "D"],
-      8: ["A", "B"],
-      9: ["A", "C"],
-      10: ["A", "C", "D"],
-      11: ["B", "C", "E"],
-      12: ["B", "E"]
+    "id": 2,
+    "nome": "Anderson Daniel Oliveira Leite",
+    "iniciais": "AD",
+    "genero": "ele",
+    "email_institucional": "anderson.daniel@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Lufa-Lufa",
+    "casaSlug": "lufalufa",
+    "areaDestaque": "Gestão Financeira & Economia",
+    "lemas": "A universidade é bem mais tranquila e proveitosa quando você encontra bons amigos e o ritmo certo!",
+    "resumo": "Espirituoso, gamer e focado em finanças. Acredita no equilíbrio entre o foco nas matérias de economia e as amizades da cantina.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "A",
+        "B"
+      ],
+      "2": [
+        "B",
+        "C"
+      ],
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "A",
+        "C"
+      ],
+      "5": [
+        "A",
+        "C"
+      ],
+      "6": [
+        "C",
+        "D"
+      ],
+      "7": [
+        "B",
+        "D"
+      ],
+      "8": [
+        "B",
+        "A"
+      ],
+      "9": [
+        "A",
+        "C"
+      ],
+      "10": [
+        "B",
+        "C"
+      ],
+      "11": [
+        "D",
+        "A"
+      ],
+      "12": [
+        "B",
+        "C"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Corvinal",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Gosto de ler, ouvir música, assistir séries, sair para tomar alguma coisa com minhas amigas e organizar referências visuais no Pinterest.",
-      meme_que_representa_sua_personalidade: "Aquele meme da pessoa falando 'vai dar tudo certo' enquanto tudo parece caótico. Resume bem minha calma externa em dias de prova.",
-      figurinha_que_representou_o_primeiro_periodo: "Uma figurinha com a frase 'cansada, porém seguindo firme'.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Taylor Swift. Provavelmente eu passaria a aula inteira tentando agir com naturalidade enquanto prestaria atenção em tudo."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Lufa-Lufa",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Jogar esportes e jogos no celular.",
+      "meme_que_representa_sua_personalidade": "Averiguando possível resenha.",
+      "figurinha_que_representou_o_primeiro_periodo": "Eu tenho o sabimento na palma das minhas mãos.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Papa Leão XIV."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Gestão de Pessoas. Gostei muito porque envolve comportamento, relações dentro das empresas e entender melhor como as pessoas funcionam em equipe.",
-      materia_que_mais_testou_a_sanidade: "Matemática Financeira. No começo eu achava que tinha entendido, aí aparecia uma questão diferente e eu percebia o tamanho do desafio.",
-      area_da_administracao_que_mais_chama_atencao: "Gestão de Pessoas e Marketing. Gosto bastante da parte de comunicação, comportamento e estratégias que envolvem entender o público.",
-      maior_choque_de_realidade: "Descobrir que você realmente precisa aprender a administrar seu próprio tempo. Tem semana em que parece não ter nada e, de repente, aparecem três trabalhos e duas provas juntas."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Economia.",
+      "materia_que_mais_testou_a_sanidade": "Matemática aplicada à Administração.",
+      "area_da_administracao_que_mais_chama_atencao": "Gestão Financeira.",
+      "maior_choque_de_realidade": "Que a faculdade é bem mais tranquila e livre do que a escola."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Durante uma apresentação, uma amiga esqueceu o que ia falar e começou a ler o slide ao pé da letra com entonação dramática. Acabou todo mundo rindo junto.",
-      momento_em_que_percebeu_que_virou_universitaria: "Quando estava adiantando trabalho no celular durante o intervalo, lanchando e planejando o estudo da noite.",
-      coisa_que_eliminaria_da_vida_universitaria: "Apresentações de seminários marcadas para a mesma semana das provas bimestrais."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Comemorar o aniversário de dois amigos na cantina com a turma toda.",
+      "momento_em_que_percebeu_que_virou_universitario": "Todas as provas caindo exatamente na mesma semana.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Projetos de extensão com prazos acumulados."
     },
-    hobbies: ["Leitura", "Música", "Cafeterias", "Design Visual"],
-    habilidades_mentoria: ["Organização de rotina sem estresse", "Resumos eficientes de matérias", "Apoio nas primeiras semanas"]
+    "hobbies": [
+      "Jogos Mobile",
+      "Esportes",
+      "Cantina com Amigos",
+      "Economia"
+    ],
+    "habilidades_mentoria": [
+      "Introdução à Economia",
+      "Gestão Financeira",
+      "Adaptação ao campus"
+    ]
   },
   {
-    id: 3,
-    nome: "Gabriel Vasconcelos",
-    iniciais: "GV",
-    genero: "ele",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Sonserina",
-    casaSlug: "sonserina",
-    areaDestaque: "Finanças & Controladoria",
-    lemas: "Se é mensurável, é gerenciável. O foco em números transforma planos em resultados.",
-    resumo: "Analítico, determinado e focado no mercado financeiro. Adora desafios lógicos, investimentos e conhece profundamente a estrutura do curso.",
-    respostasEsperadas: {
-      1: ["A", "C"],
-      2: ["B", "A"],
-      3: ["C", "B"],
-      4: ["A"],
-      5: ["A", "D"],
-      6: ["C", "E"],
-      7: ["A", "C"],
-      8: ["A"],
-      9: ["D", "B"],
-      10: ["B", "A"],
-      11: ["C"],
-      12: ["A", "D"]
+    "id": 3,
+    "nome": "Maria Cibele da Silva Leite",
+    "iniciais": "MC",
+    "genero": "ela",
+    "email_institucional": "cibele.leite@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Corvinal",
+    "casaSlug": "corvinal",
+    "areaDestaque": "Empreendedorismo, Marketing & Contabilidade",
+    "lemas": "Administrar o curso é aprender primeiro a administrar a própria vida e a rotina!",
+    "resumo": "Criativa, desenhista e atenta aos detalhes. Apaixonada por marketing, contabilidade introdutória e animes.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "A",
+        "D"
+      ],
+      "2": [
+        "A",
+        "D"
+      ],
+      "3": [
+        "C",
+        "B"
+      ],
+      "4": [
+        "B",
+        "A"
+      ],
+      "5": [
+        "B",
+        "D"
+      ],
+      "6": [
+        "B",
+        "E"
+      ],
+      "7": [
+        "C",
+        "A"
+      ],
+      "8": [
+        "A",
+        "B"
+      ],
+      "9": [
+        "C",
+        "A"
+      ],
+      "10": [
+        "B",
+        "D"
+      ],
+      "11": [
+        "C",
+        "B"
+      ],
+      "12": [
+        "A",
+        "E"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Sonserina",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Acompanhar notícias do mercado financeiro, jogar xadrez online, praticar musculação e pesquisar sobre indicadores econômicos.",
-      meme_que_representa_sua_personalidade: "O meme clássico do Julius: 'Se eu não comprar, o desconto é de 100%'. Foco e prudência financeira sempre.",
-      figurinha_que_representou_o_primeiro_periodo: "Um gráfico oscilando com a legenda: 'Tudo dentro do planejado'.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Warren Buffett ou Bernardinho, referências em foco estratégico e disciplina constante."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Corvinal",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Desenhar, ouvir música e assistir anime.",
+      "meme_que_representa_sua_personalidade": "Meme reflexivo sobre organização e rotina universitária.",
+      "figurinha_que_representou_o_primeiro_periodo": "Figurinha fofa de superação acadêmica.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Ana Caetano (duo Anavitória)."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Matemática Aplicada. Enquanto muitos achavam pesado, achei gratificante estruturar cálculos e fórmulas de suporte a decisões.",
-      materia_que_mais_testou_a_sanidade: "Sociologia das Organizações. Muito texto subjetivo; eu procurava uma lógica objetiva onde existiam múltiplas correntes teóricas.",
-      area_da_administracao_que_mais_chama_atencao: "Finanças Corporativas, Controladoria e Análise de Investimentos.",
-      maior_choque_de_realidade: "Aprender a orçar o custo do dia a dia acadêmico: passagens, alimentação e livros são a primeira prática real de ADM."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Contabilidade.",
+      "materia_que_mais_testou_a_sanidade": "Matemática aplicada à Administração.",
+      "area_da_administracao_que_mais_chama_atencao": "Empreendedorismo e Marketing.",
+      "maior_choque_de_realidade": "Descobrir que além de aprender Administração, eu precisava administrar minha própria vida, prazos e rotina com autonomia."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Fiz uma planilha detalhada com fórmulas para ratear a conta da confraternização da turma até os centavos e virei o auditor fiscal do período.",
-      momento_em_que_percebeu_que_virou_universitario: "Quando comecei a analisar custos e investimentos reais aplicando o que aprendia nas matérias.",
-      coisa_que_eliminaria_da_vida_universitaria: "Arquivos compartilhados sem padronização ABNT básica."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Nos primeiros dias de aula acabei saindo da sala para andar um pouco e quase me perdi no campus da UFAPE.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando usei a farda de Administração da UFAPE pela primeira vez e caiu a ficha real de ser universitária.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Seminários em grupo obrigatórios."
     },
-    hobbies: ["Xadrez", "Finanças", "Treino de força", "Podcasts de Mercado"],
-    habilidades_mentoria: ["Destravar Matemática e Finanças", "Planilhas de Estudos", "Orientação para Estágios"]
+    "hobbies": [
+      "Desenho & Ilustração",
+      "Animes & Mangás",
+      "Música Brasileira",
+      "Café"
+    ],
+    "habilidades_mentoria": [
+      "Contabilidade Básica",
+      "Marketing & Criação",
+      "Organização pessoal e horários"
+    ]
   },
   {
-    id: 4,
-    nome: "Camila Beatriz",
-    iniciais: "CB",
-    genero: "ela",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Lufa-Lufa",
-    casaSlug: "lufalufa",
-    areaDestaque: "Gestão de Pessoas & Clima Organizacional",
-    lemas: "Ninguém fica para trás! A melhor gestão é aquela construída com acolhimento e respeito.",
-    resumo: "Acolhedora por vocação, mediadora nata e sempre com uma palavra de apoio para tranquilizar quem estiver ansioso antes das avaliações.",
-    respostasEsperadas: {
-      1: ["D", "B"],
-      2: ["A", "C"],
-      3: ["B", "D"],
-      4: ["D", "C"],
-      5: ["B"],
-      6: ["A"],
-      7: ["D", "C"],
-      8: ["B"],
-      9: ["A", "B"],
-      10: ["D", "C"],
-      11: ["B", "A"],
-      12: ["C", "B"]
+    "id": 4,
+    "nome": "Heloísa Pereira Barreto",
+    "iniciais": "HB",
+    "genero": "ela",
+    "email_institucional": "heloisa.barreto@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Corvinal",
+    "casaSlug": "corvinal",
+    "areaDestaque": "Gestão Financeira & Estratégia",
+    "lemas": "Curiosidade intelectual sem limites: se alguém escreveu, eu vou estudar até entender tudo!",
+    "resumo": "Idealizadora do programa de apadrinhamento e líder nata. Leitora voraz, apaixonada pelo mercado financeiro e por autonomia acadêmica.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "A",
+        "C"
+      ],
+      "2": [
+        "A",
+        "C"
+      ],
+      "3": [
+        "B",
+        "C"
+      ],
+      "4": [
+        "A",
+        "B"
+      ],
+      "5": [
+        "A",
+        "B"
+      ],
+      "6": [
+        "C",
+        "B"
+      ],
+      "7": [
+        "A",
+        "C"
+      ],
+      "8": [
+        "A",
+        "C"
+      ],
+      "9": [
+        "A",
+        "C"
+      ],
+      "10": [
+        "B",
+        "A"
+      ],
+      "11": [
+        "C",
+        "A"
+      ],
+      "12": [
+        "A",
+        "E"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Lufa-Lufa",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Cozinhar receitas para amigos, cuidar de plantas, caminhar no parque Euclides Dourado e escutar MPB.",
-      meme_que_representa_sua_personalidade: "Aquele meme do abraço sincero: 'Vai ficar tudo bem, estamos juntos nessa jornada'.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha de comemoração: 'Mais um dia de aula vencido com sucesso'.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Fernanda Montenegro, pela sabedoria, serenidade e acolhimento humano."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Corvinal",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ler livros envolventes e aprender coisas novas e aleatórias sobre o mundo.",
+      "meme_que_representa_sua_personalidade": "Clóvis de Barros Filho: 'Como pode um cara escrever uma coisa que eu não entenda? Não tem como. Eu vou ler até entender!'",
+      "figurinha_que_representou_o_primeiro_periodo": "Figurinha de determinação nos estudos.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Emma Watson (inteligente, engajada e incrível para debater ideias)."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Comportamento Humano nas Organizações e Introdução à Administração.",
-      materia_que_mais_testou_a_sanidade: "Estatística Básica. As distribuições de probabilidade exigiram bastante estudo conjunto na biblioteca.",
-      area_da_administracao_que_mais_chama_atencao: "Recursos Humanos, Desenvolvimento de Líderes e Responsabilidade Socioambiental.",
-      maior_choque_de_realidade: "A transição de morar perto do campus e gerenciar a própria rotina doméstica e acadêmica simultaneamente."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
+      "materia_que_mais_testou_a_sanidade": "Introdução à Economia.",
+      "area_da_administracao_que_mais_chama_atencao": "Área Financeira e Estratégia.",
+      "maior_choque_de_realidade": "Perceber que a universidade exige autonomia total. Ninguém fica cobrando ou lembrando, é você por você mesmo construindo sua história."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Levei um bolo caseiro para a aula e o professor pausou 15 minutos para todos lancharem porque ninguém produz bem em jejum.",
-      momento_em_que_percebeu_que_virou_universitaria: "Quando uma garrafa térmica de café virou item indispensável na mochila para as aulas matinais.",
-      coisa_que_eliminaria_da_vida_universitaria: "Falta de comunicação clara nas divisões de tarefas em grupo."
+    "vida_universitaria": {
+      "momento_mais_engracado": "O professor faltou e a turma convenceu todo mundo pelo WhatsApp que era algo imperdível só para ver o pessoal chegando na sala vazia!",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando me peguei reclamando que tinha matéria demais para estudar e sem saber nem por onde começar.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Trabalhos em grupo com membros que somem."
     },
-    hobbies: ["Culinária", "Fotografia", "MPB", "Plantas e Jardinagem"],
-    habilidades_mentoria: ["Acolhimento para calouros de outras cidades", "Dicas de convivência em grupo", "Inteligência Emocional"]
+    "hobbies": [
+      "Leitura",
+      "Podcasts de Conhecimento",
+      "Finanças",
+      "Projetos Acadêmicos"
+    ],
+    "habilidades_mentoria": [
+      "Visão Geral de ADM",
+      "Autonomia de Estudos",
+      "Estratégia e Planejamento de Carreira"
+    ]
   },
   {
-    id: 5,
-    nome: "Matheus Albuquerque",
-    iniciais: "MA",
-    genero: "ele",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Grifinória",
-    casaSlug: "grifinoria",
-    areaDestaque: "Empreendedorismo & Inovação",
-    lemas: "Ideia sem ação é apenas intenção. O segredo é colocar em prática e aprender rápido!",
-    resumo: "Dinâmico, ligado no ecossistema de startups, atlética acadêmica e projetos que conectam a faculdade à prática do mercado.",
-    respostasEsperadas: {
-      1: ["C", "B"],
-      2: ["C", "B"],
-      3: ["A"],
-      4: ["A", "B"],
-      5: ["D", "C"],
-      6: ["D"],
-      7: ["A", "B"],
-      8: ["B", "C"],
-      9: ["C"],
-      10: ["C", "E"],
-      11: ["A", "D"],
-      12: ["C", "E"]
+    "id": 5,
+    "nome": "Joice Vitoria Gonçalves Silva",
+    "iniciais": "JV",
+    "genero": "ela",
+    "email_institucional": "joice.vitoria@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Sonserina",
+    "casaSlug": "sonserina",
+    "areaDestaque": "Contabilidade & Gestão",
+    "lemas": "Foco nos objetivos e resiliência total para superar qualquer desafio de cálculo!",
+    "resumo": "Espontânea, determinada e apaixonada por culinária. Sincera sobre os percalços de cálculo e sempre disposta a estender a mão aos novos alunos.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "B",
+        "C"
+      ],
+      "2": [
+        "C",
+        "B"
+      ],
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "C",
+        "B"
+      ],
+      "5": [
+        "C",
+        "B"
+      ],
+      "6": [
+        "D",
+        "A"
+      ],
+      "7": [
+        "B",
+        "C"
+      ],
+      "8": [
+        "C",
+        "B"
+      ],
+      "9": [
+        "B",
+        "C"
+      ],
+      "10": [
+        "C",
+        "D"
+      ],
+      "11": [
+        "A",
+        "D"
+      ],
+      "12": [
+        "C",
+        "B"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Grifinória",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Participar de maratonas de inovação, praticar esportes com o pessoal do curso e ler sobre novos modelos de negócios.",
-      meme_que_representa_sua_personalidade: "Meme do 'Vamos nessa, o desafio é o que move a gente!'.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha de comemoração ao enviar o trabalho antes do prazo final com sucesso.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Flávio Augusto ou Marcos Mion, pela energia empreendedora e capacidade de articulação."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Sonserina",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Cozinhar pratos especiais.",
+      "meme_que_representa_sua_personalidade": "Qualquer meme do IShowSpeed com energia a 1000%.",
+      "figurinha_que_representou_o_primeiro_periodo": "😱 (O susto com as notas do período)",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Cristiano Ronaldo (SIUUU!)."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Empreendedorismo e Criação de Novos Negócios.",
-      materia_que_mais_testou_a_sanidade: "Contabilidade Geral. Fechar balanço patrimonial e entender partidas dobradas foi um verdadeiro teste de paciência.",
-      area_da_administracao_que_mais_chama_atencao: "Inovação, Startups, Gestão de Projetos e Desenvolvimento de Marcas.",
-      maior_choque_de_realidade: "Perceber que ter boas ideias é o passo inicial; a consistência diária de execução é o que gera valor real."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Contabilidade e Introdução à Administração.",
+      "materia_que_mais_testou_a_sanidade": "Matemática / Cálculo 1.",
+      "area_da_administracao_que_mais_chama_atencao": "Contabilidade.",
+      "maior_choque_de_realidade": "Cálculo 1 na universidade é de verdade!"
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Fizemos uma simulação de vendas no corredor do curso e o coordenador do bacharelado foi nosso primeiro cliente.",
-      momento_em_que_percebeu_que_virou_universitario: "Quando criei um grupo de apoio aos colegas para tirar dúvidas de sistemas acadêmicos e prazos.",
-      coisa_que_eliminaria_da_vida_universitaria: "Aulas teóricas extensas sem pausas ativas."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Dar risada dos próprios perrengues na cantina com a turma.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando o desafio de cálculo me fez correr atrás de monitoria com toda a força.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo 1 da grade obrigatória."
     },
-    hobbies: ["Esportes", "Inovação", "Podcasts de Negócios", "Eventos Acadêmicos"],
-    habilidades_mentoria: ["Como ingressar na Empresa Júnior e Atlética", "Oratória e Pitch", "Metodologias Ágeis"]
+    "hobbies": [
+      "Gastronomia & Culinária",
+      "Futebol",
+      "Mídias Sociais",
+      "Séries"
+    ],
+    "habilidades_mentoria": [
+      "Dicas de Contabilidade",
+      "Como lidar com notas e provas",
+      "Companheirismo e motivação"
+    ]
   },
   {
-    id: 6,
-    nome: "Beatriz Rocha",
-    iniciais: "BR",
-    genero: "ela",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Corvinal",
-    casaSlug: "corvinal",
-    areaDestaque: "Estratégia Empresarial & Consultoria",
-    lemas: "Diagnóstico preciso, planejamento estruturado e execução sem improviso desnecessário.",
-    resumo: "Estrategista nata, altamente organizada em ferramentas de produtividade, com visão holística sobre tomada de decisão corporativa.",
-    respostasEsperadas: {
-      1: ["A", "C"],
-      2: ["A", "D"],
-      3: ["B", "C"],
-      4: ["A", "C"],
-      5: ["D", "B"],
-      6: ["E"],
-      7: ["A", "C"],
-      8: ["A"],
-      9: ["D", "C"],
-      10: ["A", "D"],
-      11: ["C", "B"],
-      12: ["A", "E"]
+    "id": 6,
+    "nome": "Jones Vitor dos Santos Nascimento",
+    "iniciais": "JN",
+    "genero": "ele",
+    "email_institucional": "jones.nascimento@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Grifinória",
+    "casaSlug": "grifinoria",
+    "areaDestaque": "Estratégia Interempresarial & Filosofia",
+    "lemas": "O ambiente universitário é feito de amizades sólidas e visão estratégica de futuro!",
+    "resumo": "Sociável, boleiro e focado em estratégia corporativa. Adora debater ética empresarial e aproveitar os bons momentos com os amigos.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "B",
+        "C"
+      ],
+      "2": [
+        "C",
+        "B"
+      ],
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "B",
+        "C"
+      ],
+      "5": [
+        "C",
+        "B"
+      ],
+      "6": [
+        "B",
+        "D"
+      ],
+      "7": [
+        "B",
+        "C"
+      ],
+      "8": [
+        "B",
+        "C"
+      ],
+      "9": [
+        "B",
+        "A"
+      ],
+      "10": [
+        "A",
+        "C"
+      ],
+      "11": [
+        "A",
+        "D"
+      ],
+      "12": [
+        "C",
+        "E"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Corvinal",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Estruturar notas de estudo no Notion, ler biografias de lideranças, degustar cafés especiais e assistir a documentários.",
-      meme_que_representa_sua_personalidade: "Meme do raciocínio analítico: ponderando todas as variáveis antes de propor um direcionamento.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha de uma prancheta organizada com checklist 100% preenchido.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Anitta, pela clareza de visão estratégica e gestão de carreira impecável."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Grifinória",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Jogar futebol ou sair com os amigos.",
+      "meme_que_representa_sua_personalidade": "A criança chorando comemorando vitória nos acréscimos.",
+      "figurinha_que_representou_o_primeiro_periodo": "Figurinha de resenha da turma.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Yuri Alberto."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Teoria Geral da Administração (TGA) e Pensamento Estratégico.",
-      materia_que_mais_testou_a_sanidade: "Instituições de Direito Público e Privado. O vocabulário jurídico denso exigiu bastante tempo de leitura minuciosa.",
-      area_da_administracao_que_mais_chama_atencao: "Planejamento Estratégico, Consultoria de Gestão e Governança Corporativa.",
-      maior_choque_de_realidade: "Compreender que as leituras bibliográficas indicadas são fundamentais para fundamentar intervenções em sala."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Filosofia e Ética Geral.",
+      "materia_que_mais_testou_a_sanidade": "Cálculo e Matemática.",
+      "area_da_administracao_que_mais_chama_atencao": "Sistema estratégico e relacionamento entre empresas.",
+      "maior_choque_de_realidade": "Ter que sentar e estudar de verdade todos os dias."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Elaborei um cronograma com código de cores para um projeto em grupo e os colegas acharam que era uma cartela de amostra de tintas.",
-      momento_em_que_percebeu_que_virou_universitaria: "Quando comecei a aplicar análise SWOT informal para solucionar impasses do dia a dia.",
-      coisa_que_eliminaria_da_vida_universitaria: "Reuniões que poderiam ser resolvidas com um resumo objetivo em texto."
+    "vida_universitaria": {
+      "momento_mais_engracado": "As resenhas e risadas incontroláveis no intervalo com os parceiros de sala.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando cheguei nas provas e pensei: 'Agora é com a gente!'",
+      "coisa_que_eliminaria_da_vida_universitaria": "Matemática excessiva."
     },
-    hobbies: ["Produtividade & Notion", "Cafés Especiais", "Leitura de Estratégia", "Cinema"],
-    habilidades_mentoria: ["Estruturação de estudos no Notion", "Metodologia científica e resenhas", "Visão de carreira em Consultoria"]
+    "hobbies": [
+      "Futebol",
+      "Encontros com Amigos",
+      "Debates Estratégicos",
+      "Esportes"
+    ],
+    "habilidades_mentoria": [
+      "Filosofia e Ética",
+      "Visão de Negócios e Parcerias",
+      "Socialização no campus"
+    ]
   },
   {
-    id: 7,
-    nome: "Pedro Henrique",
-    iniciais: "PH",
-    genero: "ele",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Lufa-Lufa",
-    casaSlug: "lufalufa",
-    areaDestaque: "Logística & Cadeia de Suprimentos",
-    lemas: "Manter o fluxo contínuo e a cabeça no lugar: problemas complexos se resolvem passo a passo.",
-    resumo: "Tranquilo, acolhedor e focado em processos eficientes. Adora tecnologia, logística, jogos e sempre ajuda a integrar a turma com calma.",
-    respostasEsperadas: {
-      1: ["D", "A"],
-      2: ["B", "A"],
-      3: ["C", "D"],
-      4: ["B", "D"],
-      5: ["D", "A"],
-      6: ["E", "C"],
-      7: ["C", "D"],
-      8: ["B", "C"],
-      9: ["B", "A"],
-      10: ["B", "D"],
-      11: ["B", "D"],
-      12: ["D", "B"]
+    "id": 7,
+    "nome": "Renaly Ferreira de Andrade",
+    "iniciais": "RF",
+    "genero": "ela",
+    "email_institucional": "renaly.andrade@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Corvinal",
+    "casaSlug": "corvinal",
+    "areaDestaque": "Gestão de Pessoas & Logística",
+    "lemas": "Dedicação aos estudos e cuidado com o bem-estar: equilíbrio é a chave da graduação!",
+    "resumo": "Dedicada, fã de academia e séries. Tem grande afinidade com contabilidade introdutória, logística e desenvolvimento de equipes.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "A",
+        "D"
+      ],
+      "2": [
+        "A",
+        "D"
+      ],
+      "3": [
+        "B",
+        "C"
+      ],
+      "4": [
+        "A",
+        "B"
+      ],
+      "5": [
+        "A",
+        "B"
+      ],
+      "6": [
+        "A",
+        "D"
+      ],
+      "7": [
+        "C",
+        "A"
+      ],
+      "8": [
+        "A",
+        "B"
+      ],
+      "9": [
+        "A",
+        "B"
+      ],
+      "10": [
+        "B",
+        "C"
+      ],
+      "11": [
+        "C",
+        "B"
+      ],
+      "12": [
+        "A",
+        "B"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Lufa-Lufa",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Jogar online com amigos, ouvir música, preparar lanches práticos e acompanhar novidades de tecnologia.",
-      meme_que_representa_sua_personalidade: "Meme do cachorro tranquilo tomando chá: 'Mantenha a serenidade que tudo se ajeita'.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha reflexiva contemplando o horizonte no intervalo das aulas.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Casimiro Miguel, pela descontração e autenticidade ao comentar qualquer situação."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Corvinal 💙",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ir à academia e maratonar minhas séries favoritas.",
+      "meme_que_representa_sua_personalidade": "Aquele clássico dos ETs se abraçando em sintonia.",
+      "figurinha_que_representou_o_primeiro_periodo": "A figurinha de desespero simpático com os prazos.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Algum gênio da matemática 🧮 para tirar dúvidas na hora!"
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Fundamentos de Economia e Introdução à Logística.",
-      materia_que_mais_testou_a_sanidade: "Metodologia Científica. As regras de formatação e citações da ABNT tomaram várias madrugadas.",
-      area_da_administracao_que_mais_chama_atencao: "Logística, Gestão de Operações e Cadeia de Suprimentos.",
-      maior_choque_de_realidade: "Descobrir que a pontualidade do transporte público e a logística de deslocamento diário ditam o ritmo da faculdade."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Contabilidade.",
+      "materia_que_mais_testou_a_sanidade": "Cálculo 1.",
+      "area_da_administracao_que_mais_chama_atencao": "Gestão de Pessoas e Logística.",
+      "maior_choque_de_realidade": "A transição direta do ensino médio para a rotina intensa da universidade."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Tirei um cochilo de 15 minutos na biblioteca e acordei cercado de livros com os colegas registrando a cena.",
-      momento_em_que_percebeu_que_virou_universitario: "Quando comemorei encontrar uma mesa livre no restaurante universitário sem fila.",
-      coisa_que_eliminaria_da_vida_universitaria: "Seminários não agendados em sextas-feiras no último horário."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Sobreviver aos momentos tensos de prova e rir aliviada depois.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando comecei a deixar os trabalhos para a última hora por causa da rotina cheia.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo 1, sem pensar duas vezes."
     },
-    hobbies: ["Jogos Eletrônicos", "Música Lo-Fi", "Tecnologia", "Gastronomia Simples"],
-    habilidades_mentoria: ["Rotinas e macetes do campus da UFAPE", "Mapas mentais de matérias", "Manter a tranquilidade antes de provas"]
+    "hobbies": [
+      "Academia & Musculação",
+      "Séries e Filmes",
+      "Leitura",
+      "Saúde e Bem-Estar"
+    ],
+    "habilidades_mentoria": [
+      "Introdução à Contabilidade",
+      "Gestão de Pessoas e Logística",
+      "Transição do Ensino Médio"
+    ]
   },
   {
-    id: 8,
-    nome: "Larissa Menezes",
-    iniciais: "LM",
-    genero: "ela",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Sonserina",
-    casaSlug: "sonserina",
-    areaDestaque: "Marketing Digital & Comunicação Corporativa",
-    lemas: "Comunicação assertiva e posicionamento estratégico abrem todas as portas no ambiente profissional.",
-    resumo: "Super comunicativa, atenta às redes, branding pessoal e especialista em aproximar pessoas, oportunidades e eventos no curso de ADM.",
-    respostasEsperadas: {
-      1: ["B", "C"],
-      2: ["C", "B"],
-      3: ["A"],
-      4: ["B", "A"],
-      5: ["C", "B"],
-      6: ["B"],
-      7: ["B", "A"],
-      8: ["B", "C"],
-      9: ["A"],
-      10: ["C", "E"],
-      11: ["A", "D"],
-      12: ["C", "E"]
+    "id": 8,
+    "nome": "Richard Charles Silvestre da Silva",
+    "iniciais": "RC",
+    "genero": "ele",
+    "email_institucional": "richard.cssilva@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Lufa-Lufa",
+    "casaSlug": "lufalufa",
+    "areaDestaque": "Finanças Corporativas & Contabilidade",
+    "lemas": "O aprendizado justo é aquele incitado pelo esforço, gerando constante perfeição de conhecimento. Passar sem aprender é perder tempo!",
+    "resumo": "Reflexivo, cinéfilo e focado no domínio prático das finanças. Valoriza o mérito do estudo sincero e o bom humor entre colegas.",
+    "limite_vagas": 5,
+    "respostasEsperadas": {
+      "1": [
+        "C",
+        "A"
+      ],
+      "2": [
+        "A",
+        "C"
+      ],
+      "3": [
+        "B",
+        "C"
+      ],
+      "4": [
+        "A",
+        "C"
+      ],
+      "5": [
+        "A",
+        "C"
+      ],
+      "6": [
+        "C",
+        "D"
+      ],
+      "7": [
+        "A",
+        "C"
+      ],
+      "8": [
+        "A",
+        "B"
+      ],
+      "9": [
+        "A",
+        "B"
+      ],
+      "10": [
+        "B",
+        "A"
+      ],
+      "11": [
+        "C",
+        "B"
+      ],
+      "12": [
+        "D",
+        "A"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Sonserina",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Produzir conteúdo para mídias sociais, participar de encontros acadêmicos, fotografia e explorar novos pontos em Garanhuns.",
-      meme_que_representa_sua_personalidade: "Meme da animação e entusiasmo: energia renovada para cada novo projeto.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha animada anunciando a chegada da semana de entregas finais.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Bianca Andrade, pela visão de branding corporativo e estratégias de posicionamento de mercado."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Lufa-Lufa",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir a grandes filmes, jogar futebol e descansar.",
+      "meme_que_representa_sua_personalidade": "Cenas épicas de The Office.",
+      "figurinha_que_representou_o_primeiro_periodo": "Figurinha reflexiva de superação.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Robert De Niro."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Comunicação Empresarial e Princípios de Marketing.",
-      materia_que_mais_testou_a_sanidade: "Matemática Aplicada. As equações e funções exigiram bastante treino intensivo com colegas.",
-      area_da_administracao_que_mais_chama_atencao: "Marketing Digital, Branding, Mídias Sociais e Relações Corporativas.",
-      maior_choque_de_realidade: "Entender que carisma e comunicação são valiosos, mas decisões sólidas em ADM demandam dados e métricas concretas."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Contabilidade Geral.",
+      "materia_que_mais_testou_a_sanidade": "Matemática aplicada à Administração e Contabilidade.",
+      "area_da_administracao_que_mais_chama_atencao": "Finanças Corporativas.",
+      "maior_choque_de_realidade": "O verdadeiro aprendizado exige esforço autêntico; a graduação requer dedicação séria e diária."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Fui registrar um vídeo rápido pelos corredores da universidade e a equipe de apoio entrou na gravação cumprimentando a turma.",
-      momento_em_que_percebeu_que_virou_universitaria: "Quando estruturei uma rede colaborativa de caronas solidárias para otimizar os trajetos da turma.",
-      coisa_que_eliminaria_da_vida_universitaria: "Professores que demoram a disponibilizar o material complementar no ambiente virtual."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Quando bati o carro levemente e o grupo da turma transformou o ocorrido em resenha coletiva.",
+      "momento_em_que_percebeu_que_virou_universitario": "Durante a semana clássica de provas com conteúdos densos.",
+      "coisa_que_eliminaria_da_vida_universitaria": "O estresse desnecessário pré-prova."
     },
-    hobbies: ["Criação de Conteúdo", "Eventos", "Fotografia Mobile", "Comunicação & Tendências"],
-    habilidades_mentoria: ["Técnicas de oratória e desenvoltura em público", "Construção de Networking", "Oportunidades de bolsas e projetos"]
+    "hobbies": [
+      "Cinema Clássico",
+      "Futebol",
+      "The Office",
+      "Finanças"
+    ],
+    "habilidades_mentoria": [
+      "Contabilidade Financeira",
+      "Rigor acadêmico com ética",
+      "Apoio prático para provas"
+    ]
   },
   {
-    id: 9,
-    nome: "Thiago Silveira",
-    iniciais: "TS",
-    genero: "ele",
-    periodo: "2º Período de Administração - UFAPE",
-    casaHogwarts: "Corvinal",
-    casaSlug: "corvinal",
-    areaDestaque: "Gestão Pública & Sustentabilidade",
-    lemas: "Administração com propósito: aplicar a ciência da gestão para impactar positivamente a sociedade e o Agreste.",
-    resumo: "Consciente, crítico e entusiasmado pelo desenvolvimento regional. Aprecia debates bem embasados, extensão comunitária e boa literatura.",
-    respostasEsperadas: {
-      1: ["A", "D"],
-      2: ["A", "D"],
-      3: ["B", "C"],
-      4: ["C", "A"],
-      5: ["B", "D"],
-      6: ["E", "F"],
-      7: ["D", "C"],
-      8: ["A", "B"],
-      9: ["C", "B"],
-      10: ["D", "A"],
-      11: ["C", "B"],
-      12: ["E", "C"]
+    "id": 9,
+    "nome": "Tamires Ferreira Rodrigues da Silva",
+    "iniciais": "TF",
+    "genero": "ela",
+    "email_institucional": "tamires.ferreira@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Grifinória",
+    "casaSlug": "grifinoria",
+    "areaDestaque": "Gestão de Pessoas & Introdução à ADM",
+    "lemas": "Acolhimento caloroso e amizade verdadeira: dividindo a sala com pessoas incríveis e construindo pontes!",
+    "resumo": "Sociável, alegre e empática. Tem uma cota especial de 4 vagas e muita energia para orientar na adaptação à rotina da UFAPE.",
+    "limite_vagas": 4,
+    "respostasEsperadas": {
+      "1": [
+        "B",
+        "D"
+      ],
+      "2": [
+        "C",
+        "D"
+      ],
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "B",
+        "A"
+      ],
+      "5": [
+        "B",
+        "C"
+      ],
+      "6": [
+        "A",
+        "F"
+      ],
+      "7": [
+        "B",
+        "C"
+      ],
+      "8": [
+        "C",
+        "B"
+      ],
+      "9": [
+        "B",
+        "C"
+      ],
+      "10": [
+        "D",
+        "C"
+      ],
+      "11": [
+        "A",
+        "D"
+      ],
+      "12": [
+        "C",
+        "B"
+      ]
     },
-    para_conhecer_voce: {
-      casa_de_hogwarts: "Corvinal",
-      o_que_gosta_de_fazer_quando_nao_esta_estudando: "Participar de iniciativas voluntárias, pedalar por Garanhuns, ler autores brasileiros e conversar em cafeterias.",
-      meme_que_representa_sua_personalidade: "Meme do pensador clássico com olhar atento e reflexivo sobre a realidade ao redor.",
-      figurinha_que_representou_o_primeiro_periodo: "Figurinha clássica do estudante determinado com a mochila organizada.",
-      pessoa_famosa_para_sentir_ao_lado_na_aula: "Ariano Suassuna, pela valorização cultural nordestina e profundidade de princípios."
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Grifinória",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Sair com os amigos para passear e conversar.",
+      "meme_que_representa_sua_personalidade": "Confundir o cachorro com uma pedra na rua por falta de atenção.",
+      "figurinha_que_representou_o_primeiro_periodo": "Menininho chorando de emoção com o final do semestre.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Zezé Di Camargo (para dar um show ao vivo na sala!)."
     },
-    experiencia_no_curso: {
-      materia_preferida_no_primeiro_periodo: "Introdução à Administração e Ciência Política.",
-      materia_que_mais_testou_a_sanidade: "Estatística Aplicada. Compreender desvios-padrão e análises de variância exigiu dedicação contínua.",
-      area_da_administracao_que_mais_chama_atencao: "Administração Pública, Terceiro Setor, ESG e Desenvolvimento Regional Sustentável.",
-      maior_choque_de_realidade: "Compreender a imensidão de oportunidades que uma universidade pública oferece além da sala de aula (pesquisa, extensão e representação)."
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
+      "materia_que_mais_testou_a_sanidade": "Introdução à Economia.",
+      "area_da_administracao_que_mais_chama_atencao": "Gestão de Pessoas.",
+      "maior_choque_de_realidade": "Descobrir que os professores da UFAPE são super compreensíveis e acolhedores quando a gente conversa."
     },
-    vida_universitaria: {
-      momento_mais_engracado: "Fiz uma defesa conceitual longa e detalhada num debate de aula e descobri que o professor esperava apenas um 'sim' ou 'não'.",
-      momento_em_que_percebeu_que_virou_universitario: "Quando comecei a carregar ecobag, garrafa de água e cadernos de campo para todas as atividades.",
-      coisa_que_eliminaria_da_vida_universitaria: "Aulas sem debates interativos entre os estudantes."
+    "vida_universitaria": {
+      "momento_mais_engracado": "Sair com os amigos pós-prova direto para comer pastel na feira e esquecer as questões difíceis.",
+      "momento_em_que_percebeu_que_virou_universitario": "Dividir a sala diariamente com pessoas super inteligentes e dedicadas.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Provas longas e cansativas."
     },
-    hobbies: ["Ciclismo", "Literatura Brasileira", "Projetos Sociais", "Cafeterias"],
-    habilidades_mentoria: ["Ingresso em Iniciação Científica e Extensão", "Visão ética e sustentável", "Adaptação à vida universitária na UFAPE"]
+    "hobbies": [
+      "Passeios com Amigos",
+      "Música Sertaneja",
+      "Pastel Pós-Prova",
+      "Comunicação"
+    ],
+    "habilidades_mentoria": [
+      "Gestão de Pessoas e Empatia",
+      "Comunicação com Professores",
+      "Acolhimento aos Calouros"
+    ]
   }
 ];
 
