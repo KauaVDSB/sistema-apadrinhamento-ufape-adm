@@ -14,6 +14,8 @@ __pycache__/
 .env
 .env.local
 .env.*.local
+js/env.js
+js/config.local.js
 
 # Dependências Node.js
 node_modules/

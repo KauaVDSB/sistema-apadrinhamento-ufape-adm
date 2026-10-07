@@ -160,8 +160,12 @@ class ApadrinhamentoApp {
       const dadosRemotos = await supabaseService.getPadrinhos();
       if (dadosRemotos && Array.isArray(dadosRemotos) && dadosRemotos.length > 0) {
         dadosRemotos.forEach(remoto => {
-          const local = this.padrinhos.find(p => p.id === remoto.id);
+          const local = this.padrinhos.find(p => 
+            p.id === remoto.id || 
+            (p.nome && remoto.nome && p.nome.trim().toLowerCase() === remoto.nome.trim().toLowerCase())
+          );
           if (local) {
+            local.uuid = remoto.id; // Mapeia o UUID oficial gerado pelo Supabase
             local.limite_vagas = remoto.limite_vagas ?? local.limite_vagas;
             local.vagas_ocupadas = remoto.vagas_ocupadas ?? 0;
             local.vagas_restantes = remoto.vagas_restantes ?? Math.max(0, local.limite_vagas - local.vagas_ocupadas);
@@ -801,7 +805,7 @@ class ApadrinhamentoApp {
 
     try {
       const payload = {
-        padrinhoId: this.selectedPadrinho.id,
+        padrinhoId: this.selectedPadrinho.uuid || this.selectedPadrinho.id,
         padrinhoNome: this.selectedPadrinho.nome,
         calouroNome: nome,
         calouroWhatsapp: whatsapp,

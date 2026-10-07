@@ -676,6 +676,9 @@
   <!-- Supabase JS Oficial (Carregamento local resiliente com fallback CDN) -->
   <script src="vendor/supabase.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'"></script>
 
+  <!-- Injeção Dinâmica de Variáveis de Ambiente (Gerado localmente ou no build da Vercel) -->
+  <script src="js/env.js" onerror="console.info('Modo híbrido local sem js/env.js')"></script>
+
   <!-- Scripts do Projeto (Módulos ES6) -->
   <script type="module" src="js/data.js"></script>
   <script type="module" src="js/error-handler.js"></script>

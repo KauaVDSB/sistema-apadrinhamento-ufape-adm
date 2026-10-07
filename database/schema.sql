@@ -371,3 +371,14 @@ CREATE OR REPLACE TRIGGER trg_padrinhos_timestamp
 BEFORE UPDATE ON public.padrinhos
 FOR EACH ROW
 EXECUTE FUNCTION public.trigger_atualizar_timestamp();
+
+-- ==============================================================================
+-- 7. CONCESSÃO DE PERMISSÕES PARA API POSTGREST (ANON / AUTHENTICATED)
+-- ==============================================================================
+
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT SELECT ON public.vw_padrinhos_publico TO anon, authenticated;
+GRANT SELECT ON public.padrinhos TO anon, authenticated;
+GRANT SELECT ON public.calouros_aprovados TO anon, authenticated;
+GRANT SELECT, INSERT ON public.apadrinhamentos TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.registrar_apadrinhamento(UUID, TEXT, TEXT, TEXT, TEXT, JSONB, TEXT, TEXT) TO anon, authenticated;
