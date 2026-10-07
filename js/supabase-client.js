@@ -7,7 +7,7 @@
  * ==============================================================================
  */
 
-import { PADRINHOS_DATA } from './data.js';
+import { PADRINHOS } from './data.js';
 
 // Configuração de Credenciais do Supabase
 // Injetadas em runtime via window.SUPABASE_URL e window.SUPABASE_ANON_KEY (ex: Vercel / index.html)
@@ -55,7 +55,7 @@ class SupabaseService {
   async getPadrinhos() {
     if (!this.isConfigured()) {
       // Fallback gracioso para a base estática do data.js
-      return PADRINHOS_DATA;
+      return PADRINHOS;
     }
 
     try {
@@ -64,12 +64,12 @@ class SupabaseService {
         .select('*');
 
       if (error) throw error;
-      if (!data || data.length === 0) return PADRINHOS_DATA;
+      if (!data || data.length === 0) return PADRINHOS;
 
       return data;
     } catch (err) {
       console.warn('[SupabaseService] Erro ao buscar padrinhos do Supabase. Usando fallback local:', err);
-      return PADRINHOS_DATA;
+      return PADRINHOS;
     }
   }
 

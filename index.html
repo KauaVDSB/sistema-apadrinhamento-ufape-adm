@@ -663,11 +663,11 @@
     </div>
   </footer>
 
-  <!-- Confetti CDN com Fallback Graceful -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- Confetti (Carregamento local resiliente com fallback CDN) -->
+  <script src="vendor/confetti.browser.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js'"></script>
 
-  <!-- Supabase JS CDN Oficial -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase JS Oficial (Carregamento local resiliente com fallback CDN) -->
+  <script src="vendor/supabase.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'"></script>
 
   <!-- Scripts do Projeto (Módulos ES6) -->
   <script type="module" src="js/data.js"></script>

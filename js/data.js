@@ -590,3 +590,6 @@ export const PADRINHOS = [
     habilidades_mentoria: ["Ingresso em Iniciação Científica e Extensão", "Visão ética e sustentável", "Adaptação à vida universitária na UFAPE"]
   }
 ];
+
+// Alias para retrocompatibilidade
+export const PADRINHOS_DATA = PADRINHOS;

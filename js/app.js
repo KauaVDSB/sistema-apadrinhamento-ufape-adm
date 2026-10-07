@@ -752,7 +752,15 @@ class ApadrinhamentoApp {
   }
 }
 
-// Inicializa a aplicação quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', () => {
-  window.app = new ApadrinhamentoApp();
-});
+// Inicializa a aplicação quando o DOM estiver pronto (suporta execução após DOMContentLoaded)
+function iniciarApp() {
+  if (!window.app) {
+    window.app = new ApadrinhamentoApp();
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', iniciarApp);
+} else {
+  iniciarApp();
+}
