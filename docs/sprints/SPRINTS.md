@@ -55,14 +55,17 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 
 ---
 
-### Sprint 04: CORE ESSENCIAL - Ingestão de Dados, Validação Nominal e Persistência
-* **Branch:** `feat/core-data-and-matching`
+### Sprint 04: CORE ESSENCIAL - Ingestão de Dados, Validação Nominal e Persistência [CONCLUÍDA]
+* **Branch:** `feat/core-data-and-matching` (Merged via PR #11)
 * **Micro-Marcos:**
-  * **Ingestão de Calouros:** Pipeline para extração dos PDFs da UFAPE (1 regular + 9 listas de espera), expurgando alunos de 2026.1 via Ata de Sala, inserindo na tabela `calouros_aprovados`;
-  * **Ingestão de Veteranos:** Carga dos dados reais dos padrinhos e madrinhas na tabela `padrinhos` (madrinha Tamires com cota 4, demais veteranos com cota 5), sincronizando com o catálogo do frontend;
-  * **Validação Nominal no Frontend:** Verificação de elegibilidade do calouro em tempo real (com normalização `normalize('NFD')`) e chave de desbloqueio temporal em 12/10/2026;
-  * **Persistência Total:** Leitura em tempo real de vagas via `vw_padrinhos_publico` e confirmação transacional do apadrinhamento gravada no Supabase.
-* **Critério de Aceite:** Calouro na lista é liberado; nome ausente recebe bloqueio orientativo; após escolha, dados são gravados atomicamente no Supabase.
+  * **Ingestão de Calouros:** Pipeline para extração dos 10 PDFs da UFAPE (1 regular + 9 listas de espera), expurgando alunos de 2026.1 via Ata de Veteranos (35 veteranos expurgados), gerando base com 159 calouros únicos e seed `02_calouros_aprovados.sql`;
+  * **Ingestão de Veteranos:** Carga dos dados oficiais dos 9 padrinhos e madrinhas reais na tabela `padrinhos` (Tamires com 4 vagas, demais 8 mentores com 5 vagas; total 44 vagas) no seed `01_padrinhos_reais.sql` e catálogo `js/data.js`;
+  * **Validação Nominal no Frontend (ADR-004):** Verificação de elegibilidade do calouro em tempo real (com normalização Unicode NFD) e contingência temporal em 12/10/2026;
+  * **Isolamento de Seleção e Confirmação (ADR-003):** Hero Banner e `localStorage` só persistem o mentor após confirmação via RPC do Supabase;
+  * **Privacidade e Suspense (ADR-005):** Remoção de contato via WhatsApp prévio à cerimônia presencial; inserção de aviso da Cerimônia Oficial de Apadrinhamento;
+  * **Contadores de Vagas:** Badges de cotas dinâmicas em tempo real (`5 vagas disponíveis`, `4 vagas disponíveis`, `Vagas Esgotadas`) e botão de boas-vindas no header;
+  * **Testes Automatizados:** Suíte `scripts/test_rules.py` com 5 testes aprovados.
+* **Critério de Aceite:** Calouro na lista é validado; cotas são respeitadas; dados são persistidos atomicamente no Supabase (PR #11 merged, Issue #4 fechada).
 
 ---
 
@@ -90,7 +93,7 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 ### Sprint 07: Identidade Visual Final, Mídias WebP e Deploy Vercel
 * **Branch:** `feat/brand-assets-deploy`
 * **Micro-Marcos:**
-  * Substituição da logo provisória "UF" pela identidade oficial da UFAPE enviada;
+  * Substituição da logo provisória "UF" pela identidade oficial da UFAPE enviada (`assets/img/brasao-ufape.png`);
   * Otimização e alocação dos memes/stickers em `assets/img/padrinhos/*.webp`;
   * **Padronização rigorosa do Footer** em todas as páginas e rotas com dados institucionais e créditos do desenvolvedor;
   * Teste de homologação em dispositivos móveis (Android e iOS);
@@ -99,11 +102,9 @@ Planejamento ágil orientado a entregas incrementais com branches isoladas e Pul
 
 ---
 
-## Notas de Discussão & Decisões Pendentes (Backlog / ADRs)
-* **[DISCUSSÃO PENDENTE] Botão de WhatsApp vs. Suspense da Cerimônia de Apadrinhamento:**
-  - *Contexto:* Ao concluir o formulário com sucesso, a interface exibe atualmente um card com a opção de contato via WhatsApp.
-  - *Ponto de atenção:* Deve-se pausar a exibição do contato telefônico dos padrinhos/madrinhas caso eles prefiram resguardar a privacidade, mantendo o suspense para a Cerimônia Oficial de Apadrinhamento presencial?
-  - *Status:* Aguardando retorno da resposta válida do usuário antes de efetivar a alteração.
+## Notas de Decisões Arquiteturais e Diretrizes de Negócio
+* **[DECISÃO CONCLUÍDA - ADR-005] Omissão de Contatos Telefônicos Pré-Cerimônia:**
+  - *Decisão:* Nenhum número de WhatsApp ou telefone de mentor é exibido no frontend antes da Cerimônia Oficial de Apadrinhamento. O primeiro encontro será presencial no campus da UFAPE para preservar o suspense e a privacidade.
 * **[COMPROMISSO] Padronização Rigorosa do Footer:**
   - O rodapé institucional deve ser idêntico em todas as páginas (`index.html`, `test-errors.html`, `404.html`, `/padrinho/`, `/admin/`) antes da release final.
 
