@@ -7,6 +7,7 @@ import { QUIZ_CONFIG, QUIZ_QUESTIONS, PADRINHOS } from './data.js';
 import { QuizEngine } from './quiz-engine.js';
 import { supabaseService } from './supabase-client.js';
 import { httpErrorHandler } from './error-handler.js';
+import { validarElegibilidadeCalouro } from './calouros-validator.js';
 
 class ApadrinhamentoApp {
   constructor() {
@@ -68,6 +69,8 @@ class ApadrinhamentoApp {
     this.chosenMentorAvatar = document.getElementById('chosen-mentor-avatar');
     this.chosenMentorArea = document.getElementById('chosen-mentor-area');
     this.calouroForm = document.getElementById('calouro-presentation-form');
+    this.inputNome = document.getElementById('calouro-nome');
+    this.feedbackNome = document.getElementById('calouro-nome-feedback');
 
     // Success Card Elements
     this.connectionSuccessCard = document.getElementById('connection-success-card');
@@ -195,6 +198,28 @@ class ApadrinhamentoApp {
       this.calouroForm.addEventListener('change', () => {
         this.salvarRascunhoFormulario();
       });
+
+      if (this.inputNome && this.feedbackNome) {
+        const verificarNome = () => {
+          const valor = this.inputNome.value.trim();
+          if (valor.length < 5) {
+            this.feedbackNome.style.display = 'none';
+            return;
+          }
+          const st = validarElegibilidadeCalouro(valor);
+          this.feedbackNome.style.display = 'flex';
+          if (st.valido) {
+            this.feedbackNome.className = 'nome-validation-feedback success';
+            this.feedbackNome.innerHTML = `<span>✓</span> <span>${st.mensagem}</span>`;
+          } else {
+            this.feedbackNome.className = 'nome-validation-feedback warning';
+            this.feedbackNome.innerHTML = `<span>⚠</span> <span>${st.mensagem}</span>`;
+          }
+        };
+
+        this.inputNome.addEventListener('input', verificarNome);
+        this.inputNome.addEventListener('blur', verificarNome);
+      }
     }
 
     // Botão reset quiz
@@ -636,6 +661,26 @@ class ApadrinhamentoApp {
 
     const formData = new FormData(this.calouroForm);
     const nome = formData.get('nome')?.trim() || '';
+
+    // Validação nominal estrita e contingência temporal (ADR-004)
+    const statusElegibilidade = validarElegibilidadeCalouro(nome);
+    if (!statusElegibilidade.valido) {
+      httpErrorHandler.show(403, {
+        title: 'Validação de Ingressante UFAPE',
+        message: statusElegibilidade.mensagem,
+        primaryBtn: {
+          text: 'Revisar Nome Completo',
+          action: () => {
+            if (this.inputNome) {
+              this.inputNome.focus();
+              this.inputNome.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+      });
+      return;
+    }
+
     const whatsapp = formData.get('whatsapp')?.trim() || '';
     const instagram = formData.get('instagram')?.trim() || '';
     const canalPreferido = formData.get('canalPreferido') || 'whatsapp';
