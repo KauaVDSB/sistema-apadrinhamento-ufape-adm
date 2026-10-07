@@ -145,8 +145,7 @@ class ApadrinhamentoApp {
       }
       // 3. Atualiza botão do Header para "Boas-vindas!"
       if (this.navActionBtn) {
-        const nomePrimeiro = this.calouroData?.nome ? this.calouroData.nome.split(' ')[0] : 'Calouro(a)';
-        this.navActionBtn.textContent = `Boas-vindas, ${nomePrimeiro}!`;
+        this.navActionBtn.textContent = 'Boas-vindas!';
         this.navActionBtn.href = '#hero-selected-banner';
         this.navActionBtn.className = 'btn btn-sm';
         this.navActionBtn.style.backgroundColor = 'var(--warm-gold)';
