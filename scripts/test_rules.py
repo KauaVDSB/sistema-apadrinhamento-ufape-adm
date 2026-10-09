@@ -25,22 +25,27 @@ from scripts.ingest_data import (
 )
 
 def test_cotas_padrinhos():
-    print("[TESTE 1] Verificacao de Cotas dos Mentores...")
-    padrinhos = carregar_dados_padrinhos()
-    assert len(padrinhos) == 9, f"Esperado 9 padrinhos, obtido {len(padrinhos)}"
+    print("[TESTE 1] Verificacao de Cotas dos Mentores (10 Mentores com 4 vagas cada)...")
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    data_js_path = os.path.join(base_dir, "js", "data.js")
+    with open(data_js_path, "r", encoding="utf-8") as f:
+        content = f.read()
     
-    tamires = next((p for p in padrinhos if "TAMIRES" in p["nome"].upper()), None)
-    assert tamires is not None, "Madrinha Tamires nao encontrada"
-    assert tamires["limite_vagas"] == 4, f"Cota de Tamires deve ser 4, obtido {tamires['limite_vagas']}"
+    match = re.search(r"export const PADRINHOS = (\[.*?\]);", content, re.DOTALL)
+    assert match, "PADRINHOS array nao encontrado em js/data.js"
+    padrinhos = json.loads(match.group(1))
+    assert len(padrinhos) == 10, f"Esperado 10 padrinhos, obtido {len(padrinhos)}"
     
-    outros = [p for p in padrinhos if p != tamires]
-    for p in outros:
-        assert p["limite_vagas"] == 5, f"Cota de {p['nome']} deve ser 5, obtido {p['limite_vagas']}"
+    manoel = next((p for p in padrinhos if "MANOEL" in p["nome"].upper()), None)
+    assert manoel is not None, "Mentor Manoel Frasão não encontrado em js/data.js"
+    
+    for p in padrinhos:
+        assert p["limite_vagas"] == 4, f"Cota de {p['nome']} deve ser 4, obtido {p['limite_vagas']}"
         assert len(p["iniciais"]) == 2, f"Iniciais de {p['nome']} devem ter 2 letras: {p['iniciais']}"
     
     total_vagas = sum(p["limite_vagas"] for p in padrinhos)
-    assert total_vagas == 44, f"Total de vagas deve ser 44 (8*5 + 4), obtido {total_vagas}"
-    print(f"  [OK] Cotas aprovadas: 8 mentores com 5 vagas e Tamires com 4 vagas (Total: {total_vagas} vagas)")
+    assert total_vagas == 40, f"Total de vagas deve ser 40 (10*4), obtido {total_vagas}"
+    print(f"  [OK] Cotas aprovadas: 10 mentores com 4 vagas cada (Total: {total_vagas} vagas)")
 
 def test_purga_veteranos():
     print("[TESTE 2] Auditoria da Purga de Veteranos de 2026.1...")
@@ -128,7 +133,20 @@ def test_contrato_frontend_e_seguranca():
     assert "saveConfirmedStateToStorage" in js, "js/app.js deve persistir apenas padrinhos confirmados"
     assert "confirmedPadrinho" in js, "js/app.js deve gerenciar confirmedPadrinho isoladamente de selectedPadrinho"
     
-    print("  [OK] Contrato do Frontend e UX 100% aderente as diretrizes de privacidade e suspense")
+    # 6. Ausencia de botoes de demonstracao rapida (demo)
+    assert "demo-lucas-btn" not in html, "Botoes demo nao devem estar no HTML"
+    assert "simularRespostasPara" not in js, "Metodos de simulacao demo nao devem existir em app.js"
+    
+    # 7. Modal de Permuta e Fluxo de Troca Unica
+    assert 'id="permuta-modal"' in html, "Modal de permuta deve existir no HTML"
+    assert "permutou" in js, "js/app.js deve gerenciar controle de permuta"
+    assert "tentarSelecionarPadrinho" in js, "js/app.js deve validar selecao com tentarSelecionarPadrinho"
+    
+    # 8. Link Oficial Even3 e Dados do Evento
+    assert "even3.com.br/workshop-adm-785501" in html, "Link do Even3 deve estar presente no HTML"
+    assert "14 de outubro" in html, "Data do evento oficial deve constar no HTML"
+    
+    print("  [OK] Contrato do Frontend e UX 100% aderente as diretrizes de privacidade, suspense e regras de negocio")
 
 def main():
     print("=" * 70)

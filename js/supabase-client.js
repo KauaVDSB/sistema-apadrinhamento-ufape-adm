@@ -115,6 +115,26 @@ class SupabaseService {
   }
 
   /**
+   * Consulta se o calouro já possui vínculo registrado e se já realizou permuta (Multi-dispositivo)
+   */
+  async consultarStatusCalouro(nome) {
+    if (!this.isConfigured() || !nome || nome.trim().length < 3) {
+      return { cadastrado: false };
+    }
+
+    try {
+      const { data, error } = await this.client.rpc('consultar_status_calouro', {
+        p_nome: nome.trim()
+      });
+      if (error) throw error;
+      return data || { cadastrado: false };
+    } catch (err) {
+      console.warn('[SupabaseService] Falha ao consultar status do calouro no banco:', err);
+      return { cadastrado: false };
+    }
+  }
+
+  /**
    * Salva rascunho das respostas do calouro no localStorage (tolerância a falhas)
    */
   salvarRascunho(dados) {
