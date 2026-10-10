@@ -189,12 +189,19 @@ function configurarEventos() {
     formEsqueciSenha.addEventListener('submit', handleEsqueciSenha);
   }
 
-  // Fechar modais ao clicar no backdrop
+  // Fechar modais ao clicar no backdrop ou pressionar ESC
   [modalAlterarSenha, modalEsqueciSenha].forEach(modal => {
     if (modal) {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) fecharModal(modal);
       });
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      fecharModal(modalAlterarSenha);
+      fecharModal(modalEsqueciSenha);
     }
   });
 }
@@ -801,12 +808,18 @@ function exibirTelaLogin() {
 function abrirModal(modal) {
   if (modal) {
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    const firstInput = modal.querySelector('input');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 80);
+    }
   }
 }
 
 function fecharModal(modal) {
   if (modal) {
     modal.style.display = 'none';
+    document.body.style.overflow = '';
   }
 }
 
