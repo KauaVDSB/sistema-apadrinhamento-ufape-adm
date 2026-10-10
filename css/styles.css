@@ -2078,23 +2078,26 @@ svg {
   margin: 0 auto 2rem auto;
 }
 
-/* Brand Emblem no Hero */
+/* Brand Emblem no Hero (Fundo Royal Navy para contraste perfeito com Brasão Branco) */
 .hero-brand-emblem {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.45rem 1rem;
+  background: var(--royal-navy);
+  padding: 0.45rem 1.15rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(201, 162, 39, 0.35);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 1rem;
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  box-shadow: 0 4px 14px rgba(14, 42, 71, 0.16);
+  margin-bottom: 1.15rem;
 }
 
 .hero-emblem-logo {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
   object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 .hero-emblem-text {
@@ -2107,7 +2110,7 @@ svg {
 .hero-emblem-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--royal-navy);
+  color: #FFFFFF;
   letter-spacing: -0.02em;
   line-height: 1;
 }
