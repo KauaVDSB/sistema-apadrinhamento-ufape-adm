@@ -113,7 +113,19 @@ def main():
                     raw_app_meta_data,
                     raw_user_meta_data,
                     created_at,
-                    updated_at
+                    updated_at,
+                    confirmation_token,
+                    recovery_token,
+                    email_change_token_new,
+                    email_change,
+                    phone_change,
+                    phone_change_token,
+                    email_change_token_current,
+                    reauthentication_token,
+                    is_super_admin,
+                    is_sso_user,
+                    is_anonymous,
+                    email_change_confirm_status
                 ) VALUES (
                     '00000000-0000-0000-0000-000000000000',
                     gen_random_uuid(),
@@ -125,7 +137,9 @@ def main():
                     '{"provider": "email", "providers": ["email"]}'::jsonb,
                     '{"email_verified": true}'::jsonb,
                     timezone('utc', now()),
-                    timezone('utc', now())
+                    timezone('utc', now()),
+                    '', '', '', '', '', '', '', '',
+                    false, false, false, 0
                 ) RETURNING id;
             """, (email, senha_temp))
             uid = cur.fetchone()["id"]

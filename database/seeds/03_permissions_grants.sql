@@ -16,8 +16,10 @@ GRANT SELECT ON public.calouros_aprovados TO anon, authenticated;
 
 -- 4. Permite inserção e leitura de apadrinhamentos (restringidos por RLS)
 GRANT SELECT, INSERT ON public.apadrinhamentos TO anon, authenticated;
+GRANT SELECT ON public.user_roles TO anon, authenticated;
 
--- 5. Permite execução da stored procedure transacional de apadrinhamento
+-- 5. Permite execução de funções de verificação e apadrinhamento
+GRANT EXECUTE ON FUNCTION public.is_admin(UUID) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.registrar_apadrinhamento(UUID, TEXT, TEXT, TEXT, TEXT, JSONB, TEXT, TEXT) TO anon, authenticated;
 
 -- 5. Confirmação

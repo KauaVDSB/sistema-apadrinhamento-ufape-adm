@@ -177,13 +177,28 @@ ALTER TABLE public.padrinhos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.calouros_aprovados ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.apadrinhamentos ENABLE ROW LEVEL SECURITY;
 
+-- 4.0. Função Auxiliar Segura de Verificação de Administrador (Previne Recursão Infinita em RLS)
+CREATE OR REPLACE FUNCTION public.is_admin(p_user_id UUID DEFAULT auth.uid())
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+STABLE
+AS $$
+    SELECT EXISTS (
+        SELECT 1 FROM public.user_roles
+        WHERE user_id = p_user_id AND role IN ('admin', 'coordenador')
+    );
+$$;
+
+GRANT EXECUTE ON FUNCTION public.is_admin(UUID) TO anon, authenticated;
+
 -- 4.1. Políticas para user_roles
-CREATE POLICY "Admins podem visualizar todos os roles"
+CREATE POLICY "Usuário lê seu próprio role ou admin"
 ON public.user_roles FOR SELECT
 TO authenticated
 USING (
-    user_id = auth.uid() OR
-    EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin')
+    user_id = auth.uid() OR public.is_admin(auth.uid())
 );
 
 -- 4.2. Políticas para padrinhos
@@ -205,7 +220,7 @@ CREATE POLICY "Admin gerencia todos os padrinhos"
 ON public.padrinhos FOR ALL
 TO authenticated
 USING (
-    EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin')
+    public.is_admin(auth.uid())
 );
 
 -- 4.3. Políticas para calouros_aprovados
@@ -220,7 +235,7 @@ CREATE POLICY "Admin gerencia lista de calouros aprovados"
 ON public.calouros_aprovados FOR ALL
 TO authenticated
 USING (
-    EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin')
+    public.is_admin(auth.uid())
 );
 
 -- 4.4. Políticas para apadrinhamentos (ISOLAMENTO ESTRITO LGPD)
@@ -231,7 +246,7 @@ TO authenticated
 USING (
     padrinho_id IN (SELECT id FROM public.padrinhos WHERE user_id = auth.uid())
     OR
-    EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = auth.uid() AND role = 'admin')
+    public.is_admin(auth.uid())
 );
 
 -- Inserção é permitida
@@ -492,4 +507,5 @@ GRANT SELECT ON public.vw_padrinhos_publico TO anon, authenticated;
 GRANT SELECT ON public.padrinhos TO anon, authenticated;
 GRANT SELECT ON public.calouros_aprovados TO anon, authenticated;
 GRANT SELECT, INSERT ON public.apadrinhamentos TO anon, authenticated;
+GRANT SELECT ON public.user_roles TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.registrar_apadrinhamento(UUID, TEXT, TEXT, TEXT, TEXT, JSONB, TEXT, TEXT) TO anon, authenticated;

@@ -201,7 +201,9 @@ async function handleLogin(e) {
       return;
     }
 
-    // Sucesso - o listener onAuthStateChange cuidará de carregar a tela
+    if (data && data.user) {
+      await carregarDadosMentor(data.user);
+    }
   } catch (err) {
     console.error('[PadrinhoApp] Erro inesperado no login:', err);
     showAlert(loginAlert, 'Erro de conexão com o servidor. Tente novamente.', 'danger');
