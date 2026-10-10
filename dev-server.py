@@ -10,14 +10,19 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
     def do_GET(self):
-        path = self.translate_path(self.path)
-        # Suporte a Clean URLs (ex: /padrinho carrega /padrinho.html)
-        if not os.path.exists(path) and os.path.exists(path + '.html'):
-            self.path = self.path + '.html'
-            path = path + '.html'
+        import urllib.parse
+        parsed = urllib.parse.urlsplit(self.path)
+        clean_path = parsed.path
+        local_file = os.path.normpath(os.path.join(DIRECTORY, clean_path.lstrip('/')))
+
+        # Suporte a Clean URLs (ex: /padrinho ou /padrinho?foo=bar carrega /padrinho.html)
+        if not os.path.exists(local_file) and os.path.exists(local_file + '.html'):
+            query_part = ('?' + parsed.query) if parsed.query else ''
+            self.path = clean_path + '.html' + query_part
+            local_file = local_file + '.html'
 
         # Se não existir, retorna 404
-        if not os.path.exists(path):
+        if not os.path.exists(local_file):
             self.send_response(404)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
             self.end_headers()
@@ -30,9 +35,13 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_HEAD(self):
-        path = self.translate_path(self.path)
-        if not os.path.exists(path) and os.path.exists(path + '.html'):
-            self.path = self.path + '.html'
+        import urllib.parse
+        parsed = urllib.parse.urlsplit(self.path)
+        clean_path = parsed.path
+        local_file = os.path.normpath(os.path.join(DIRECTORY, clean_path.lstrip('/')))
+        if not os.path.exists(local_file) and os.path.exists(local_file + '.html'):
+            query_part = ('?' + parsed.query) if parsed.query else ''
+            self.path = clean_path + '.html' + query_part
         return super().do_HEAD()
 
 if __name__ == '__main__':

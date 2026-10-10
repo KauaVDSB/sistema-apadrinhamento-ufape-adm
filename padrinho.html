@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Portal do Mentor | ADM UFAPE</title>
+  <title>Portal do Mentor | UFAPE padrinhos</title>
   
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,24 +17,28 @@
 <body class="padrinho-portal-body">
 
   <!-- =========================================================================
-       HEADER / NAVBAR DO PORTAL
+       HEADER / NAVBAR COM IDENTIDADE UFAPE + PADRINHOS
        ========================================================================= -->
   <header class="site-header">
     <div class="container navbar">
       <div class="brand-container">
         <a href="index.html" class="brand-link" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
           <img src="assets/img/brasao-ufape.png" alt="Brasão UFAPE" class="brand-logo-img">
-          <div class="brand-info">
-            <span class="brand-title">ADM UFAPE</span>
-            <span class="brand-tag">Área do Mentor</span>
+          <div class="brand-hero-text">
+            <span class="brand-title">UFAPE</span>
+            <span class="brand-sub-padrinhos">padrinhos</span>
           </div>
         </a>
       </div>
 
-      <div class="nav-actions">
+      <div class="nav-actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="portal-nav-status">
+          <span class="status-pulse-dot"></span>
+          <span class="status-nav-text">2026.2 Ativo</span>
+        </div>
         <a href="index.html" class="btn btn-outline btn-sm">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          Início
+          Mural Público
         </a>
       </div>
     </div>
@@ -47,76 +51,160 @@
     <div class="container">
 
       <!-- =====================================================================
-           ESTADO 1: TELA DE LOGIN (NÃO AUTENTICADO)
+           ESTADO 1: TELA DE LOGIN (PRÉ-AUTENTICADO) - VISUAL E MODERNA
            ===================================================================== -->
-      <section id="padrinho-login-section" class="portal-card-login">
-        <div class="portal-login-header">
-          <div class="portal-icon-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
+      <section id="padrinho-login-section" class="portal-login-section">
+        
+        <!-- Hero Header Compacto -->
+        <div class="portal-login-hero">
+          <div class="hero-brand-emblem">
+            <img src="assets/img/brasao-ufape.png" alt="Brasão UFAPE" class="hero-emblem-logo">
+            <div class="hero-emblem-text">
+              <span class="hero-emblem-title">UFAPE</span>
+              <span class="hero-emblem-sub">padrinhos</span>
+            </div>
           </div>
-          <span class="portal-session-pill">Acesso aos Mentores Veteranos</span>
-          <h1 class="portal-login-title">Portal dos Padrinhos & Madrinhas</h1>
-          <p class="portal-login-subtitle">
-            Acompanhe em tempo real quem escolheu você como mentor e inicie o primeiro contato com os calouros de Administração.
+          <h1 class="portal-login-hero-title">
+            Portal Exclusivo dos <span class="text-gold">Mentores</span>
+          </h1>
+          <p class="portal-login-hero-subtitle">
+            Acompanhe suas 4 vagas de acolhimento e contate seus afilhados de Administração.
           </p>
         </div>
 
-        <!-- Alerta de Feedback de Login -->
-        <div id="login-alert" class="portal-alert" style="display: none;" role="alert"></div>
-
-        <form id="padrinho-login-form" class="portal-form" novalidate>
-          <div class="form-group">
-            <label for="login-email" class="form-label">E-mail Institucional UFAPE</label>
-            <input 
-              type="email" 
-              id="login-email" 
-              class="form-input" 
-              placeholder="ex: seu.nome@ufape.edu.br" 
-              required
-              autocomplete="email"
-            >
-          </div>
-
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-              <label for="login-password" class="form-label" style="margin-bottom: 0;">Senha de Acesso</label>
-              <button type="button" id="btn-toggle-esqueci" class="portal-link-btn" style="font-size: 0.8rem;">
-                Esqueci a senha
-              </button>
+        <!-- Grid Dividida: Login + Cards de Recursos -->
+        <div class="portal-login-grid">
+          
+          <!-- Card de Login -->
+          <div class="portal-card-login">
+            <div class="portal-card-login-header">
+              <div class="portal-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h2 class="portal-login-title">Acesso do Mentor</h2>
+              <span class="portal-session-pill">2º Período • ADM UFAPE</span>
             </div>
-            <input 
-              type="password" 
-              id="login-password" 
-              class="form-input" 
-              placeholder="Digite sua senha" 
-              required
-              autocomplete="current-password"
-            >
+
+            <!-- Alerta de Feedback -->
+            <div id="login-alert" class="portal-alert" style="display: none;" role="alert"></div>
+
+            <form id="padrinho-login-form" class="portal-form" novalidate onsubmit="return false;">
+              <div class="form-group">
+                <label for="login-email" class="form-label">E-mail Institucional</label>
+                <div class="input-icon-wrap">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  <input 
+                    type="email" 
+                    id="login-email" 
+                    class="form-input form-input-with-icon" 
+                    placeholder="seu.nome@ufape.edu.br" 
+                    required
+                    autocomplete="email"
+                  >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <label for="login-password" class="form-label" style="margin-bottom: 0;">Senha</label>
+                  <button type="button" id="btn-toggle-esqueci" class="portal-link-btn" style="font-size: 0.8rem;">
+                    Esqueci a senha
+                  </button>
+                </div>
+                <div class="input-icon-wrap">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="input-icon">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <input 
+                    type="password" 
+                    id="login-password" 
+                    class="form-input form-input-with-icon" 
+                    placeholder="Digite sua senha" 
+                    required
+                    autocomplete="current-password"
+                  >
+                </div>
+              </div>
+
+              <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block portal-submit-btn">
+                <span>Acessar Meu Painel</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            </form>
+
+            <div class="portal-login-footer-hint">
+              <span class="hint-bullet">●</span>
+              <span>Utilize a senha provisória enviada pela coordenação.</span>
+            </div>
           </div>
 
-          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block portal-submit-btn">
-            <span>Acessar Meu Painel</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </button>
-        </form>
+          <!-- Cards de Destaque Visual -->
+          <div class="portal-login-features">
+            <div class="features-mini-grid">
+              <div class="feature-card-modern">
+                <div class="feature-card-icon icon-gold">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div class="feature-card-info">
+                  <h4>4 Vagas por Mentor</h4>
+                  <p>Acompanhamento dos slots oficiais em tempo real.</p>
+                </div>
+              </div>
 
-        <!-- Box de Instruções de Primeiro Acesso -->
-        <div class="portal-login-info-box">
-          <div class="info-box-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
+              <div class="feature-card-modern">
+                <div class="feature-card-icon icon-green">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div class="feature-card-info">
+                  <h4>WhatsApp com 1-Clique</h4>
+                  <p>Mensagem calorosa de acolhimento pronta para envio.</p>
+                </div>
+              </div>
+
+              <div class="feature-card-modern">
+                <div class="feature-card-icon icon-blue">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div class="feature-card-info">
+                  <h4>Tabela & Checklist</h4>
+                  <p>Controle de primeiro contato e canais preferidos.</p>
+                </div>
+              </div>
+
+              <div class="feature-card-modern">
+                <div class="feature-card-icon icon-purple">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                </div>
+                <div class="feature-card-info">
+                  <h4>Workshop 14/10 às 19h</h4>
+                  <p>Grande cerimônia presencial na Quadra da UFAPE.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Demonstração dos Slots -->
+            <div class="portal-slots-teaser">
+              <span class="teaser-title">Estrutura das 4 Vagas no Painel:</span>
+              <div class="teaser-pills-row">
+                <span class="teaser-pill pill-filled">Vaga #1 • Afilhado</span>
+                <span class="teaser-pill pill-open">Vaga #2 • Em Aberto</span>
+                <span class="teaser-pill pill-open">Vaga #3 • Em Aberto</span>
+                <span class="teaser-pill pill-open">Vaga #4 • Em Aberto</span>
+              </div>
+            </div>
           </div>
-          <div class="info-box-text">
-            <strong>Dica de Primeiro Acesso:</strong>
-            <p>Utilize a senha provisória enviada pela organização. Assim que fizer o login, você poderá cadastrar sua senha definitiva com 1 clique.</p>
-          </div>
+
         </div>
+
       </section>
 
       <!-- =====================================================================
@@ -124,50 +212,52 @@
            ===================================================================== -->
       <section id="padrinho-dashboard-section" class="portal-dashboard" style="display: none;">
         
-        <!-- Top Status Bar -->
-        <div class="portal-top-bar">
-          <div class="portal-status-chip">
-            <span class="status-pulse-dot"></span>
-            <span>Ambiente Oficial do Mentor • Bacharelado em Administração</span>
-          </div>
-          <span class="portal-term-badge">2026.2</span>
-        </div>
-
-        <!-- Header Card do Mentor (Design Sofisticado Escuro) -->
+        <!-- Header Card do Mentor com Brasão e Identidade UFAPE padrinhos -->
         <div class="mentor-hero-card">
           <div class="mentor-hero-content">
-            <div id="mentor-monogram" class="monogram-avatar avatar-mentor-portal">--</div>
+            <div id="mentor-monogram" class="monogram-avatar avatar-mentor-portal">HB</div>
             <div class="mentor-hero-text">
               <div class="mentor-badges-row">
                 <span class="badge badge-accent">Mentor Oficial 2026.2</span>
                 <span id="mentor-admin-badge" class="badge badge-coord" style="display: none;">Coordenação</span>
                 <span class="badge badge-periodo">2º Período ADM</span>
               </div>
-              <h1 id="mentor-name" class="mentor-hero-name">Carregando...</h1>
-              <p id="mentor-email" class="mentor-hero-email">carregando@ufape.edu.br</p>
+              <h1 id="mentor-name" class="mentor-hero-name">Heloísa Barreto</h1>
+              <p id="mentor-email" class="mentor-hero-email">heloisa.barreto@ufape.edu.br</p>
             </div>
           </div>
 
-          <div class="mentor-hero-actions">
-            <button type="button" id="btn-abrir-troca-senha" class="btn btn-outline-white btn-sm" title="Defina sua senha pessoal definitiva">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-              Alterar Senha
-            </button>
-            <button type="button" id="btn-logout" class="btn btn-danger-soft btn-sm" title="Encerrar sessão com segurança">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                <polyline points="16 17 21 12 16 7"/>
-                <line x1="21" y1="12" x2="9" y2="12"/>
-              </svg>
-              Sair
-            </button>
+          <div class="mentor-hero-right">
+            <!-- Brand Mark no Hero Banner -->
+            <div class="hero-brand-mark">
+              <img src="assets/img/brasao-ufape.png" alt="Brasão UFAPE" class="hero-brand-mark-img">
+              <div class="hero-brand-mark-titles">
+                <span class="hero-brand-mark-main">UFAPE</span>
+                <span class="hero-brand-mark-sub">padrinhos</span>
+              </div>
+            </div>
+
+            <div class="mentor-hero-actions">
+              <button type="button" id="btn-abrir-troca-senha" class="btn btn-outline-white btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span>Senha</span>
+              </button>
+              <button type="button" id="btn-logout" class="btn btn-danger-soft btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16 17 21 12 16 7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                <span>Sair</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- 3 Cards de Métricas Rápidas -->
+        <!-- 4 Cards de Métricas (Visual-First) -->
         <div class="portal-metrics-grid">
           <div class="metric-card">
             <div class="metric-icon-wrap metric-icon-blue">
@@ -179,9 +269,9 @@
               </svg>
             </div>
             <div class="metric-data">
-              <span class="metric-label">Cota Máxima</span>
+              <span class="metric-label">Cota Oficial</span>
               <span class="metric-value">4 Vagas</span>
-              <span class="metric-hint">Capacidade oficial por mentor</span>
+              <span class="metric-hint">Capacidade oficial</span>
             </div>
           </div>
 
@@ -192,7 +282,7 @@
               </svg>
             </div>
             <div class="metric-data">
-              <span class="metric-label">Afilhados Confirmados</span>
+              <span class="metric-label">Afilhados</span>
               <span id="metric-afilhados-count" class="metric-value">0</span>
               <span id="metric-afilhados-status" class="metric-hint text-warning">Aguardando escolhas</span>
             </div>
@@ -208,125 +298,158 @@
             <div class="metric-data">
               <span class="metric-label">Vagas em Aberto</span>
               <span id="metric-vagas-restantes" class="metric-value">4</span>
-              <span class="metric-hint">Disponíveis no mural público</span>
+              <span class="metric-hint">Disponíveis no mural</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon-wrap metric-icon-purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-label">Ocupação</span>
+              <span id="metric-ocupacao" class="metric-value">0%</span>
+              <span class="metric-hint">Progresso da cota</span>
             </div>
           </div>
         </div>
 
-        <!-- Card de Progresso e Ocupação da Cota -->
-        <div class="portal-quota-card">
-          <div class="quota-card-header">
-            <div>
-              <span class="quota-card-subtitle">Status da sua Cota</span>
-              <h2 id="quota-headline" class="quota-card-title">0 de 4 afilhados vinculados</h2>
-            </div>
-            <div id="quota-remaining-badge" class="quota-remaining-badge">4 vagas restantes</div>
+        <!-- Barra de Progresso Fina e Elegante -->
+        <div class="portal-quota-bar-wrapper">
+          <div class="quota-bar-info">
+            <span id="quota-headline" class="quota-bar-text">0 de 4 afilhados vinculados</span>
+            <span id="quota-remaining-badge" class="quota-pill-status">4 vagas restantes</span>
           </div>
-          
           <div class="quota-progress-track">
             <div id="quota-progress-bar" class="quota-progress-fill" style="width: 0%;"></div>
           </div>
-
-          <div class="quota-milestones-row">
-            <span class="milestone-item active">0</span>
-            <span class="milestone-item">1</span>
-            <span class="milestone-item">2</span>
-            <span class="milestone-item">3</span>
-            <span class="milestone-item">4 (Cota Máxima)</span>
-          </div>
-
-          <p id="quota-encouragement" class="quota-card-tip">
-            Os calouros estão respondendo ao quiz de afinidade nominal no site oficial e farão suas escolhas.
-          </p>
         </div>
 
-        <!-- Orientações do Mentor (Card Rico e Informativo) -->
-        <div class="mentor-orientation-box">
-          <div class="orientation-header">
-            <div class="orientation-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="16" x2="12" y2="12"/>
-                <line x1="12" y1="8" x2="12.01" y2="8"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="orientation-title">Guia Prático para o Mentor</h3>
-              <p class="orientation-subtitle">Como funciona o acolhimento até o dia da cerimônia:</p>
-            </div>
-          </div>
-
-          <div class="orientation-steps-grid">
-            <div class="orientation-step-item">
-              <div class="step-num-badge">1</div>
-              <div class="step-body">
-                <strong>Aguarde a Confirmação</strong>
-                <p>Assim que um calouro escolher seu perfil, ele aparecerá na lista abaixo instantaneamente com número de WhatsApp e perfil do Instagram.</p>
-              </div>
-            </div>
-
-            <div class="orientation-step-item">
-              <div class="step-num-badge">2</div>
-              <div class="step-body">
-                <strong>Envie as Boas-Vindas</strong>
-                <p>Utilize o botão verde do WhatsApp no card do calouro. Já deixamos uma mensagem inicial acolhedora pronta para você enviar com 1 clique.</p>
-              </div>
-            </div>
-
-            <div class="orientation-step-item">
-              <div class="step-num-badge">3</div>
-              <div class="step-body">
-                <strong>Workshop Presencial</strong>
-                <p>Nosso grande encontro presencial será no dia <strong>14 de outubro de 2026, às 19h00</strong>, na Quadra Poliesportiva da UFAPE.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Seção de Afilhados -->
-        <div class="portal-afilhados-section">
-          <div class="afilhados-section-header">
-            <div>
-              <h2 class="afilhados-section-title">Meus Afilhados Confirmados</h2>
-              <p class="afilhados-section-subtitle">
-                Calouros de Administração que escolheram sua mentoria para o período 2026.2.
-              </p>
-            </div>
-            <button type="button" id="btn-recarregar-afilhados" class="btn btn-outline btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 4 23 10 17 10"/>
-                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-              </svg>
-              Atualizar Lista
+        <!-- ===================================================================
+             SEGMENTED NAVIGATION (TABS): DIVIDE SEÇÕES SEM POLUIR A TELA!
+             =================================================================== -->
+        <div class="portal-segmented-bar">
+          <div class="portal-tabs-nav" role="tablist">
+            <button type="button" class="tab-btn active" data-tab="cards" role="tab" aria-selected="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>4 Slots de Acolhimento</span>
+              <span class="tab-pill-badge" id="tab-badge-cards">4</span>
+            </button>
+            <button type="button" class="tab-btn" data-tab="tabela" role="tab" aria-selected="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <span>Tabela de Gestão</span>
+            </button>
+            <button type="button" class="tab-btn" data-tab="coordenacao" id="tab-btn-coordenacao" role="tab" aria-selected="false" style="display: none;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>Coordenação Geral (10 Mentores)</span>
+              <span class="tab-pill-gold">Admin</span>
             </button>
           </div>
 
-          <!-- Estado Vazio (Sem afilhados ainda) -->
-          <div id="afilhados-empty-state" class="afilhados-empty-box" style="display: none;">
-            <div class="empty-icon-circle">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <line x1="19" y1="8" x2="19" y2="14"/>
-                <line x1="22" y1="11" x2="16" y2="11"/>
-              </svg>
-            </div>
-            <h3 class="empty-state-title">Nenhum afilhado vinculado até o momento</h3>
-            <p class="empty-state-text">
-              Fique tranquilo(a)! O formulário de apadrinhamento acabou de ser liberado e os calouros estão conhecendo os mentores no mural. Conforme eles confirmarem, os cards deles aparecerão aqui com atalhos diretos de contato.
-            </p>
-            <div class="empty-state-actions">
-              <a href="index.html#mural-padrinhos" target="_blank" class="btn btn-secondary btn-sm">
-                Ver Meu Perfil no Mural Público
-              </a>
-            </div>
-          </div>
+          <button type="button" id="btn-recarregar-afilhados" class="btn btn-outline btn-sm portal-refresh-btn" title="Atualizar dados em tempo real">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            </svg>
+            <span>Atualizar</span>
+          </button>
+        </div>
 
-          <!-- Grid de Cards de Afilhados -->
+        <!-- ===================================================================
+             ABA 1: CARDS DOS 4 SLOTS (DESIGN DIFERENCIADO & MODERNO)
+             =================================================================== -->
+        <div id="tab-content-cards" class="portal-tab-content active" role="tabpanel">
           <div id="afilhados-grid" class="afilhados-cards-grid">
-            <!-- Injetado dinamicamente via padrinho-app.js -->
+            <!-- Injetado dinamicamente via js/padrinho-app.js -->
           </div>
         </div>
+
+        <!-- ===================================================================
+             ABA 2: TABELA DE GESTÃO DOS AFILHADOS (VIEW TABULAR)
+             =================================================================== -->
+        <div id="tab-content-tabela" class="portal-tab-content" role="tabpanel" style="display: none;">
+          <div class="portal-table-container">
+            <table class="portal-data-table" id="afilhados-table">
+              <thead>
+                <tr>
+                  <th style="width: 10%;">Slot</th>
+                  <th style="width: 16%;">Status</th>
+                  <th>Calouro(a)</th>
+                  <th style="width: 16%;">Preferência</th>
+                  <th style="width: 22%;">Contatos Rápidos</th>
+                  <th style="width: 14%; text-align: center;">Acolhimento</th>
+                </tr>
+              </thead>
+              <tbody id="afilhados-table-body">
+                <!-- Injetado dinamicamente via js/padrinho-app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             ABA 3: PAINEL DA COORDENAÇÃO GERAL (10 MENTORES • 40 VAGAS)
+             =================================================================== -->
+        <div id="tab-content-coordenacao" class="portal-tab-content" role="tabpanel" style="display: none;">
+          <div class="portal-coordenacao-card">
+            <div class="coordenacao-header-box">
+              <div class="coordenacao-title-group">
+                <span class="badge badge-coord">Painel da Coordenação</span>
+                <h3 class="coordenacao-title">Distribuição dos 10 Mentores • 40 Vagas Oficiais</h3>
+              </div>
+              
+              <div class="coordenacao-pills-row">
+                <div class="coord-stat-pill">
+                  <span class="coord-pill-label">Total Geral</span>
+                  <strong class="coord-pill-value">40 Vagas</strong>
+                </div>
+                <div class="coord-stat-pill">
+                  <span class="coord-pill-label">Preenchidas</span>
+                  <strong id="coord-total-ocupadas" class="coord-pill-value text-gold">0</strong>
+                </div>
+                <div class="coord-stat-pill">
+                  <span class="coord-pill-label">Livres</span>
+                  <strong id="coord-total-livres" class="coord-pill-value text-success">40</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabela com overflow encapsulado e layout auto para NUNCA quebrar -->
+            <div class="portal-table-container">
+              <table class="portal-data-table table-coord-responsive" id="coordenacao-table">
+                <thead>
+                  <tr>
+                    <th style="width: 6%;">#</th>
+                    <th>Mentor(a) Oficial</th>
+                    <th>E-mail Institucional</th>
+                    <th style="text-align: center; width: 10%;">Cota</th>
+                    <th style="text-align: center; width: 12%;">Ocupadas</th>
+                    <th style="text-align: center; width: 12%;">Livres</th>
+                    <th style="text-align: center; width: 12%;">Taxa</th>
+                  </tr>
+                </thead>
+                <tbody id="coordenacao-table-body">
+                  <!-- Injetado dinamicamente via js/padrinho-app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Banner do Workshop Presencial -->
+        <aside class="portal-workshop-strip">
+          <div class="workshop-strip-content">
+            <span class="workshop-strip-badge">14 DE OUTUBRO • 19H00</span>
+            <span class="workshop-strip-text">
+              <strong>Workshop Presencial de Apadrinhamento:</strong> Encontro oficial na Quadra Poliesportiva da UFAPE.
+            </span>
+          </div>
+          <a href="index.html" class="btn btn-outline btn-xs">Ver Mural</a>
+        </aside>
 
       </section>
 
@@ -350,7 +473,7 @@
 
         <div id="modal-senha-alert" class="portal-alert" style="display: none;" role="alert"></div>
 
-        <form id="form-alterar-senha" novalidate>
+        <form id="form-alterar-senha" novalidate onsubmit="return false;">
           <div class="form-group">
             <label for="nova-senha" class="form-label">Nova Senha</label>
             <input 
@@ -403,7 +526,7 @@
 
         <div id="modal-esqueci-alert" class="portal-alert" style="display: none;" role="alert"></div>
 
-        <form id="form-esqueci-senha" novalidate>
+        <form id="form-esqueci-senha" novalidate onsubmit="return false;">
           <div class="form-group">
             <label for="esqueci-email" class="form-label">E-mail Institucional</label>
             <input 
@@ -429,11 +552,11 @@
   <!-- =========================================================================
        FOOTER
        ========================================================================= -->
-  <footer class="site-footer" style="margin-top: 4rem;">
+  <footer class="site-footer" style="margin-top: 3.5rem;">
     <div class="container footer-content">
       <div class="footer-bottom">
-        <div>© 2026 Curso de Bacharelado em Administração - UFAPE. Todos os direitos reservados.</div>
-        <div>Portal do Padrinho & Madrinha • Acesso Restrito dos Mentores</div>
+        <div>© 2026 Curso de Bacharelado em Administração — UFAPE.</div>
+        <div>UFAPE padrinhos • Ambiente de Acolhimento Universitário</div>
       </div>
     </div>
   </footer>

@@ -2,7 +2,7 @@
  * ==============================================================================
  * SISTEMA DE APADRINHAMENTO ACADÊMICO • BACHARELADO EM ADMINISTRAÇÃO (UFAPE)
  * Arquivo: js/padrinho-app.js
- * Módulo: Lógica do Portal do Padrinho & Madrinha (Autenticação, Gestão e Contatos)
+ * Módulo: Lógica do Portal do Padrinho & Madrinha (UFAPE padrinhos)
  * Autor: Kauã Vinicius dos Santos Barbosa (BCC / UFAPE)
  * ==============================================================================
  */
@@ -21,8 +21,9 @@ if (typeof window.supabase !== 'undefined' && SUPABASE_URL && SUPABASE_ANON_KEY)
 // Estado Local
 let currentSession = null;
 let currentMentor = null;
+let isUserAdmin = false;
 
-// Elementos do DOM
+// Elementos do DOM - Login
 const loginSection = document.getElementById('padrinho-login-section');
 const dashboardSection = document.getElementById('padrinho-dashboard-section');
 const loginForm = document.getElementById('padrinho-login-form');
@@ -31,7 +32,7 @@ const loginPasswordInput = document.getElementById('login-password');
 const loginAlert = document.getElementById('login-alert');
 const btnLoginSubmit = document.getElementById('btn-login-submit');
 
-// Dashboard Elements
+// Elementos do DOM - Dashboard
 const mentorMonogram = document.getElementById('mentor-monogram');
 const mentorNameEl = document.getElementById('mentor-name');
 const mentorEmailEl = document.getElementById('mentor-email');
@@ -39,14 +40,26 @@ const mentorAdminBadge = document.getElementById('mentor-admin-badge');
 const quotaHeadline = document.getElementById('quota-headline');
 const quotaRemainingBadge = document.getElementById('quota-remaining-badge');
 const quotaProgressBar = document.getElementById('quota-progress-bar');
-const quotaEncouragement = document.getElementById('quota-encouragement');
 const metricAfilhadosCount = document.getElementById('metric-afilhados-count');
 const metricAfilhadosStatus = document.getElementById('metric-afilhados-status');
 const metricVagasRestantes = document.getElementById('metric-vagas-restantes');
-const afilhadosEmptyState = document.getElementById('afilhados-empty-state');
+const metricOcupacao = document.getElementById('metric-ocupacao');
 const afilhadosGrid = document.getElementById('afilhados-grid');
+const afilhadosTableBody = document.getElementById('afilhados-table-body');
 const btnRecarregar = document.getElementById('btn-recarregar-afilhados');
 const btnLogout = document.getElementById('btn-logout');
+
+// Tabs
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabBtnCoordenacao = document.getElementById('tab-btn-coordenacao');
+const tabContentCards = document.getElementById('tab-content-cards');
+const tabContentTabela = document.getElementById('tab-content-tabela');
+const tabContentCoordenacao = document.getElementById('tab-content-coordenacao');
+
+// Coordenação Geral (Heloísa / Admins)
+const coordenacaoTableBody = document.getElementById('coordenacao-table-body');
+const coordTotalOcupadas = document.getElementById('coord-total-ocupadas');
+const coordTotalLivres = document.getElementById('coord-total-livres');
 
 // Modal Alterar Senha
 const modalAlterarSenha = document.getElementById('modal-alterar-senha');
@@ -91,11 +104,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // 2. Verificar sessão existente
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    currentSession = session;
-    await carregarDadosMentor(session.user);
-  } else {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      currentSession = session;
+      await carregarDadosMentor(session.user);
+    } else {
+      exibirTelaLogin();
+    }
+  } catch (err) {
+    console.warn('[PadrinhoApp] Erro ao verificar sessão inicial:', err);
     exibirTelaLogin();
   }
 
@@ -104,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 /**
- * Registra listeners de formulários e botões
+ * Registra listeners de formulários, botões e tabs
  */
 function configurarEventos() {
   // Login
@@ -117,6 +135,14 @@ function configurarEventos() {
     btnLogout.addEventListener('click', handleLogout);
   }
 
+  // Segmented Tabs
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tab');
+      ativarTab(targetTab);
+    });
+  });
+
   // Recarregar afilhados
   if (btnRecarregar) {
     btnRecarregar.addEventListener('click', async () => {
@@ -124,6 +150,9 @@ function configurarEventos() {
         btnRecarregar.disabled = true;
         btnRecarregar.classList.add('loading-spin');
         await carregarAfilhados(currentMentor.id);
+        if (isUserAdmin) {
+          await carregarVisaoGeralCoordenacao();
+        }
         setTimeout(() => {
           btnRecarregar.disabled = false;
           btnRecarregar.classList.remove('loading-spin');
@@ -171,18 +200,33 @@ function configurarEventos() {
 }
 
 /**
+ * Ativa aba do segmented control
+ */
+function ativarTab(tabName) {
+  tabBtns.forEach(b => {
+    const isTarget = b.getAttribute('data-tab') === tabName;
+    b.classList.toggle('active', isTarget);
+    b.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+  });
+
+  if (tabContentCards) tabContentCards.style.display = tabName === 'cards' ? 'block' : 'none';
+  if (tabContentTabela) tabContentTabela.style.display = tabName === 'tabela' ? 'block' : 'none';
+  if (tabContentCoordenacao) tabContentCoordenacao.style.display = tabName === 'coordenacao' ? 'block' : 'none';
+}
+
+/**
  * Fluxo de Login
  */
 async function handleLogin(e) {
-  e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   esconderAlert(loginAlert);
 
-  const email = loginEmailInput.value.trim().toLowerCase();
-  const password = loginPasswordInput.value;
+  const email = (loginEmailInput.value || '').trim().toLowerCase();
+  const password = loginPasswordInput.value || '';
 
   if (!email || !password) {
     showAlert(loginAlert, 'Por favor, informe seu e-mail institucional e senha.', 'warning');
-    return;
+    return false;
   }
 
   btnLoginSubmit.disabled = true;
@@ -201,7 +245,7 @@ async function handleLogin(e) {
       } else {
         showAlert(loginAlert, `Falha no acesso: ${error.message}`, 'danger');
       }
-      return;
+      return false;
     }
 
     if (data && data.user) {
@@ -209,11 +253,13 @@ async function handleLogin(e) {
     }
   } catch (err) {
     console.error('[PadrinhoApp] Erro inesperado no login:', err);
-    showAlert(loginAlert, 'Erro de conexão com o servidor. Tente novamente.', 'danger');
+    showAlert(loginAlert, 'Erro de conexão com o servidor. Verifique sua rede e tente novamente.', 'danger');
   } finally {
     btnLoginSubmit.disabled = false;
     btnLoginSubmit.classList.remove('btn-loading');
   }
+
+  return false;
 }
 
 /**
@@ -227,6 +273,7 @@ async function handleLogout() {
   }
   currentSession = null;
   currentMentor = null;
+  isUserAdmin = false;
   exibirTelaLogin();
 }
 
@@ -240,15 +287,15 @@ async function carregarDadosMentor(user) {
       .from('padrinhos')
       .select('*')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
-    // Fallback: se user_id ainda não estiver populado, busca pelo e-mail institucional
+    // Fallback: busca pelo e-mail institucional se user_id ainda não estiver populado
     if (!mentor && user.email) {
       const { data: mentorFallback } = await supabase
         .from('padrinhos')
         .select('*')
         .eq('email_institucional', user.email)
-        .single();
+        .maybeSingle();
       mentor = mentorFallback;
     }
 
@@ -260,29 +307,42 @@ async function carregarDadosMentor(user) {
 
     currentMentor = mentor;
 
-    // 2. Verificar se possui role de admin
+    // 2. Verificar se possui role de admin / coordenador
     const { data: roleData } = await supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', user.id)
       .maybeSingle();
 
-    const isAdmin = roleData && (roleData.role === 'admin' || roleData.role === 'coordenador');
+    isUserAdmin = roleData && (roleData.role === 'admin' || roleData.role === 'coordenador');
 
     // 3. Renderizar Header do Mentor
-    mentorMonogram.textContent = mentor.iniciais || 'MT';
-    mentorNameEl.textContent = mentor.nome;
-    mentorEmailEl.textContent = mentor.email_institucional;
+    if (mentorMonogram) mentorMonogram.textContent = mentor.iniciais || 'HB';
+    if (mentorNameEl) mentorNameEl.textContent = mentor.nome;
+    if (mentorEmailEl) mentorEmailEl.textContent = mentor.email_institucional;
     if (mentorAdminBadge) {
-      mentorAdminBadge.style.display = isAdmin ? 'inline-flex' : 'none';
+      mentorAdminBadge.style.display = isUserAdmin ? 'inline-flex' : 'none';
     }
 
-    // 4. Alternar telas
+    // 4. Mostrar aba de coordenação se for admin
+    if (tabBtnCoordenacao) {
+      tabBtnCoordenacao.style.display = isUserAdmin ? 'inline-flex' : 'none';
+    }
+
+    // 5. Alternar telas
     loginSection.style.display = 'none';
     dashboardSection.style.display = 'block';
 
-    // 5. Carregar lista de afilhados
+    // 6. Carregar lista de afilhados e slots do mentor
     await carregarAfilhados(mentor.id);
+
+    // 7. Se for coordenador/admin, carregar a visão geral dos 10 padrinhos
+    if (isUserAdmin) {
+      await carregarVisaoGeralCoordenacao();
+    }
+
+    // Garante que aba de cards seja a ativa
+    ativarTab('cards');
 
   } catch (err) {
     console.error('[PadrinhoApp] Erro ao carregar perfil do mentor:', err);
@@ -291,7 +351,7 @@ async function carregarDadosMentor(user) {
 }
 
 /**
- * Carrega e renderiza os calouros vinculados ao mentor
+ * Carrega e renderiza os calouros vinculados ao mentor (SEMPRE exibe os 4 slots!)
  */
 async function carregarAfilhados(padrinhoId) {
   try {
@@ -306,22 +366,27 @@ async function carregarAfilhados(padrinhoId) {
       return;
     }
 
-    const total = (afilhados || []).length;
+    const lista = afilhados || [];
+    const total = lista.length;
     const limite = currentMentor.limite_vagas || 4;
     const vagasRestantes = Math.max(0, limite - total);
     const porcentagem = Math.min(100, Math.round((total / limite) * 100));
 
     // Atualiza Card de Cota e Métricas
-    quotaHeadline.textContent = `${total} de ${limite} afilhados vinculados`;
-    quotaRemainingBadge.textContent = `${vagasRestantes} vaga${vagasRestantes !== 1 ? 's' : ''} restante${vagasRestantes !== 1 ? 's' : ''}`;
-    quotaProgressBar.style.width = `${porcentagem}%`;
+    if (quotaHeadline) quotaHeadline.textContent = `${total} de ${limite} afilhados vinculados`;
+    if (quotaRemainingBadge) {
+      quotaRemainingBadge.textContent = `${vagasRestantes} vaga${vagasRestantes !== 1 ? 's' : ''} restante${vagasRestantes !== 1 ? 's' : ''}`;
+    }
+    if (quotaProgressBar) quotaProgressBar.style.width = `${porcentagem}%`;
 
     // Atualiza Métricas Rápidas
     if (metricAfilhadosCount) metricAfilhadosCount.textContent = String(total);
-    if (metricVagasRestantes) metricVagasRestantes.textContent = `${vagasRestantes} restante${vagasRestantes !== 1 ? 's' : ''}`;
+    if (metricVagasRestantes) metricVagasRestantes.textContent = `${vagasRestantes} vaga${vagasRestantes !== 1 ? 's' : ''}`;
+    if (metricOcupacao) metricOcupacao.textContent = `${porcentagem}%`;
+
     if (metricAfilhadosStatus) {
       if (total === 0) {
-        metricAfilhadosStatus.textContent = 'Aguardando escolhas';
+        metricAfilhadosStatus.textContent = 'Aguardando escolhas no mural';
         metricAfilhadosStatus.className = 'metric-hint text-warning';
       } else if (total < limite) {
         metricAfilhadosStatus.textContent = `${total} vinculado(s)`;
@@ -332,29 +397,8 @@ async function carregarAfilhados(padrinhoId) {
       }
     }
 
-    // Atualiza Milestones da Barra
-    const milestoneItems = document.querySelectorAll('.milestone-item');
-    milestoneItems.forEach((item, idx) => {
-      if (idx <= total) {
-        item.classList.add('active');
-      } else {
-        item.classList.remove('active');
-      }
-    });
-
-    if (total === 0) {
-      quotaEncouragement.textContent = 'Os calouros estão conhecendo os perfis no sistema e em breve farão a escolha de mentores.';
-      afilhadosEmptyState.style.display = 'block';
-      afilhadosGrid.innerHTML = '';
-    } else if (total < limite) {
-      quotaEncouragement.textContent = `Você já possui ${total} afilhado(s)! Aproveite para fazer o primeiro contato via WhatsApp.`;
-      afilhadosEmptyState.style.display = 'none';
-      renderizarCardsAfilhados(afilhados);
-    } else {
-      quotaEncouragement.textContent = '🎉 Parabéns! Sua cota máxima de 4 vagas está 100% preenchida para o acolhimento deste período!';
-      afilhadosEmptyState.style.display = 'none';
-      renderizarCardsAfilhados(afilhados);
-    }
+    // RENDERIZAÇÃO DOS 4 SLOTS (CARDS E TABELA)
+    renderizarSlotsCardsETabela(lista, limite);
 
   } catch (err) {
     console.error('[PadrinhoApp] Falha na consulta de afilhados:', err);
@@ -362,92 +406,105 @@ async function carregarAfilhados(padrinhoId) {
 }
 
 /**
- * Renderiza os cards de cada calouro apadrinhado
+ * Renderiza simultaneamente os 4 Cards de Vagas e as 4 Linhas da Tabela
+ * Design dos cards totalmente diferenciado, limpo e moderno.
  */
-function renderizarCardsAfilhados(afilhados) {
+function renderizarSlotsCardsETabela(afilhados, limite = 4) {
+  if (!afilhadosGrid || !afilhadosTableBody) return;
+
   afilhadosGrid.innerHTML = '';
+  afilhadosTableBody.innerHTML = '';
 
-  afilhados.forEach((afilhado, index) => {
-    const card = document.createElement('div');
-    card.className = 'afilhado-card';
+  for (let i = 0; i < limite; i++) {
+    const slotNumero = i + 1;
+    const afilhado = afilhados[i];
 
-    // Formatação de data
-    const dataIso = afilhado.trocado_em || afilhado.criado_em;
-    let dataFormatada = 'Data recente';
-    if (dataIso) {
-      const d = new Date(dataIso);
-      dataFormatada = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-    }
+    if (afilhado) {
+      // -------------------------------------------------------------
+      // SLOT PREENCHIDO (CARD MODERNO + LINHA DA TABELA)
+      // -------------------------------------------------------------
+      const dataIso = afilhado.trocado_em || afilhado.criado_em;
+      let dataFormatada = 'Recente';
+      if (dataIso) {
+        const d = new Date(dataIso);
+        dataFormatada = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+      }
 
-    // Limpeza e link WhatsApp
-    const rawWhats = (afilhado.calouro_whatsapp || '').replace(/\D/g, '');
-    let whatsLink = '#';
-    let whatsDisplay = afilhado.calouro_whatsapp || 'Não informado';
-    if (rawWhats.length >= 10) {
-      const ddiWhats = rawWhats.startsWith('55') ? rawWhats : `55${rawWhats}`;
-      const primeiroNomeCalouro = afilhado.calouro_nome.split(' ')[0];
-      const mensagemBoasVindas = encodeURIComponent(
-        `Olá, ${primeiroNomeCalouro}! Sou ${currentMentor.nome}, seu padrinho/madrinha no curso de Administração da UFAPE. Vi que você me escolheu e vim te dar as boas-vindas ao nosso curso e à nossa universidade!`
-      );
-      whatsLink = `https://wa.me/${ddiWhats}?text=${mensagemBoasVindas}`;
-    }
+      // Extrair iniciais do calouro
+      const nomesPartes = (afilhado.calouro_nome || 'Calouro').trim().split(/\s+/);
+      const calouroIniciais = nomesPartes.length >= 2 
+        ? `${nomesPartes[0][0]}${nomesPartes[nomesPartes.length - 1][0]}`.toUpperCase()
+        : (nomesPartes[0][0] || 'C').toUpperCase();
 
-    // Instagram
-    const rawInsta = (afilhado.calouro_instagram || '').replace(/[@\s]/g, '');
-    const instaLink = rawInsta ? `https://instagram.com/${rawInsta}` : '#';
-    const instaDisplay = rawInsta ? `@${rawInsta}` : 'Não informado';
+      const rawWhats = (afilhado.calouro_whatsapp || '').replace(/\D/g, '');
+      let whatsLink = '#';
+      let whatsDisplay = afilhado.calouro_whatsapp || 'Não informado';
+      if (rawWhats.length >= 10) {
+        const ddiWhats = rawWhats.startsWith('55') ? rawWhats : `55${rawWhats}`;
+        const primeiroNomeCalouro = nomesPartes[0];
+        const mensagemBoasVindas = encodeURIComponent(
+          `Olá, ${primeiroNomeCalouro}! Sou ${currentMentor.nome}, seu padrinho/madrinha no curso de Administração da UFAPE. Vi que você me escolheu e vim te dar as boas-vindas ao nosso curso e à nossa universidade!`
+        );
+        whatsLink = `https://wa.me/${ddiWhats}?text=${mensagemBoasVindas}`;
+      }
 
-    // Canal preferido
-    let canalTexto = 'Tanto faz';
-    let canalBadgeClass = 'badge-muted';
-    if (afilhado.canal_preferido === 'whatsapp') {
-      canalTexto = 'Prefere WhatsApp';
-      canalBadgeClass = 'badge-whatsapp';
-    } else if (afilhado.canal_preferido === 'instagram') {
-      canalTexto = 'Prefere Instagram';
-      canalBadgeClass = 'badge-instagram';
-    }
+      const rawInsta = (afilhado.calouro_instagram || '').replace(/[@\s]/g, '');
+      const instaLink = rawInsta ? `https://instagram.com/${rawInsta}` : '#';
+      const instaDisplay = rawInsta ? `@${rawInsta}` : 'Não informado';
 
-    // Status de contato salvo no localStorage
-    const storageKey = `contato_padrinho_${currentMentor.id}_${afilhado.id}`;
-    const jaContatou = localStorage.getItem(storageKey) === 'true';
+      let canalTexto = 'Tanto faz';
+      let canalBadgeClass = 'badge-muted';
+      if (afilhado.canal_preferido === 'whatsapp') {
+        canalTexto = 'Prefere WhatsApp';
+        canalBadgeClass = 'badge-whatsapp';
+      } else if (afilhado.canal_preferido === 'instagram') {
+        canalTexto = 'Prefere Instagram';
+        canalBadgeClass = 'badge-instagram';
+      }
 
-    // Extrair dados do questionário
-    const respostas = afilhado.respostas || {};
-    const choqueMateria = respostas.materia_temida || respostas.choque_realidade || 'Adaptação geral ao curso';
-    const perfilResumo = respostas.perfil_estudo || respostas.expectativa || 'Animado(a) com o início das aulas';
+      const storageKey = `contato_padrinho_${currentMentor.id}_${afilhado.id}`;
+      const jaContatou = localStorage.getItem(storageKey) === 'true';
 
-    card.innerHTML = `
-      <div class="afilhado-card-top">
-        <div class="afilhado-header-info">
-          <span class="afilhado-numero">Afilhado #${index + 1}</span>
-          <h3 class="afilhado-nome">${escapeHtml(afilhado.calouro_nome)}</h3>
-          <div class="afilhado-meta-row">
-            <span class="afilhado-data">${dataFormatada}</span>
-            ${afilhado.permutou ? '<span class="badge badge-permuta">🔄 Permuta</span>' : ''}
-            <span class="badge ${canalBadgeClass}">${canalTexto}</span>
+      const respostas = afilhado.respostas || {};
+      const choqueMateria = respostas.materia_temida || respostas.choque_realidade || 'Adaptação geral';
+      const perfilResumo = respostas.perfil_estudo || respostas.expectativa || 'Início das aulas';
+
+      // 1. Inserir Card Diferenciado do Slot Preenchido
+      const card = document.createElement('div');
+      card.className = `modern-slot-card slot-card-filled ${jaContatou ? 'card-contatado-glow' : ''}`;
+      card.innerHTML = `
+        <div class="slot-card-top-bar">
+          <div class="slot-indicator-group">
+            <span class="slot-index-pill">Slot #${slotNumero}</span>
+            <span class="badge badge-success">● Confirmado</span>
+          </div>
+          <span class="slot-timestamp">${dataFormatada}</span>
+        </div>
+
+        <div class="slot-student-profile">
+          <div class="student-avatar-circle">${calouroIniciais}</div>
+          <div class="student-profile-info">
+            <h3 class="student-name">${escapeHtml(afilhado.calouro_nome)}</h3>
+            <div class="student-chips-row">
+              <span class="badge ${canalBadgeClass}">${canalTexto}</span>
+              ${afilhado.permutou ? '<span class="badge badge-permuta">🔄 Permuta</span>' : ''}
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Ações de Contato -->
-      <div class="afilhado-contatos-box">
-        <div class="contato-row">
-          <span class="contato-label">WhatsApp:</span>
+        <!-- Dock de Contatos com Ação 1-Clique -->
+        <div class="slot-contact-dock">
           ${rawWhats.length >= 10 ? `
-            <a href="${whatsLink}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-action" title="Iniciar conversa no WhatsApp">
+            <a href="${whatsLink}" target="_blank" rel="noopener noreferrer" class="btn-dock-whatsapp" title="Iniciar conversa no WhatsApp">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.274.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
               </svg>
-              <span>${escapeHtml(whatsDisplay)}</span>
+              <span>WhatsApp</span>
             </a>
-          ` : `<span class="contato-valor">${escapeHtml(whatsDisplay)}</span>`}
-        </div>
+          ` : `<span class="dock-empty-contact">WhatsApp: ${escapeHtml(whatsDisplay)}</span>`}
 
-        <div class="contato-row">
-          <span class="contato-label">Instagram:</span>
           ${rawInsta ? `
-            <a href="${instaLink}" target="_blank" rel="noopener noreferrer" class="btn-instagram-action" title="Abrir perfil no Instagram">
+            <a href="${instaLink}" target="_blank" rel="noopener noreferrer" class="btn-dock-instagram" title="Abrir perfil no Instagram">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
@@ -455,55 +512,208 @@ function renderizarCardsAfilhados(afilhados) {
               </svg>
               <span>${escapeHtml(instaDisplay)}</span>
             </a>
-          ` : `<span class="contato-valor">${escapeHtml(instaDisplay)}</span>`}
+          ` : ''}
         </div>
-      </div>
 
-      <!-- Respostas do Formulário -->
-      <div class="afilhado-respostas-box">
-        <div class="resposta-item">
-          <span class="resposta-rotulo">Maior choque ou receio:</span>
-          <span class="resposta-valor">${escapeHtml(choqueMateria)}</span>
+        <!-- Micro-Chips de Afinidade do Quiz -->
+        <div class="slot-affinity-chips">
+          <div class="affinity-chip">
+            <span class="chip-label">Receio:</span>
+            <span class="chip-val">${escapeHtml(choqueMateria)}</span>
+          </div>
+          <div class="affinity-chip">
+            <span class="chip-label">Perfil:</span>
+            <span class="chip-val">${escapeHtml(perfilResumo)}</span>
+          </div>
         </div>
-        <div class="resposta-item">
-          <span class="resposta-rotulo">Expectativa / Perfil:</span>
-          <span class="resposta-valor">${escapeHtml(perfilResumo)}</span>
+
+        <!-- Checklist de Acolhimento -->
+        <div class="slot-card-bottom-action">
+          <label class="modern-checklist-toggle">
+            <input type="checkbox" class="checklist-toggle-input" data-key="${storageKey}" ${jaContatou ? 'checked' : ''}>
+            <span class="toggle-switch-visual"></span>
+            <span class="toggle-text">Primeiro contato realizado</span>
+          </label>
         </div>
-      </div>
+      `;
 
-      <!-- Checklist de Primeiro Contato -->
-      <div class="afilhado-checklist-box">
-        <label class="checklist-label">
-          <input type="checkbox" class="checklist-checkbox" data-key="${storageKey}" ${jaContatou ? 'checked' : ''}>
-          <span>Primeiro contato realizado</span>
-        </label>
-      </div>
-    `;
+      // Listener para o checkbox de contato
+      const checkbox = card.querySelector('.checklist-toggle-input');
+      checkbox.addEventListener('change', (e) => {
+        localStorage.setItem(storageKey, e.target.checked ? 'true' : 'false');
+        card.classList.toggle('card-contatado-glow', e.target.checked);
+        const statusTbEl = document.getElementById(`tb-status-${afilhado.id}`);
+        if (statusTbEl) {
+          statusTbEl.textContent = e.target.checked ? 'Contatado' : 'Pendente';
+          statusTbEl.className = e.target.checked ? 'badge badge-success' : 'badge badge-warning';
+        }
+      });
 
-    // Listener para o checkbox de contato
-    const checkbox = card.querySelector('.checklist-checkbox');
-    checkbox.addEventListener('change', (e) => {
-      localStorage.setItem(storageKey, e.target.checked ? 'true' : 'false');
-      if (e.target.checked) {
-        card.classList.add('afilhado-card-contatado');
-      } else {
-        card.classList.remove('afilhado-card-contatado');
-      }
-    });
+      afilhadosGrid.appendChild(card);
 
-    if (jaContatou) {
-      card.classList.add('afilhado-card-contatado');
+      // 2. Inserir Linha da Tabela
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong class="text-navy">#${slotNumero}</strong></td>
+        <td><span class="badge badge-success">● Confirmado</span></td>
+        <td>
+          <div class="tb-student-name">${escapeHtml(afilhado.calouro_nome)}</div>
+          <div class="tb-student-meta">${dataFormatada}</div>
+        </td>
+        <td><span class="badge ${canalBadgeClass}">${canalTexto}</span></td>
+        <td>
+          <div class="tb-actions-row">
+            ${rawWhats.length >= 10 ? `
+              <a href="${whatsLink}" target="_blank" rel="noopener noreferrer" class="btn-tb-action btn-tb-wa" title="WhatsApp">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.274.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+                </svg>
+                <span>WhatsApp</span>
+              </a>
+            ` : '—'}
+            ${rawInsta ? `
+              <a href="${instaLink}" target="_blank" rel="noopener noreferrer" class="btn-tb-action btn-tb-ig" title="Instagram">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                </svg>
+                <span>Insta</span>
+              </a>
+            ` : ''}
+          </div>
+        </td>
+        <td style="text-align: center;">
+          <span id="tb-status-${afilhado.id}" class="badge ${jaContatou ? 'badge-success' : 'badge-warning'}">
+            ${jaContatou ? 'Contatado' : 'Pendente'}
+          </span>
+        </td>
+      `;
+      afilhadosTableBody.appendChild(tr);
+
+    } else {
+      // -------------------------------------------------------------
+      // SLOT EM ABERTO (CARD VAGO MODERNO + LINHA DA TABELA)
+      // -------------------------------------------------------------
+      const openCard = document.createElement('div');
+      openCard.className = 'modern-slot-card slot-card-open';
+      openCard.innerHTML = `
+        <div class="slot-card-top-bar">
+          <span class="slot-index-pill">Slot #${slotNumero}</span>
+          <span class="badge badge-accent">○ Vaga em Aberto</span>
+        </div>
+
+        <div class="slot-open-visual-center">
+          <div class="slot-open-ring-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <line x1="19" y1="8" x2="19" y2="14"/>
+              <line x1="22" y1="11" x2="16" y2="11"/>
+            </svg>
+          </div>
+          <h4 class="slot-open-heading">Disponível no Mural</h4>
+          <p class="slot-open-text">
+            Aguardando seleção por um calouro de Administração no formulário oficial do site.
+          </p>
+        </div>
+
+        <div class="slot-open-action-footer">
+          <a href="index.html#mural-padrinhos" target="_blank" class="btn btn-outline btn-xs btn-open-link">
+            <span>Ver no Mural Público</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      `;
+      afilhadosGrid.appendChild(openCard);
+
+      // Linha da Tabela Aberta
+      const openTr = document.createElement('tr');
+      openTr.className = 'tb-row-open';
+      openTr.innerHTML = `
+        <td><strong class="text-muted">#${slotNumero}</strong></td>
+        <td><span class="badge badge-accent">○ Em Aberto</span></td>
+        <td><span class="text-muted" style="font-style: italic;">Disponível no formulário público</span></td>
+        <td><span class="text-light">—</span></td>
+        <td><span class="text-light">Aguardando calouro</span></td>
+        <td style="text-align: center;"><span class="badge badge-muted">Pendente</span></td>
+      `;
+      afilhadosTableBody.appendChild(openTr);
+    }
+  }
+}
+
+/**
+ * Carrega a visão geral da Coordenação (10 Mentores • 40 Vagas)
+ * Garante layout auto e colunas fluidas para NÃO quebrar a página!
+ */
+async function carregarVisaoGeralCoordenacao() {
+  if (!coordenacaoTableBody) return;
+
+  try {
+    // 1. Buscar todos os padrinhos cadastrados
+    const { data: padrinhos, error: errPad } = await supabase
+      .from('padrinhos')
+      .select('id, nome, email_institucional, limite_vagas, ordem_exibicao')
+      .order('ordem_exibicao', { ascending: true });
+
+    if (errPad || !padrinhos) {
+      console.warn('[PadrinhoApp] Erro ao carregar padrinhos da coordenação:', errPad);
+      return;
     }
 
-    afilhadosGrid.appendChild(card);
-  });
+    // 2. Buscar contagem de apadrinhamentos por padrinho
+    const { data: allApadrinhamentos, error: errApad } = await supabase
+      .from('apadrinhamentos')
+      .select('padrinho_id');
+
+    const counts = {};
+    (allApadrinhamentos || []).forEach(row => {
+      counts[row.padrinho_id] = (counts[row.padrinho_id] || 0) + 1;
+    });
+
+    let totalGeralOcupadas = 0;
+    const totalGeralVagas = 40;
+
+    coordenacaoTableBody.innerHTML = '';
+
+    padrinhos.forEach((p, idx) => {
+      const cota = p.limite_vagas || 4;
+      const ocupadas = counts[p.id] || 0;
+      const livres = Math.max(0, cota - ocupadas);
+      totalGeralOcupadas += ocupadas;
+      const pct = Math.round((ocupadas / cota) * 100);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight: 700; color: var(--text-muted);">${idx + 1}</td>
+        <td><strong class="text-navy">${escapeHtml(p.nome)}</strong></td>
+        <td><span class="tb-email-truncate">${escapeHtml(p.email_institucional)}</span></td>
+        <td style="text-align: center; font-weight: 700;">${cota}</td>
+        <td style="text-align: center;"><span class="badge ${ocupadas > 0 ? 'badge-success' : 'badge-muted'}">${ocupadas}</span></td>
+        <td style="text-align: center;"><span class="badge ${livres > 0 ? 'badge-accent' : 'badge-danger'}">${livres}</span></td>
+        <td style="text-align: center;">
+          <span class="badge ${ocupadas === cota ? 'badge-success' : (ocupadas > 0 ? 'badge-warning' : 'badge-muted')}">
+            ${pct}%
+          </span>
+        </td>
+      `;
+      coordenacaoTableBody.appendChild(tr);
+    });
+
+    const totalGeralLivres = Math.max(0, totalGeralVagas - totalGeralOcupadas);
+    if (coordTotalOcupadas) coordTotalOcupadas.textContent = String(totalGeralOcupadas);
+    if (coordTotalLivres) coordTotalLivres.textContent = String(totalGeralLivres);
+
+  } catch (err) {
+    console.error('[PadrinhoApp] Erro na coordenação:', err);
+  }
 }
 
 /**
  * Alteração de Senha
  */
 async function handleAlterarSenha(e) {
-  e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   esconderAlert(modalSenhaAlert);
 
   const novaSenha = novaSenhaInput.value;
@@ -511,12 +721,12 @@ async function handleAlterarSenha(e) {
 
   if (!novaSenha || novaSenha.length < 6) {
     showAlert(modalSenhaAlert, 'A nova senha deve ter no mínimo 6 caracteres.', 'warning');
-    return;
+    return false;
   }
 
   if (novaSenha !== confirmaSenha) {
     showAlert(modalSenhaAlert, 'As senhas informadas não coincidem. Digite novamente.', 'danger');
-    return;
+    return false;
   }
 
   try {
@@ -524,7 +734,7 @@ async function handleAlterarSenha(e) {
 
     if (error) {
       showAlert(modalSenhaAlert, `Erro ao atualizar senha: ${error.message}`, 'danger');
-      return;
+      return false;
     }
 
     showAlert(modalSenhaAlert, 'Senha atualizada com sucesso! Você já pode utilizá-la em seus próximos acessos.', 'success');
@@ -540,19 +750,21 @@ async function handleAlterarSenha(e) {
     console.error('[PadrinhoApp] Erro ao alterar senha:', err);
     showAlert(modalSenhaAlert, 'Falha ao atualizar a senha. Tente novamente.', 'danger');
   }
+
+  return false;
 }
 
 /**
  * Esqueci Minha Senha
  */
 async function handleEsqueciSenha(e) {
-  e.preventDefault();
+  if (e && e.preventDefault) e.preventDefault();
   esconderAlert(modalEsqueciAlert);
 
   const email = esqueciEmailInput.value.trim().toLowerCase();
   if (!email) {
     showAlert(modalEsqueciAlert, 'Por favor, informe seu e-mail institucional.', 'warning');
-    return;
+    return false;
   }
 
   try {
@@ -563,7 +775,7 @@ async function handleEsqueciSenha(e) {
 
     if (error) {
       showAlert(modalEsqueciAlert, `Erro: ${error.message}`, 'danger');
-      return;
+      return false;
     }
 
     showAlert(modalEsqueciAlert, 'Link de redefinição enviado com sucesso para o seu e-mail institucional!', 'success');
@@ -573,14 +785,16 @@ async function handleEsqueciSenha(e) {
     console.error('[PadrinhoApp] Erro ao enviar recuperação:', err);
     showAlert(modalEsqueciAlert, 'Falha ao processar solicitação. Tente novamente.', 'danger');
   }
+
+  return false;
 }
 
 /**
  * Utilitários de Interface
  */
 function exibirTelaLogin() {
-  loginSection.style.display = 'block';
-  dashboardSection.style.display = 'none';
+  if (loginSection) loginSection.style.display = 'block';
+  if (dashboardSection) dashboardSection.style.display = 'none';
   if (loginPasswordInput) loginPasswordInput.value = '';
 }
 
