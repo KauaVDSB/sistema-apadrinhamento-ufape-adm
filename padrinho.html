@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Portal do Padrinho & Madrinha | ADM UFAPE</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Oficial do Sistema -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%230E2A47%22/><text x=%2250%22 y=%2260%22 font-family=%22sans-serif%22 font-size=%2238%22 font-weight=%22bold%22 fill=%22%23C9A227%22 text-anchor=%22middle%22>ADM</text></svg>">
+</head>
+<body class="padrinho-portal-body">
+
+  <!-- =========================================================================
+       HEADER / NAVBAR DO PORTAL
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="container navbar">
+      <div class="brand-container">
+        <a href="index.html" class="brand-link" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none;">
+          <img src="assets/img/brasao-ufape.png" alt="Brasão UFAPE" class="brand-logo-img">
+          <div class="brand-info">
+            <span class="brand-title">ADM UFAPE</span>
+            <span class="brand-tag">Portal do Mentor</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Voltar ao Início
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       CONTAINER PRINCIPAL DO PORTAL
+       ========================================================================= -->
+  <main class="portal-main-content">
+    <div class="container">
+
+      <!-- =====================================================================
+           ESTADO 1: TELA DE LOGIN (NÃO AUTENTICADO)
+           ===================================================================== -->
+      <section id="padrinho-login-section" class="portal-card-login">
+        <div class="portal-login-header">
+          <div class="portal-icon-badge">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h1 class="portal-login-title">Portal dos Padrinhos & Madrinhas</h1>
+          <p class="portal-login-subtitle">
+            Acesso exclusivo para os mentores veteranos do 2º período de Administração da UFAPE.
+          </p>
+        </div>
+
+        <!-- Alerta de Feedback de Login -->
+        <div id="login-alert" class="portal-alert" style="display: none;" role="alert"></div>
+
+        <form id="padrinho-login-form" class="portal-form" novalidate>
+          <div class="form-group">
+            <label for="login-email" class="form-label">E-mail Institucional</label>
+            <input 
+              type="email" 
+              id="login-email" 
+              class="form-input" 
+              placeholder="seu.nome@ufape.edu.br" 
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+              <label for="login-password" class="form-label" style="margin-bottom: 0;">Senha</label>
+              <button type="button" id="btn-toggle-esqueci" class="portal-link-btn" style="font-size: 0.8rem;">
+                Esqueci minha senha
+              </button>
+            </div>
+            <input 
+              type="password" 
+              id="login-password" 
+              class="form-input" 
+              placeholder="Digite sua senha" 
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block portal-submit-btn">
+            <span>Entrar no Portal</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Box de Instruções de Primeiro Acesso -->
+        <div class="portal-login-info-box">
+          <div class="info-box-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+          </div>
+          <div class="info-box-text">
+            <strong>Primeiro acesso com senha provisória?</strong>
+            <p>Utilize a senha enviada pela coordenação. Assim que entrar, você poderá cadastrar sua senha definitiva no botão superior.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           ESTADO 2: DASHBOARD DO MENTOR (AUTENTICADO)
+           ===================================================================== -->
+      <section id="padrinho-dashboard-section" class="portal-dashboard" style="display: none;">
+        
+        <!-- Header do Mentor -->
+        <div class="mentor-profile-banner">
+          <div class="mentor-banner-main">
+            <div id="mentor-monogram" class="monogram-avatar avatar-lg">--</div>
+            <div class="mentor-banner-info">
+              <div class="mentor-badges-row">
+                <span class="badge badge-accent">Mentor Oficial 2026.2</span>
+                <span id="mentor-admin-badge" class="badge badge-primary" style="display: none;">Coordenação</span>
+              </div>
+              <h1 id="mentor-name" class="mentor-banner-name">Carregando...</h1>
+              <p id="mentor-email" class="mentor-banner-email">carregando@ufape.edu.br</p>
+            </div>
+          </div>
+
+          <div class="mentor-banner-actions">
+            <button type="button" id="btn-abrir-troca-senha" class="btn btn-outline btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Alterar Senha
+            </button>
+            <button type="button" id="btn-logout" class="btn btn-secondary btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Sair
+            </button>
+          </div>
+        </div>
+
+        <!-- Card de Progresso da Cota (4 Vagas) -->
+        <div class="portal-quota-card">
+          <div class="quota-card-header">
+            <div>
+              <span class="quota-card-subtitle">Ocupação da sua Cota de Mentoria</span>
+              <h2 id="quota-headline" class="quota-card-title">0 de 4 afilhados vinculados</h2>
+            </div>
+            <div id="quota-remaining-badge" class="quota-remaining-badge">4 vagas restantes</div>
+          </div>
+          
+          <div class="quota-progress-track">
+            <div id="quota-progress-bar" class="quota-progress-fill" style="width: 0%;"></div>
+          </div>
+
+          <p id="quota-encouragement" class="quota-card-tip">
+            Seus futuros afilhados estão conhecendo os perfis e realizando a confirmação.
+          </p>
+        </div>
+
+        <!-- Seção de Afilhados -->
+        <div class="portal-afilhados-section">
+          <div class="afilhados-section-header">
+            <div>
+              <h2 class="afilhados-section-title">Seus Afilhados Confirmados</h2>
+              <p class="afilhados-section-subtitle">
+                Entre em contato com eles antes do encontro presencial na Quadra da UFAPE.
+              </p>
+            </div>
+            <button type="button" id="btn-recarregar-afilhados" class="btn btn-outline btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"/>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+              </svg>
+              Atualizar Lista
+            </button>
+          </div>
+
+          <!-- Estado Vazio (Sem afilhados ainda) -->
+          <div id="afilhados-empty-state" class="afilhados-empty-box" style="display: none;">
+            <div class="empty-icon-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3 class="empty-state-title">Nenhum afilhado vinculado ainda</h3>
+            <p class="empty-state-text">
+              Assim que os calouros selecionarem você no sistema, eles aparecerão aqui instantaneamente com seus números de WhatsApp, Instagram e respostas do formulário!
+            </p>
+          </div>
+
+          <!-- Grid de Cards de Afilhados -->
+          <div id="afilhados-grid" class="afilhados-cards-grid">
+            <!-- Injetado dinamicamente via padrinho-app.js -->
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       MODAL: ALTERAR SENHA
+       ========================================================================= -->
+  <div id="modal-alterar-senha" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-troca-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-troca-title" class="modal-title">Alterar Minha Senha</h2>
+        <button type="button" id="btn-fechar-modal-senha" class="modal-close-btn" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-description">
+          Cadastre sua nova senha de acesso pessoal. Ela deve conter no mínimo 6 caracteres.
+        </p>
+
+        <div id="modal-senha-alert" class="portal-alert" style="display: none;" role="alert"></div>
+
+        <form id="form-alterar-senha" novalidate>
+          <div class="form-group">
+            <label for="nova-senha" class="form-label">Nova Senha</label>
+            <input 
+              type="password" 
+              id="nova-senha" 
+              class="form-input" 
+              placeholder="Digite sua nova senha" 
+              required
+              minlength="6"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="confirma-nova-senha" class="form-label">Confirmar Nova Senha</label>
+            <input 
+              type="password" 
+              id="confirma-nova-senha" 
+              class="form-input" 
+              placeholder="Repita sua nova senha" 
+              required
+              minlength="6"
+            >
+          </div>
+
+          <div class="modal-actions-group">
+            <button type="button" id="btn-cancelar-modal-senha" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" id="btn-salvar-nova-senha" class="btn btn-primary">
+              Salvar Nova Senha
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: ESQUECI MINHA SENHA
+       ========================================================================= -->
+  <div id="modal-esqueci-senha" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-esqueci-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-esqueci-title" class="modal-title">Recuperação de Senha</h2>
+        <button type="button" id="btn-fechar-modal-esqueci" class="modal-close-btn" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-description">
+          Informe seu e-mail institucional da UFAPE. Se você for um mentor cadastrado, você receberá um link seguro para redefinição.
+        </p>
+
+        <div id="modal-esqueci-alert" class="portal-alert" style="display: none;" role="alert"></div>
+
+        <form id="form-esqueci-senha" novalidate>
+          <div class="form-group">
+            <label for="esqueci-email" class="form-label">E-mail Institucional</label>
+            <input 
+              type="email" 
+              id="esqueci-email" 
+              class="form-input" 
+              placeholder="seu.nome@ufape.edu.br" 
+              required
+            >
+          </div>
+
+          <div class="modal-actions-group">
+            <button type="button" id="btn-cancelar-modal-esqueci" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" id="btn-enviar-esqueci" class="btn btn-primary">
+              Enviar Link de Recuperação
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer" style="margin-top: 4rem;">
+    <div class="container footer-content">
+      <div class="footer-bottom">
+        <div>© 2026 Curso de Bacharelado em Administração - UFAPE. Todos os direitos reservados.</div>
+        <div>Portal do Padrinho & Madrinha • Acesso Restrito</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase JS Oficial (com fallback CDN) -->
+  <script src="vendor/supabase.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'"></script>
+
+  <!-- Injeção Dinâmica de Variáveis de Ambiente -->
+  <script src="js/env.js" onerror="console.info('Modo híbrido local sem js/env.js')"></script>
+
+  <!-- Lógica da Aplicação do Portal -->
+  <script type="module" src="js/padrinho-app.js"></script>
+</body>
+</html>
