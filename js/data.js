@@ -242,14 +242,14 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Lufa-Lufa",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Praticar esportes.",
       "meme_que_representa_sua_personalidade": "Agostinho Carrara da Grande Família, falando que todas as classes odeiam ele.",
-      "figurinha_que_representou_o_primeiro_periodo": "O veterano informou: \"Não sou de usar figurinhas\" (foco no papo direto!).",
+      "figurinha_que_representou_o_primeiro_periodo": "Não sou de usar figurinhas.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Mano Brown (Racionais MC's)."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
       "materia_que_mais_testou_a_sanidade": "Matemática Aplicada.",
       "area_da_administracao_que_mais_chama_atencao": "Economia.",
-      "maior_choque_de_realidade": "Matemática é cruel, mas com estudo em grupo a gente vence!"
+      "maior_choque_de_realidade": "Matemática é cruel..."
     },
     "vida_universitaria": {
       "momento_mais_engracado": "Contar os décimos das notas, tipo contando migalhas para ver se passo.",
@@ -345,7 +345,7 @@ export const PADRINHOS = [
       "maior_choque_de_realidade": "Que a faculdade é bem mais tranquila e livre do que a escola."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Comemorar o aniversário de dois amigos na cantina com a turma toda.",
+      "momento_mais_engracado": "Comemorar o aniversário de dois amigos na cantina.",
       "momento_em_que_percebeu_que_virou_universitario": "Todas as provas caindo exatamente na mesma semana.",
       "coisa_que_eliminaria_da_vida_universitaria": "Projeto de extensão com prazos acumulados."
     },
@@ -427,8 +427,8 @@ export const PADRINHOS = [
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Corvinal",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Desenhar, ouvir música e assistir anime.",
-      "meme_que_representa_sua_personalidade": "Meme não informado pela madrinha.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha não informada pela madrinha.",
+      "meme_que_representa_sua_personalidade": "Não informado.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Ana Caetano (duo Anavitória)."
     },
     "experiencia_no_curso": {
@@ -614,8 +614,8 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Sonserina",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Cozinhar.",
       "meme_que_representa_sua_personalidade": "Qualquer um do IShowSpeed com energia a 1000%.",
-      "figurinha_que_representou_o_primeiro_periodo": "😱 (O susto sincero com as matérias e provas).",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Cristiano Ronaldo (SIUUU!)."
+      "figurinha_que_representou_o_primeiro_periodo": "😱",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Cristiano Ronaldo."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Contabilidade e Administração.",
@@ -707,7 +707,7 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Grifinória",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Jogar bola ou sair com os amigos.",
       "meme_que_representa_sua_personalidade": "O da criança chorando porque o Corinthians foi campeão.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha não informada pelo padrinho.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Yuri Alberto."
     },
     "experiencia_no_curso": {
@@ -718,7 +718,7 @@ export const PADRINHOS = [
     },
     "vida_universitaria": {
       "momento_mais_engracado": "Os momentos com meus amigos da sala.",
-      "momento_em_que_percebeu_que_virou_universitario": "A sensação pós-prova de que agora é sério!",
+      "momento_em_que_percebeu_que_virou_universitario": "\"Agora fudeu\"",
       "coisa_que_eliminaria_da_vida_universitaria": "Matemática."
     },
     "hobbies": [
@@ -893,7 +893,7 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Lufa-Lufa",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir filmes, jogar futebol e dormir.",
       "meme_que_representa_sua_personalidade": "The Office.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha não informada pelo padrinho.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Robert De Niro."
     },
     "experiencia_no_curso": {
@@ -1079,7 +1079,7 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Sonserina",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Gosto de jogar, ler e gosto muito de sair com meu amigos, são os melhores momentos que tenho.",
       "meme_que_representa_sua_personalidade": "\"O capitalismo só vai acabar quando nós, o povo soviético saímos apedrejando todos os carros que tiverem na rua. E eu quero todo mundo parando de trabalhar nessa porra!\"",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha não informada pelo padrinho.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Major RD."
     },
     "experiencia_no_curso": {

@@ -681,16 +681,6 @@ class ApadrinhamentoApp {
 
     if (tabKey === 'conhecer') {
       const c = p.para_conhecer_voce;
-      const formatarMemeOuFigurinha = (texto, tipo) => {
-        if (!texto || texto.trim() === '' || texto.toLowerCase().includes('não sou de usar') || texto.toLowerCase().includes('não informou') || texto.toLowerCase().includes('nenhum')) {
-          return `<div style="color: var(--text-muted); font-style: italic; display: flex; align-items: center; gap: 0.4rem;">
-            <span>ℹ️</span>
-            <span>${texto || `Não informou ${tipo} específico — prefere o papo direto na cerimônia!`}</span>
-          </div>`;
-        }
-        return `<div>${texto}</div>`;
-      };
-
       html = `
         <div class="profile-qa-card">
           <div class="profile-qa-title">Casa de Hogwarts</div>
@@ -701,12 +691,12 @@ class ApadrinhamentoApp {
           <div class="profile-qa-answer">${c.o_que_gosta_de_fazer_quando_nao_esta_estudando}</div>
         </div>
         <div class="profile-qa-card">
-          <div class="profile-qa-title">Frase ou referência sobre sua personalidade</div>
-          <div class="profile-qa-answer">${formatarMemeOuFigurinha(c.meme_que_representa_sua_personalidade, 'meme')}</div>
+          <div class="profile-qa-title">Frase ou meme sobre sua personalidade</div>
+          <div class="profile-qa-answer">${c.meme_que_representa_sua_personalidade}</div>
         </div>
         <div class="profile-qa-card">
-          <div class="profile-qa-title">Como resume seu primeiro período</div>
-          <div class="profile-qa-answer">${formatarMemeOuFigurinha(c.figurinha_que_representou_o_primeiro_periodo, 'figurinha')}</div>
+          <div class="profile-qa-title">Que figurinha resume seu primeiro período?</div>
+          <div class="profile-qa-answer">${c.figurinha_que_representou_o_primeiro_periodo}</div>
         </div>
         <div class="profile-qa-card">
           <div class="profile-qa-title">Personalidade marcante para sentar ao lado na aula</div>
@@ -729,7 +719,7 @@ class ApadrinhamentoApp {
           <div class="profile-qa-answer">${e.area_da_administracao_que_mais_chama_atencao}</div>
         </div>
         <div class="profile-qa-card" style="border-left-color: var(--warm-gold);">
-          <div class="profile-qa-title">Maior aprendizado ao ingressar na universidade</div>
+          <div class="profile-qa-title">Maior choque de realidade</div>
           <div class="profile-qa-answer">${e.maior_choque_de_realidade}</div>
         </div>
       `;
@@ -1090,9 +1080,10 @@ class ApadrinhamentoApp {
 
     } catch (err) {
       console.error('[ApadrinhamentoApp] Erro na submissão:', err);
+      const detalheErro = err.message ? `<p style="margin-top: 0.8rem; font-size: 0.85rem; color: #dc2626; background: #fef2f2; padding: 0.6rem; border-radius: 6px; text-align: left;"><strong>Detalhe técnico:</strong> ${err.message}</p>` : '';
       httpErrorHandler.show(500, {
         title: 'Não foi possível confirmar o apadrinhamento',
-        message: 'Ocorreu uma instabilidade momentânea na conexão. <strong>Suas respostas foram salvas no navegador</strong> e não foram perdidas.',
+        message: `Ocorreu uma instabilidade na comunicação com o banco de dados. <strong>Suas respostas foram salvas no navegador</strong> e não foram perdidas.${detalheErro}`,
         preserveData: true,
         onRetry: () => this.handleFormSubmit()
       });
