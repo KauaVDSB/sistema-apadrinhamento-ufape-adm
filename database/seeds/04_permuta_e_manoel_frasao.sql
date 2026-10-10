@@ -302,7 +302,7 @@ RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public, pg_temp
-AS 24728
+AS $$
 DECLARE
     v_norm TEXT;
     v_rec RECORD;
@@ -330,7 +330,7 @@ BEGIN
         RETURN jsonb_build_object('cadastrado', false);
     END IF;
 END;
-24728;
+$$;
 
 -- 4. STORED PROCEDURE ATUALIZADA COM REGRA DE 1 PERMUTA E CONCORRÊNCIA ATÔMICA
 CREATE OR REPLACE FUNCTION public.registrar_apadrinhamento(
@@ -347,7 +347,7 @@ RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public, pg_temp
-AS 24728
+AS $$
 DECLARE
     v_limite_maximo INT;
     v_vagas_atuais INT;
@@ -512,7 +512,7 @@ BEGIN
         'message', format('Apadrinhamento confirmado com sucesso com %s!', v_padrinho_nome)
     );
 END;
-24728;
+$$;
 
 -- 5. PERMISSÕES E GRANTS
 GRANT EXECUTE ON FUNCTION public.registrar_apadrinhamento(UUID, TEXT, TEXT, TEXT, TEXT, JSONB, TEXT, TEXT) TO anon, authenticated;
