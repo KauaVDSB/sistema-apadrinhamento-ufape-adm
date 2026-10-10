@@ -97,6 +97,9 @@ CREATE TABLE IF NOT EXISTS public.apadrinhamentos (
     respostas JSONB NOT NULL DEFAULT '{}'::jsonb,
     ip_origem TEXT,
     user_agent TEXT,
+    permutou BOOLEAN NOT NULL DEFAULT false,
+    padrinho_anterior_id UUID REFERENCES public.padrinhos(id),
+    trocado_em TIMESTAMPTZ,
     criado_em TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
     CONSTRAINT uk_calouro_unico_apadrinhamento UNIQUE (calouro_nome_normalizado)
 );
@@ -238,9 +241,48 @@ TO anon, authenticated
 WITH CHECK (true);
 
 -- ==============================================================================
--- 5. FUNÇÃO TRANSACIONAL ANTI-RACE CONDITION (ADR-003)
+-- 5. FUNÇÕES TRANSACIONAIS ANTI-RACE CONDITION E CONSULTA SEGURA (ADR-002 / ADR-003)
 -- ==============================================================================
 
+-- 5.1. Consulta segura do status do calouro (Multi-dispositivo / LGPD Safe)
+CREATE OR REPLACE FUNCTION public.consultar_status_calouro(p_nome TEXT)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $$
+DECLARE
+    v_norm TEXT;
+    v_rec RECORD;
+BEGIN
+    v_norm := public.normalizar_texto(p_nome);
+    IF v_norm IS NULL OR length(v_norm) < 3 THEN
+        RETURN jsonb_build_object('cadastrado', false);
+    END IF;
+
+    SELECT a.id, a.padrinho_id, p.nome AS padrinho_nome, COALESCE(a.permutou, false) AS permutou
+    INTO v_rec
+    FROM public.apadrinhamentos a
+    JOIN public.padrinhos p ON p.id = a.padrinho_id
+    WHERE a.calouro_nome_normalizado = v_norm;
+
+    IF FOUND THEN
+        RETURN jsonb_build_object(
+            'cadastrado', true,
+            'apadrinhamento_id', v_rec.id,
+            'padrinho_id', v_rec.padrinho_id,
+            'padrinho_nome', v_rec.padrinho_nome,
+            'permutou', v_rec.permutou
+        );
+    ELSE
+        RETURN jsonb_build_object('cadastrado', false);
+    END IF;
+END;
+$$;
+
+COMMENT ON FUNCTION public.consultar_status_calouro IS 'Permite consulta pública e segura de status de calouro sem expor contatos sensíveis.';
+
+-- 5.2. Procedimento de Registro e Permuta Única com Lock Pessimista
 CREATE OR REPLACE FUNCTION public.registrar_apadrinhamento(
     p_padrinho_id UUID,
     p_calouro_nome TEXT,
@@ -260,7 +302,9 @@ DECLARE
     v_limite_maximo INT;
     v_vagas_atuais INT;
     v_calouro_normalizado TEXT;
-    v_ja_cadastrado BOOLEAN;
+    v_existente_id UUID;
+    v_padrinho_existente_id UUID;
+    v_ja_permutou BOOLEAN;
     v_novo_id UUID;
     v_padrinho_nome TEXT;
 BEGIN
@@ -275,21 +319,84 @@ BEGIN
         );
     END IF;
 
-    -- 2. Verificar duplicidade de cadastro do calouro
-    SELECT EXISTS (
-        SELECT 1 FROM public.apadrinhamentos 
-        WHERE calouro_nome_normalizado = v_calouro_normalizado
-    ) INTO v_ja_cadastrado;
+    -- 2. Verificar se o calouro já possui cadastro prévio
+    SELECT id, padrinho_id, COALESCE(permutou, false)
+    INTO v_existente_id, v_padrinho_existente_id, v_ja_permutou
+    FROM public.apadrinhamentos
+    WHERE calouro_nome_normalizado = v_calouro_normalizado;
 
-    IF v_ja_cadastrado THEN
+    IF v_existente_id IS NOT NULL THEN
+        -- Caso 2.1: Tentou selecionar exatamente o mesmo padrinho já confirmado
+        IF v_padrinho_existente_id = p_padrinho_id THEN
+            RETURN jsonb_build_object(
+                'success', false,
+                'code', 'MESMO_PADRINHO',
+                'message', 'Você já possui vínculo confirmado com este(a) padrinho/madrinha.'
+            );
+        END IF;
+
+        -- Caso 2.2: Já usou a única troca permitida (permutou = true)
+        IF v_ja_permutou THEN
+            RETURN jsonb_build_object(
+                'success', false,
+                'code', 'LIMITE_PERMUTAS_ATINGIDO',
+                'message', 'Você já utilizou sua única permuta (troca) de padrinho permitida pelo regulamento do programa.'
+            );
+        END IF;
+
+        -- Caso 2.3: Permuta válida (permutou = false). Lock pessimista no padrinho destino
+        SELECT limite_vagas, nome INTO v_limite_maximo, v_padrinho_nome
+        FROM public.padrinhos
+        WHERE id = p_padrinho_id AND ativo = true
+        FOR UPDATE;
+
+        IF NOT FOUND THEN
+            RETURN jsonb_build_object(
+                'success', false,
+                'code', 'PADRINHO_NAO_ENCONTRADO',
+                'message', 'O mentor selecionado não foi encontrado ou está inativo.'
+            );
+        END IF;
+
+        -- Contagem atômica de vagas ocupadas do padrinho destino
+        SELECT count(*)::INT INTO v_vagas_atuais
+        FROM public.apadrinhamentos
+        WHERE padrinho_id = p_padrinho_id;
+
+        IF v_vagas_atuais >= v_limite_maximo THEN
+            RETURN jsonb_build_object(
+                'success', false,
+                'code', 'VAGAS_ESGOTADAS',
+                'message', format('As vagas para %s acabaram de ser preenchidas. Por favor, selecione outro mentor disponível.', v_padrinho_nome)
+            );
+        END IF;
+
+        -- Executa a permuta atômica
+        UPDATE public.apadrinhamentos
+        SET padrinho_anterior_id = padrinho_id,
+            padrinho_id = p_padrinho_id,
+            permutou = true,
+            trocado_em = timezone('utc', now()),
+            calouro_whatsapp = COALESCE(NULLIF(trim(p_calouro_whatsapp), ''), calouro_whatsapp),
+            calouro_instagram = COALESCE(NULLIF(trim(p_calouro_instagram), ''), calouro_instagram),
+            canal_preferido = COALESCE(NULLIF(p_canal_preferido, ''), canal_preferido),
+            respostas = COALESCE(p_respostas, respostas),
+            ip_origem = COALESCE(p_ip_origem, ip_origem),
+            user_agent = COALESCE(p_user_agent, user_agent)
+        WHERE id = v_existente_id;
+
         RETURN jsonb_build_object(
-            'success', false,
-            'code', 'CALOURO_JA_CADASTRADO',
-            'message', 'Você já possui uma escolha de padrinho/madrinha registrada no sistema.'
+            'success', true,
+            'code', 'PERMUTA_REALIZADA',
+            'permuta', true,
+            'apadrinhamento_id', v_existente_id,
+            'padrinho_nome', v_padrinho_nome,
+            'permutou', true,
+            'message', format('Sua permuta para %s foi realizada com sucesso! Lembramos que esta foi sua única troca permitida.', v_padrinho_nome)
         );
     END IF;
 
-    -- 3. Lock Pessimista de Linha (Row-Level Lock) no padrinho selecionado
+    -- 3. Lock Pessimista de Linha (Row-Level Lock) no padrinho selecionado para novo cadastro
     SELECT limite_vagas, nome INTO v_limite_maximo, v_padrinho_nome
     FROM public.padrinhos
     WHERE id = p_padrinho_id AND ativo = true
@@ -308,7 +415,7 @@ BEGIN
     FROM public.apadrinhamentos
     WHERE padrinho_id = p_padrinho_id;
 
-    -- 5. Validação da Cota Máxima (5 vagas gerais / 4 para a madrinha especial)
+    -- 5. Validação da Cota Máxima (4 vagas por mentor)
     IF v_vagas_atuais >= v_limite_maximo THEN
         RETURN jsonb_build_object(
             'success', false,
@@ -317,7 +424,7 @@ BEGIN
         );
     END IF;
 
-    -- 6. Inserção atômica do vínculo
+    -- 6. Inserção atômica do vínculo inicial
     INSERT INTO public.apadrinhamentos (
         padrinho_id,
         calouro_nome,
@@ -327,7 +434,8 @@ BEGIN
         canal_preferido,
         respostas,
         ip_origem,
-        user_agent
+        user_agent,
+        permutou
     )
     VALUES (
         p_padrinho_id,
@@ -338,7 +446,8 @@ BEGIN
         p_canal_preferido,
         COALESCE(p_respostas, '{}'::jsonb),
         p_ip_origem,
-        p_user_agent
+        p_user_agent,
+        false
     )
     RETURNING id INTO v_novo_id;
 
@@ -346,9 +455,11 @@ BEGIN
     RETURN jsonb_build_object(
         'success', true,
         'code', 'APADRINHAMENTO_CONFIRMADO',
+        'permuta', false,
         'apadrinhamento_id', v_novo_id,
         'padrinho_nome', v_padrinho_nome,
-        'vagas_restantes_apos_escolha', GREATEST(0, v_limite_maximo - (v_vagas_atuais + 1))
+        'permutou', false,
+        'message', format('Apadrinhamento confirmado com sucesso com %s!', v_padrinho_nome)
     );
 END;
 $$;

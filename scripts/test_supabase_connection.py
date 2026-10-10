@@ -83,10 +83,10 @@ def main():
             print(f"  [DADOS] Total de mentores encontrados: {len(data)}")
             for p in data:
                 print(f"    - {p.get('nome')} ({p.get('iniciais')}): {p.get('limite_vagas')} vagas totais | {p.get('vagas_restantes')} disponiveis")
-            if len(data) == 9:
-                print("  [OK] Todos os 9 padrinhos oficiais estao cadastrados e com cotas ativas!")
+            if len(data) == 10:
+                print("  [OK] Todos os 10 padrinhos oficiais estao cadastrados e com cotas ativas!")
             else:
-                print(f"  [ALERTA] Esperado 9 mentores, retornado {len(data)}. Verifique a seed 01_padrinhos_reais.sql.")
+                print(f"  [ALERTA] Esperado 10 mentores, retornado {len(data)}. Verifique a seed 04_permuta_e_manoel_frasao.sql.")
     except urllib.error.HTTPError as e:
         print(f"  [ERRO HTTP {e.code}]: {e.reason}")
         corpo = e.read().decode('utf-8')

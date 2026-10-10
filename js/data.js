@@ -177,7 +177,7 @@ export const QUIZ_QUESTIONS = [
 export const PADRINHOS = [
   {
     "id": 1,
-    "nome": "Adelmo Felix de Brito Leite",
+    "nome": "Adelmo Felix",
     "iniciais": "AF",
     "genero": "ele",
     "email_institucional": "adelmo.felix@ufape.edu.br",
@@ -187,7 +187,7 @@ export const PADRINHOS = [
     "areaDestaque": "Economia & Gestão Geral",
     "lemas": "Determinado e parceiro: o aprendizado é construído passo a passo com dedicação!",
     "resumo": "Praticante de esportes e focado no crescimento acadêmico. Enfrentou a matemática aplicada com garra e acolhe com energia positiva.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "C",
@@ -242,14 +242,14 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Lufa-Lufa",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Praticar esportes.",
       "meme_que_representa_sua_personalidade": "Agostinho Carrara da Grande Família, falando que todas as classes odeiam ele.",
-      "figurinha_que_representou_o_primeiro_periodo": "Não sou muito de usar figurinhas (foco no papo direto!).",
+      "figurinha_que_representou_o_primeiro_periodo": "Não sou de usar figurinhas.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Mano Brown (Racionais MC's)."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
       "materia_que_mais_testou_a_sanidade": "Matemática Aplicada.",
       "area_da_administracao_que_mais_chama_atencao": "Economia.",
-      "maior_choque_de_realidade": "Matemática é cruel, mas com estudo em grupo a gente vence!"
+      "maior_choque_de_realidade": "Matemática é cruel..."
     },
     "vida_universitaria": {
       "momento_mais_engracado": "Contar os décimos das notas, tipo contando migalhas para ver se passo.",
@@ -270,7 +270,7 @@ export const PADRINHOS = [
   },
   {
     "id": 2,
-    "nome": "Anderson Daniel Oliveira Leite",
+    "nome": "Anderson Daniel",
     "iniciais": "AD",
     "genero": "ele",
     "email_institucional": "anderson.daniel@ufape.edu.br",
@@ -280,7 +280,7 @@ export const PADRINHOS = [
     "areaDestaque": "Gestão Financeira & Economia",
     "lemas": "A universidade é bem mais tranquila e proveitosa quando você encontra bons amigos e o ritmo certo!",
     "resumo": "Espirituoso, gamer e focado em finanças. Acredita no equilíbrio entre o foco nas matérias de economia e as amizades da cantina.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "A",
@@ -345,9 +345,9 @@ export const PADRINHOS = [
       "maior_choque_de_realidade": "Que a faculdade é bem mais tranquila e livre do que a escola."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Comemorar o aniversário de dois amigos na cantina com a turma toda.",
+      "momento_mais_engracado": "Comemorar o aniversário de dois amigos na cantina.",
       "momento_em_que_percebeu_que_virou_universitario": "Todas as provas caindo exatamente na mesma semana.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Projetos de extensão com prazos acumulados."
+      "coisa_que_eliminaria_da_vida_universitaria": "Projeto de extensão com prazos acumulados."
     },
     "hobbies": [
       "Jogos Mobile",
@@ -363,8 +363,8 @@ export const PADRINHOS = [
   },
   {
     "id": 3,
-    "nome": "Maria Cibele da Silva Leite",
-    "iniciais": "MC",
+    "nome": "Cibele Leite",
+    "iniciais": "CL",
     "genero": "ela",
     "email_institucional": "cibele.leite@ufape.edu.br",
     "periodo": "2º Período de Administração - UFAPE",
@@ -373,7 +373,7 @@ export const PADRINHOS = [
     "areaDestaque": "Empreendedorismo, Marketing & Contabilidade",
     "lemas": "Administrar o curso é aprender primeiro a administrar a própria vida e a rotina!",
     "resumo": "Criativa, desenhista e atenta aos detalhes. Apaixonada por marketing, contabilidade introdutória e animes.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "A",
@@ -427,20 +427,20 @@ export const PADRINHOS = [
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Corvinal",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Desenhar, ouvir música e assistir anime.",
-      "meme_que_representa_sua_personalidade": "Meme reflexivo sobre organização e rotina universitária.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha fofa de superação acadêmica.",
+      "meme_que_representa_sua_personalidade": "Não informado.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Ana Caetano (duo Anavitória)."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Contabilidade.",
       "materia_que_mais_testou_a_sanidade": "Matemática aplicada à Administração.",
       "area_da_administracao_que_mais_chama_atencao": "Empreendedorismo e Marketing.",
-      "maior_choque_de_realidade": "Descobrir que além de aprender Administração, eu precisava administrar minha própria vida, prazos e rotina com autonomia."
+      "maior_choque_de_realidade": "Descobrir que além de aprender Administração, eu também precisava aprender a administrar minha própria vida, meus prazos e minha falta de organização. A faculdade exige muito mais organização e responsabilidade do que eu imaginava."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Nos primeiros dias de aula acabei saindo da sala para andar um pouco e quase me perdi no campus da UFAPE.",
-      "momento_em_que_percebeu_que_virou_universitario": "Quando usei a farda de Administração da UFAPE pela primeira vez e caiu a ficha real de ser universitária.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Seminários em grupo obrigatórios."
+      "momento_mais_engracado": "Um momento engraçado foi que nos primeiros dias de aula acabei saindo da sala pra andar um pouco e quase me perdi no campus.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando usei a farda de Administração pela primeira vez me fez cair a real que realmente tinha me tornado uma universitária.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Eliminaria os seminários. Com certeza."
     },
     "hobbies": [
       "Desenho & Ilustração",
@@ -456,7 +456,7 @@ export const PADRINHOS = [
   },
   {
     "id": 4,
-    "nome": "Heloísa Pereira Barreto",
+    "nome": "Heloísa Barreto",
     "iniciais": "HB",
     "genero": "ela",
     "email_institucional": "heloisa.barreto@ufape.edu.br",
@@ -466,7 +466,7 @@ export const PADRINHOS = [
     "areaDestaque": "Gestão Financeira & Estratégia",
     "lemas": "Curiosidade intelectual sem limites: se alguém escreveu, eu vou estudar até entender tudo!",
     "resumo": "Idealizadora do programa de apadrinhamento e líder nata. Leitora voraz, apaixonada pelo mercado financeiro e por autonomia acadêmica.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "A",
@@ -519,21 +519,21 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Corvinal",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ler livros envolventes e aprender coisas novas e aleatórias sobre o mundo.",
-      "meme_que_representa_sua_personalidade": "Clóvis de Barros Filho: 'Como pode um cara escrever uma coisa que eu não entenda? Não tem como. Eu vou ler até entender!'",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha de determinação nos estudos.",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Emma Watson (inteligente, engajada e incrível para debater ideias)."
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Gosto de ler e aprender coisas aleatórias.",
+      "meme_que_representa_sua_personalidade": "Clóvis de Barros Filho: \"Como pode um cara escrever uma coisa que eu não entenda? Não tem como. Eu vou ler aquela merda até entender!\"",
+      "figurinha_que_representou_o_primeiro_periodo": "Figurinha enviada à coordenação (em processamento).",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Emma Watson. Acho ela muito inteligente, interessante e seria muito legal conversar com ela sobre estudos, livros e vários outros assuntos."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
       "materia_que_mais_testou_a_sanidade": "Introdução à Economia.",
-      "area_da_administracao_que_mais_chama_atencao": "Área Financeira e Estratégia.",
-      "maior_choque_de_realidade": "Perceber que a universidade exige autonomia total. Ninguém fica cobrando ou lembrando, é você por você mesmo construindo sua história."
+      "area_da_administracao_que_mais_chama_atencao": "A área financeira.",
+      "maior_choque_de_realidade": "Perceber que a faculdade exige muito mais autonomia e organização do que eu imaginava. Ninguém fica lembrando você do que precisa fazer, então acaba sendo muito mais você por você mesmo."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "O professor faltou e a turma convenceu todo mundo pelo WhatsApp que era algo imperdível só para ver o pessoal chegando na sala vazia!",
-      "momento_em_que_percebeu_que_virou_universitario": "Quando me peguei reclamando que tinha matéria demais para estudar e sem saber nem por onde começar.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Trabalhos em grupo com membros que somem."
+      "momento_mais_engracado": "O dia em que o professor de Filosofia faltou e uma galera foi para a aula sem saber. Aí a gente começou a falar no grupo da sala que estava acontecendo uma coisa importante para fazer o pessoal ir também. Quando chegavam lá, descobriam que tinham caído no trote que a gente inventou kkkkkkkkk.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando eu me vi reclamando que tinha coisa demais para estudar e, ao mesmo tempo, sem saber nem por onde começar.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Trabalho em grupo, sem pensar duas vezes."
     },
     "hobbies": [
       "Leitura",
@@ -549,7 +549,7 @@ export const PADRINHOS = [
   },
   {
     "id": 5,
-    "nome": "Joice Vitoria Gonçalves Silva",
+    "nome": "Joice Vitoria",
     "iniciais": "JV",
     "genero": "ela",
     "email_institucional": "joice.vitoria@ufape.edu.br",
@@ -559,7 +559,7 @@ export const PADRINHOS = [
     "areaDestaque": "Contabilidade & Gestão",
     "lemas": "Foco nos objetivos e resiliência total para superar qualquer desafio de cálculo!",
     "resumo": "Espontânea, determinada e apaixonada por culinária. Sincera sobre os percalços de cálculo e sempre disposta a estender a mão aos novos alunos.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "B",
@@ -612,21 +612,21 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Sonserina",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Cozinhar pratos especiais.",
-      "meme_que_representa_sua_personalidade": "Qualquer meme do IShowSpeed com energia a 1000%.",
-      "figurinha_que_representou_o_primeiro_periodo": "😱 (O susto com as notas do período)",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Cristiano Ronaldo (SIUUU!)."
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Cozinhar.",
+      "meme_que_representa_sua_personalidade": "Qualquer um do IShowSpeed com energia a 1000%.",
+      "figurinha_que_representou_o_primeiro_periodo": "😱",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Cristiano Ronaldo."
     },
     "experiencia_no_curso": {
-      "materia_preferida_no_primeiro_periodo": "Contabilidade e Introdução à Administração.",
-      "materia_que_mais_testou_a_sanidade": "Matemática / Cálculo 1.",
+      "materia_preferida_no_primeiro_periodo": "Contabilidade e Administração.",
+      "materia_que_mais_testou_a_sanidade": "Matemática.",
       "area_da_administracao_que_mais_chama_atencao": "Contabilidade.",
-      "maior_choque_de_realidade": "Cálculo 1 na universidade é de verdade!"
+      "maior_choque_de_realidade": "Cálculo I."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Dar risada dos próprios perrengues na cantina com a turma.",
-      "momento_em_que_percebeu_que_virou_universitario": "Quando o desafio de cálculo me fez correr atrás de monitoria com toda a força.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo 1 da grade obrigatória."
+      "momento_mais_engracado": "Dar risada dos próprios perrengues acadêmicos na cantina com a turma.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando reprovei em Cálculo I.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo I."
     },
     "hobbies": [
       "Gastronomia & Culinária",
@@ -642,7 +642,7 @@ export const PADRINHOS = [
   },
   {
     "id": 6,
-    "nome": "Jones Vitor dos Santos Nascimento",
+    "nome": "Jones Nascimento",
     "iniciais": "JN",
     "genero": "ele",
     "email_institucional": "jones.nascimento@ufape.edu.br",
@@ -652,7 +652,7 @@ export const PADRINHOS = [
     "areaDestaque": "Estratégia Interempresarial & Filosofia",
     "lemas": "O ambiente universitário é feito de amizades sólidas e visão estratégica de futuro!",
     "resumo": "Sociável, boleiro e focado em estratégia corporativa. Adora debater ética empresarial e aproveitar os bons momentos com os amigos.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "B",
@@ -705,21 +705,21 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Grifinória",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Jogar futebol ou sair com os amigos.",
-      "meme_que_representa_sua_personalidade": "A criança chorando comemorando vitória nos acréscimos.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha de resenha da turma.",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Jogar bola ou sair com os amigos.",
+      "meme_que_representa_sua_personalidade": "O da criança chorando porque o Corinthians foi campeão.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Yuri Alberto."
     },
     "experiencia_no_curso": {
-      "materia_preferida_no_primeiro_periodo": "Filosofia e Ética Geral.",
-      "materia_que_mais_testou_a_sanidade": "Cálculo e Matemática.",
-      "area_da_administracao_que_mais_chama_atencao": "Sistema estratégico e relacionamento entre empresas.",
-      "maior_choque_de_realidade": "Ter que sentar e estudar de verdade todos os dias."
+      "materia_preferida_no_primeiro_periodo": "Filosofia e Ética.",
+      "materia_que_mais_testou_a_sanidade": "Cálculo.",
+      "area_da_administracao_que_mais_chama_atencao": "A parte do sistema estratégico do relacionamento entre as empresas.",
+      "maior_choque_de_realidade": "Ter que estudar."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "As resenhas e risadas incontroláveis no intervalo com os parceiros de sala.",
-      "momento_em_que_percebeu_que_virou_universitario": "Quando cheguei nas provas e pensei: 'Agora é com a gente!'",
-      "coisa_que_eliminaria_da_vida_universitaria": "Matemática excessiva."
+      "momento_mais_engracado": "Os momentos com meus amigos da sala.",
+      "momento_em_que_percebeu_que_virou_universitario": "\"Agora fudeu\"",
+      "coisa_que_eliminaria_da_vida_universitaria": "Matemática."
     },
     "hobbies": [
       "Futebol",
@@ -735,8 +735,8 @@ export const PADRINHOS = [
   },
   {
     "id": 7,
-    "nome": "Renaly Ferreira de Andrade",
-    "iniciais": "RF",
+    "nome": "Renaly Andrade",
+    "iniciais": "RA",
     "genero": "ela",
     "email_institucional": "renaly.andrade@ufape.edu.br",
     "periodo": "2º Período de Administração - UFAPE",
@@ -745,7 +745,7 @@ export const PADRINHOS = [
     "areaDestaque": "Gestão de Pessoas & Logística",
     "lemas": "Dedicação aos estudos e cuidado com o bem-estar: equilíbrio é a chave da graduação!",
     "resumo": "Dedicada, fã de academia e séries. Tem grande afinidade com contabilidade introdutória, logística e desenvolvimento de equipes.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "A",
@@ -798,21 +798,21 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Corvinal 💙",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ir à academia e maratonar minhas séries favoritas.",
-      "meme_que_representa_sua_personalidade": "Aquele clássico dos ETs se abraçando em sintonia.",
-      "figurinha_que_representou_o_primeiro_periodo": "A figurinha de desespero simpático com os prazos.",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Algum gênio da matemática 🧮 para tirar dúvidas na hora!"
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ir à academia e assistir minhas séries.",
+      "meme_que_representa_sua_personalidade": "Aquele dos ET se abraçando.",
+      "figurinha_que_representou_o_primeiro_periodo": "A figurinha de desespero.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Algum gênio da matemática. 🧮"
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Contabilidade.",
       "materia_que_mais_testou_a_sanidade": "Cálculo 1.",
       "area_da_administracao_que_mais_chama_atencao": "Gestão de Pessoas e Logística.",
-      "maior_choque_de_realidade": "A transição direta do ensino médio para a rotina intensa da universidade."
+      "maior_choque_de_realidade": "A rotina. Saí direto do ensino médio e foi um choque conciliar tudo."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Sobreviver aos momentos tensos de prova e rir aliviada depois.",
-      "momento_em_que_percebeu_que_virou_universitario": "Quando comecei a deixar os trabalhos para a última hora por causa da rotina cheia.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo 1, sem pensar duas vezes."
+      "momento_mais_engracado": "Não consigo lembrar de nenhum. Foi tudo um pouco tenso.",
+      "momento_em_que_percebeu_que_virou_universitario": "Quando comecei a deixar os trabalhos para a última hora por conta da rotina.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Cálculo 1. Com certeza."
     },
     "hobbies": [
       "Academia & Musculação",
@@ -828,8 +828,8 @@ export const PADRINHOS = [
   },
   {
     "id": 8,
-    "nome": "Richard Charles Silvestre da Silva",
-    "iniciais": "RC",
+    "nome": "Richard Silva",
+    "iniciais": "RS",
     "genero": "ele",
     "email_institucional": "richard.cssilva@ufape.edu.br",
     "periodo": "2º Período de Administração - UFAPE",
@@ -838,7 +838,7 @@ export const PADRINHOS = [
     "areaDestaque": "Finanças Corporativas & Contabilidade",
     "lemas": "O aprendizado justo é aquele incitado pelo esforço, gerando constante perfeição de conhecimento. Passar sem aprender é perder tempo!",
     "resumo": "Reflexivo, cinéfilo e focado no domínio prático das finanças. Valoriza o mérito do estudo sincero e o bom humor entre colegas.",
-    "limite_vagas": 5,
+    "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
         "C",
@@ -891,24 +891,24 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Lufa-Lufa",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir a grandes filmes, jogar futebol e descansar.",
-      "meme_que_representa_sua_personalidade": "Cenas épicas de The Office.",
-      "figurinha_que_representou_o_primeiro_periodo": "Figurinha reflexiva de superação.",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir filmes, jogar futebol e dormir.",
+      "meme_que_representa_sua_personalidade": "The Office.",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Robert De Niro."
     },
     "experiencia_no_curso": {
-      "materia_preferida_no_primeiro_periodo": "Contabilidade Geral.",
-      "materia_que_mais_testou_a_sanidade": "Matemática aplicada à Administração e Contabilidade.",
-      "area_da_administracao_que_mais_chama_atencao": "Finanças Corporativas.",
-      "maior_choque_de_realidade": "O verdadeiro aprendizado exige esforço autêntico; a graduação requer dedicação séria e diária."
+      "materia_preferida_no_primeiro_periodo": "Contabilidade.",
+      "materia_que_mais_testou_a_sanidade": "Matemática aplicada à adm e contabilidade.",
+      "area_da_administracao_que_mais_chama_atencao": "Finanças.",
+      "maior_choque_de_realidade": "O aprendizado justo é aquele incitado pelo esforço, o que gera uma constante perfeita de conhecimento. Passar sem aprender é perder tempo!"
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Quando bati o carro levemente e o grupo da turma transformou o ocorrido em resenha coletiva.",
-      "momento_em_que_percebeu_que_virou_universitario": "Durante a semana clássica de provas com conteúdos densos.",
-      "coisa_que_eliminaria_da_vida_universitaria": "O estresse desnecessário pré-prova."
+      "momento_mais_engracado": "Quando eu bati o carro e ficaram tirando onda no grupo da turma.",
+      "momento_em_que_percebeu_que_virou_universitario": "Período de provas.",
+      "coisa_que_eliminaria_da_vida_universitaria": "O estresse, com certeza."
     },
     "hobbies": [
-      "Cinema Clássico",
+      "Cinema & Séries",
       "Futebol",
       "The Office",
       "Finanças"
@@ -921,7 +921,7 @@ export const PADRINHOS = [
   },
   {
     "id": 9,
-    "nome": "Tamires Ferreira Rodrigues da Silva",
+    "nome": "Tamires Ferreira",
     "iniciais": "TF",
     "genero": "ela",
     "email_institucional": "tamires.ferreira@ufape.edu.br",
@@ -930,7 +930,7 @@ export const PADRINHOS = [
     "casaSlug": "grifinoria",
     "areaDestaque": "Gestão de Pessoas & Introdução à ADM",
     "lemas": "Acolhimento caloroso e amizade verdadeira: dividindo a sala com pessoas incríveis e construindo pontes!",
-    "resumo": "Sociável, alegre e empática. Tem uma cota especial de 4 vagas e muita energia para orientar na adaptação à rotina da UFAPE.",
+    "resumo": "Sociável, alegre e empática. Tem 4 vagas e muita energia para orientar na adaptação à rotina da UFAPE.",
     "limite_vagas": 4,
     "respostasEsperadas": {
       "1": [
@@ -984,21 +984,21 @@ export const PADRINHOS = [
     },
     "para_conhecer_voce": {
       "casa_de_hogwarts": "Grifinória",
-      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Sair com os amigos para passear e conversar.",
-      "meme_que_representa_sua_personalidade": "Confundir o cachorro com uma pedra na rua por falta de atenção.",
-      "figurinha_que_representou_o_primeiro_periodo": "Menininho chorando de emoção com o final do semestre.",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Zezé Di Camargo (para dar um show ao vivo na sala!)."
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Sair com amigos.",
+      "meme_que_representa_sua_personalidade": "Confundir o cachorro com uma pedra na rua.",
+      "figurinha_que_representou_o_primeiro_periodo": "Menininho chorando.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Zezé Di Camargo, pra fazer um show ao vivo."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
       "materia_que_mais_testou_a_sanidade": "Introdução à Economia.",
       "area_da_administracao_que_mais_chama_atencao": "Gestão de Pessoas.",
-      "maior_choque_de_realidade": "Descobrir que os professores da UFAPE são super compreensíveis e acolhedores quando a gente conversa."
+      "maior_choque_de_realidade": "Professores super compreensíveis."
     },
     "vida_universitaria": {
-      "momento_mais_engracado": "Sair com os amigos pós-prova direto para comer pastel na feira e esquecer as questões difíceis.",
-      "momento_em_que_percebeu_que_virou_universitario": "Dividir a sala diariamente com pessoas super inteligentes e dedicadas.",
-      "coisa_que_eliminaria_da_vida_universitaria": "Provas longas e cansativas."
+      "momento_mais_engracado": "Sair com amigo(a)s pós-prova pra comer pastel.",
+      "momento_em_que_percebeu_que_virou_universitario": "Dividir a sala com pessoas super inteligentes.",
+      "coisa_que_eliminaria_da_vida_universitaria": "Provas!"
     },
     "hobbies": [
       "Passeios com Amigos",
@@ -1010,6 +1010,99 @@ export const PADRINHOS = [
       "Gestão de Pessoas e Empatia",
       "Comunicação com Professores",
       "Acolhimento aos Calouros"
+    ]
+  },
+  {
+    "id": 10,
+    "nome": "Manoel Frasão",
+    "iniciais": "MF",
+    "genero": "ele",
+    "email_institucional": "manoel.araujoneto@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Sonserina",
+    "casaSlug": "sonserina",
+    "areaDestaque": "Empreendedorismo & Setor Bancário",
+    "lemas": "Apaixonado por inovação e novos negócios: superando os cálculos e construindo oportunidades!",
+    "resumo": "Gamer, leitor e parceiro de resenhas. Venceu os desafios de cálculo e adora empreendedorismo e o mercado financeiro.",
+    "limite_vagas": 4,
+    "respostasEsperadas": {
+      "1": [
+        "C",
+        "A"
+      ],
+      "2": [
+        "B",
+        "A"
+      ],
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "B",
+        "A"
+      ],
+      "5": [
+        "D",
+        "A"
+      ],
+      "6": [
+        "D",
+        "C"
+      ],
+      "7": [
+        "A",
+        "C"
+      ],
+      "8": [
+        "B",
+        "A"
+      ],
+      "9": [
+        "A",
+        "C"
+      ],
+      "10": [
+        "B",
+        "C"
+      ],
+      "11": [
+        "D",
+        "E"
+      ],
+      "12": [
+        "C",
+        "E"
+      ]
+    },
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Sonserina",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Gosto de jogar, ler e gosto muito de sair com meu amigos, são os melhores momentos que tenho.",
+      "meme_que_representa_sua_personalidade": "\"O capitalismo só vai acabar quando nós, o povo soviético saímos apedrejando todos os carros que tiverem na rua. E eu quero todo mundo parando de trabalhar nessa porra!\"",
+      "figurinha_que_representou_o_primeiro_periodo": "Não informada.",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Major RD."
+    },
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Com certeza Introdução a Economia, me ajudou muito a entender vários conceitos que me apareceram no dia a dia.",
+      "materia_que_mais_testou_a_sanidade": "Matemática Aplicada a ADM (cálculo I).",
+      "area_da_administracao_que_mais_chama_atencao": "Sou apaixonado por empreendedorismo, mas gosto de setor bancário também.",
+      "maior_choque_de_realidade": "A diferença de dedicação que você tem que ter, em comparação ao ensino médio."
+    },
+    "vida_universitaria": {
+      "momento_mais_engracado": "Uma crise de riso depois de um colega tirar um tablet GIGANTE pra tirar uma foto do quadro.",
+      "momento_em_que_percebeu_que_virou_universitario": "No meu curso anterior, quando fiz minha primeira prova de Geometria Analítica e acabei tirando 2.",
+      "coisa_que_eliminaria_da_vida_universitaria": "A falta de oportunidades de projetos, visitas técnicas, estágios e etc."
+    },
+    "hobbies": [
+      "Jogos & Games",
+      "Leitura",
+      "Rolê com Amigos",
+      "Empreendedorismo"
+    ],
+    "habilidades_mentoria": [
+      "Introdução à Economia",
+      "Empreendedorismo & Finanças",
+      "Superação em Cálculo"
     ]
   }
 ];

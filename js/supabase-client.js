@@ -92,8 +92,22 @@ class SupabaseService {
     }
 
     try {
+      let padrinhoId = payload.padrinhoId;
+      const isUUID = (val) => typeof val === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
+
+      if (!isUUID(padrinhoId)) {
+        // Tenta resolver pelo catálogo remoto
+        const remotos = await this.getPadrinhos();
+        const encontrado = remotos.find(p => p.nome && payload.padrinhoNome && p.nome.trim().toLowerCase() === payload.padrinhoNome.trim().toLowerCase());
+        if (encontrado && isUUID(encontrado.id)) {
+          padrinhoId = encontrado.id;
+        } else {
+          throw new Error(`O mentor "${payload.padrinhoNome}" ainda não possui UUID ativo no banco. Por favor, execute o script SQL "database/seeds/04_permuta_e_manoel_frasao.sql" no SQL Editor do Supabase.`);
+        }
+      }
+
       const { data, error } = await this.client.rpc('registrar_apadrinhamento', {
-        p_padrinho_id: payload.padrinhoId,
+        p_padrinho_id: padrinhoId,
         p_calouro_nome: payload.calouroNome,
         p_calouro_whatsapp: payload.calouroWhatsapp,
         p_calouro_instagram: payload.calouroInstagram || '',
@@ -104,13 +118,33 @@ class SupabaseService {
       });
 
       if (error) {
-        throw error;
+        throw new Error(error.message || 'Falha ao executar Stored Procedure no Supabase.');
       }
 
       return data;
     } catch (err) {
       console.error('[SupabaseService] Erro ao executar RPC registrar_apadrinhamento:', err);
       throw err;
+    }
+  }
+
+  /**
+   * Consulta se o calouro já possui vínculo registrado e se já realizou permuta (Multi-dispositivo)
+   */
+  async consultarStatusCalouro(nome) {
+    if (!this.isConfigured() || !nome || nome.trim().length < 3) {
+      return { cadastrado: false };
+    }
+
+    try {
+      const { data, error } = await this.client.rpc('consultar_status_calouro', {
+        p_nome: nome.trim()
+      });
+      if (error) throw error;
+      return data || { cadastrado: false };
+    } catch (err) {
+      console.warn('[SupabaseService] Falha ao consultar status do calouro no banco:', err);
+      return { cadastrado: false };
     }
   }
 

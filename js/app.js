@@ -17,6 +17,9 @@ class ApadrinhamentoApp {
     this.matchResults = [];
     this.selectedPadrinho = null;
     this.confirmedPadrinho = null;
+    this.trocasRealizadas = 0;
+    this.isPermuta = false;
+    this.padrinhoPermutaAlvo = null;
     this.calouroData = null;
     this.currentFilter = 'all';
 
@@ -24,7 +27,7 @@ class ApadrinhamentoApp {
     this.padrinhos = PADRINHOS.map(p => ({
       ...p,
       vagas_ocupadas: 0,
-      vagas_restantes: p.limite_vagas || 5,
+      vagas_restantes: p.limite_vagas || 4,
       esgotado: false
     }));
 
@@ -96,6 +99,13 @@ class ApadrinhamentoApp {
     // Header & Reminder Bar Elements
     this.navActionBtn = document.getElementById('nav-action-btn');
     this.calouroReminderBar = document.getElementById('calouro-reminder-bar');
+
+    // Permuta Modal Elements (ADR-005)
+    this.permutaModal = document.getElementById('permuta-modal');
+    this.permutaMentorAtual = document.getElementById('permuta-mentor-atual');
+    this.permutaMentorNovo = document.getElementById('permuta-mentor-novo');
+    this.btnPermutaCancelar = document.getElementById('btn-permuta-cancelar');
+    this.btnPermutaConfirmar = document.getElementById('btn-permuta-confirmar');
   }
 
   loadStateFromStorage() {
@@ -105,6 +115,7 @@ class ApadrinhamentoApp {
         const parsed = JSON.parse(saved);
         if (parsed.userAnswers) this.userAnswers = parsed.userAnswers;
         if (parsed.calouroData) this.calouroData = parsed.calouroData;
+        if (parsed.permutou !== undefined) this.permutou = Boolean(parsed.permutou);
         if (parsed.confirmedPadrinhoId) {
           this.confirmedPadrinho = this.padrinhos.find(p => p.id === parsed.confirmedPadrinhoId) || PADRINHOS.find(p => p.id === parsed.confirmedPadrinhoId);
         }
@@ -123,7 +134,8 @@ class ApadrinhamentoApp {
       const dataToSave = {
         userAnswers: this.userAnswers,
         confirmedPadrinhoId: this.confirmedPadrinho ? this.confirmedPadrinho.id : null,
-        calouroData: this.calouroData
+        calouroData: this.calouroData,
+        permutou: this.permutou
       };
       localStorage.setItem('ufape_adm_apadrinhamento', JSON.stringify(dataToSave));
     } catch (e) {
@@ -184,21 +196,17 @@ class ApadrinhamentoApp {
     this.btnPrevQuestion.addEventListener('click', () => this.goToPrevQuestion());
     this.btnNextQuestion.addEventListener('click', () => this.goToNextQuestion());
 
-    // Botões de demonstração rápida
-    document.getElementById('demo-lucas-btn')?.addEventListener('click', () => {
-      this.simularRespostasPara(1); // Lucas Andrade
-    });
-    document.getElementById('demo-mariana-btn')?.addEventListener('click', () => {
-      this.simularRespostasPara(2); // Mariana Alves
-    });
-    document.getElementById('demo-random-btn')?.addEventListener('click', () => {
-      this.simularRespostasAleatorias();
-    });
-
     // Modal Events
     this.modalCloseBtn.addEventListener('click', () => this.closeProfileModal());
     this.profileModal.addEventListener('click', (e) => {
       if (e.target === this.profileModal) this.closeProfileModal();
+    });
+
+    // Permuta Modal Events (ADR-005)
+    this.btnPermutaCancelar?.addEventListener('click', () => this.fecharModalPermuta());
+    this.btnPermutaConfirmar?.addEventListener('click', () => this.confirmarPermuta());
+    this.permutaModal?.addEventListener('click', (e) => {
+      if (e.target === this.permutaModal) this.fecharModalPermuta();
     });
 
     this.modalTabs.forEach(tab => {
@@ -212,17 +220,19 @@ class ApadrinhamentoApp {
 
     this.btnModalChoose.addEventListener('click', () => {
       const padrinhoId = parseInt(this.btnModalChoose.dataset.padrinhoId, 10);
-      const padrinho = PADRINHOS.find(p => p.id === padrinhoId);
+      const padrinho = this.padrinhos.find(p => p.id === padrinhoId) || PADRINHOS.find(p => p.id === padrinhoId);
       if (padrinho) {
         this.closeProfileModal();
-        this.selecionarPadrinho(padrinho);
+        this.tentarSelecionarPadrinho(padrinho);
       }
     });
 
     // Ações do Padrinho Campeão (Top Match)
     this.btnChampionChoose.addEventListener('click', () => {
       if (this.matchResults.length > 0) {
-        this.selecionarPadrinho(this.matchResults[0].padrinho);
+        const champ = this.matchResults[0].padrinho;
+        const padrinho = this.padrinhos.find(p => p.id === champ.id) || champ;
+        this.tentarSelecionarPadrinho(padrinho);
       }
     });
 
@@ -260,6 +270,7 @@ class ApadrinhamentoApp {
       });
 
       if (this.inputNome && this.feedbackNome) {
+        let timerBuscaRemota = null;
         const verificarNome = () => {
           const valor = this.inputNome.value.trim();
           if (valor.length < 5) {
@@ -271,6 +282,37 @@ class ApadrinhamentoApp {
           if (st.valido) {
             this.feedbackNome.className = 'nome-validation-feedback success';
             this.feedbackNome.innerHTML = `<span>✓</span> <span>${st.mensagem}</span>`;
+
+            // Verificação remota no Supabase (multi-dispositivo & permuta)
+            clearTimeout(timerBuscaRemota);
+            timerBuscaRemota = setTimeout(async () => {
+              try {
+                const statusRemoto = await supabaseService.consultarStatusCalouro(valor);
+                if (statusRemoto && statusRemoto.cadastrado) {
+                  const mentorCadastrado = this.padrinhos.find(p => 
+                    (statusRemoto.padrinho_id && p.uuid === statusRemoto.padrinho_id) ||
+                    (p.nome && statusRemoto.padrinho_nome && p.nome.trim().toLowerCase() === statusRemoto.padrinho_nome.trim().toLowerCase())
+                  );
+                  if (mentorCadastrado) {
+                    this.confirmedPadrinho = mentorCadastrado;
+                    this.permutou = Boolean(statusRemoto.permutou);
+                    this.saveConfirmedStateToStorage();
+                    this.updateConfirmedUI();
+                    this.renderPadrinhosGrid();
+
+                    if (this.permutou) {
+                      this.feedbackNome.className = 'nome-validation-feedback warning';
+                      this.feedbackNome.innerHTML = `<span>ℹ️</span> <span>Identificamos seu vínculo com <strong>${statusRemoto.padrinho_nome}</strong>. Sua permuta já foi utilizada.</span>`;
+                    } else {
+                      this.feedbackNome.className = 'nome-validation-feedback info';
+                      this.feedbackNome.innerHTML = `<span>✓</span> <span>Vínculo com <strong>${statusRemoto.padrinho_nome}</strong> localizado! Você possui 1 permuta permitida caso deseje trocar.</span>`;
+                    }
+                  }
+                }
+              } catch (err) {
+                console.warn('[ApadrinhamentoApp] Erro na verificação remota do calouro:', err);
+              }
+            }, 400);
           } else {
             this.feedbackNome.className = 'nome-validation-feedback warning';
             this.feedbackNome.innerHTML = `<span>⚠</span> <span>${st.mensagem}</span>`;
@@ -370,31 +412,6 @@ class ApadrinhamentoApp {
     } else {
       this.finalizarQuiz();
     }
-  }
-
-  simularRespostasPara(padrinhoId) {
-    const padrinho = PADRINHOS.find(p => p.id === padrinhoId);
-    if (!padrinho) return;
-
-    QUIZ_QUESTIONS.forEach(q => {
-      const escolhas = padrinho.respostasEsperadas[q.id] || ["A"];
-      this.userAnswers[q.id] = escolhas[0];
-    });
-
-    this.currentQuestionIndex = QUIZ_QUESTIONS.length - 1;
-    this.saveStateToStorage();
-    this.finalizarQuiz();
-  }
-
-  simularRespostasAleatorias() {
-    QUIZ_QUESTIONS.forEach(q => {
-      const idx = Math.floor(Math.random() * q.opcoes.length);
-      this.userAnswers[q.id] = q.opcoes[idx].id;
-    });
-
-    this.currentQuestionIndex = QUIZ_QUESTIONS.length - 1;
-    this.saveStateToStorage();
-    this.finalizarQuiz();
   }
 
   resetQuiz() {
@@ -521,8 +538,46 @@ class ApadrinhamentoApp {
       const isSelected = this.selectedPadrinho && this.selectedPadrinho.id === padrinho.id;
       const vagasRestantes = typeof padrinho.vagas_restantes === 'number'
         ? padrinho.vagas_restantes
-        : (padrinho.limite_vagas || 5);
+        : (padrinho.limite_vagas || 4);
       const esgotado = Boolean(padrinho.esgotado || vagasRestantes <= 0);
+
+      let btnTexto = 'Quero Esse';
+      let btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+      let btnDisabled = false;
+
+      if (isConfirmed) {
+        btnTexto = '✓ Seu Mentor';
+        btnClasses = 'btn btn-primary btn-sm btn-choose-mentor';
+        btnDisabled = false;
+      } else if (this.confirmedPadrinho) {
+        if (this.permutou) {
+          btnTexto = 'Permuta Indisponível';
+          btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+          btnDisabled = true;
+        } else if (esgotado) {
+          btnTexto = 'Esgotado';
+          btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+          btnDisabled = true;
+        } else if (isSelected) {
+          btnTexto = 'Permuta Selecionada';
+          btnClasses = 'btn btn-secondary btn-sm btn-choose-mentor';
+        } else {
+          btnTexto = 'Permutar';
+          btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+        }
+      } else {
+        if (esgotado) {
+          btnTexto = 'Esgotado';
+          btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+          btnDisabled = true;
+        } else if (isSelected) {
+          btnTexto = 'Selecionado';
+          btnClasses = 'btn btn-secondary btn-sm btn-choose-mentor';
+        } else {
+          btnTexto = 'Quero Esse';
+          btnClasses = 'btn btn-outline btn-sm btn-choose-mentor';
+        }
+      }
 
       const card = document.createElement('div');
       card.className = 'padrinho-card';
@@ -547,10 +602,8 @@ class ApadrinhamentoApp {
         </div>
         <div class="padrinho-card-footer">
           <button class="btn btn-secondary btn-sm btn-view-profile" style="flex: 1;">Ver Perfil</button>
-          <button class="btn ${isConfirmed ? 'btn-primary' : (isSelected ? 'btn-secondary' : 'btn-outline')} btn-sm btn-choose-mentor" 
-                  style="flex: 1.2;" 
-                  ${esgotado && !isConfirmed ? 'disabled' : ''}>
-            ${isConfirmed ? '✓ Seu Mentor' : (isSelected ? 'Selecionado' : (esgotado ? 'Esgotado' : 'Quero Esse'))}
+          <button class="${btnClasses}" style="flex: 1.2;" ${btnDisabled ? 'disabled' : ''}>
+            ${btnTexto}
           </button>
         </div>
       `;
@@ -560,9 +613,7 @@ class ApadrinhamentoApp {
       });
 
       card.querySelector('.btn-choose-mentor').addEventListener('click', () => {
-        if (!esgotado || isConfirmed) {
-          this.selecionarPadrinho(padrinho);
-        }
+        this.tentarSelecionarPadrinho(padrinho);
       });
 
       this.padrinhosGrid.appendChild(card);
@@ -583,12 +634,23 @@ class ApadrinhamentoApp {
     const isConfirmed = this.confirmedPadrinho && this.confirmedPadrinho.id === padrinho.id;
     const vagasRestantes = typeof padrinho.vagas_restantes === 'number'
       ? padrinho.vagas_restantes
-      : (padrinho.limite_vagas || 5);
+      : (padrinho.limite_vagas || 4);
     const esgotado = Boolean(padrinho.esgotado || vagasRestantes <= 0);
 
     if (isConfirmed) {
       this.btnModalChoose.disabled = false;
       this.btnModalChoose.textContent = '✓ Seu Mentor Confirmado';
+    } else if (this.confirmedPadrinho) {
+      if (this.permutou) {
+        this.btnModalChoose.disabled = true;
+        this.btnModalChoose.textContent = 'Permuta Indisponível (Limite Atingido)';
+      } else if (esgotado) {
+        this.btnModalChoose.disabled = true;
+        this.btnModalChoose.textContent = 'Vagas Esgotadas';
+      } else {
+        this.btnModalChoose.disabled = false;
+        this.btnModalChoose.textContent = 'Solicitar Permuta (Trocar de Mentor)';
+      }
     } else if (esgotado) {
       this.btnModalChoose.disabled = true;
       this.btnModalChoose.textContent = 'Vagas Esgotadas';
@@ -629,11 +691,11 @@ class ApadrinhamentoApp {
           <div class="profile-qa-answer">${c.o_que_gosta_de_fazer_quando_nao_esta_estudando}</div>
         </div>
         <div class="profile-qa-card">
-          <div class="profile-qa-title">Frase ou referência sobre sua personalidade</div>
+          <div class="profile-qa-title">Frase ou meme sobre sua personalidade</div>
           <div class="profile-qa-answer">${c.meme_que_representa_sua_personalidade}</div>
         </div>
         <div class="profile-qa-card">
-          <div class="profile-qa-title">Como resume seu primeiro período</div>
+          <div class="profile-qa-title">Que figurinha resume seu primeiro período?</div>
           <div class="profile-qa-answer">${c.figurinha_que_representou_o_primeiro_periodo}</div>
         </div>
         <div class="profile-qa-card">
@@ -657,7 +719,7 @@ class ApadrinhamentoApp {
           <div class="profile-qa-answer">${e.area_da_administracao_que_mais_chama_atencao}</div>
         </div>
         <div class="profile-qa-card" style="border-left-color: var(--warm-gold);">
-          <div class="profile-qa-title">Maior aprendizado ao ingressar na universidade</div>
+          <div class="profile-qa-title">Maior choque de realidade</div>
           <div class="profile-qa-answer">${e.maior_choque_de_realidade}</div>
         </div>
       `;
@@ -673,7 +735,7 @@ class ApadrinhamentoApp {
           <div class="profile-qa-answer">${v.momento_em_que_percebeu_que_virou_universitario}</div>
         </div>
         <div class="profile-qa-card" style="border-left-color: #ef4444;">
-          <div class="profile-qa-title" style="color: #991b1b;">O que tornaria a vida acadêmica ainda melhor</div>
+          <div class="profile-qa-title" style="color: #991b1b;">O que eliminaria da vida acadêmica</div>
           <div class="profile-qa-answer">${v.coisa_que_eliminaria_da_vida_universitaria}</div>
         </div>
       `;
@@ -683,10 +745,114 @@ class ApadrinhamentoApp {
   }
 
   // =========================================================================
-  // SELEÇÃO & APRESENTAÇÃO DO CALOURO
+  // SELEÇÃO & PERMUTA DE PADRINHO
   // =========================================================================
 
+  tentarSelecionarPadrinho(padrinho) {
+    if (!padrinho) return;
+
+    // Se já tiver padrinho confirmado
+    if (this.confirmedPadrinho) {
+      if (this.confirmedPadrinho.id === padrinho.id) {
+        this.openProfileModal(padrinho);
+        return;
+      }
+
+      if (this.permutou) {
+        httpErrorHandler.show(403, {
+          title: 'Limite de Permutas Atingido',
+          message: 'Você já realizou a sua permuta de mentor permitida pelo regulamento do programa. Cada estudante pode realizar apenas <strong>1 única troca</strong> durante todo o acolhimento.',
+          primaryBtn: {
+            text: 'Entendido',
+            action: () => {}
+          }
+        });
+        return;
+      }
+
+      const vagasRestantes = typeof padrinho.vagas_restantes === 'number'
+        ? padrinho.vagas_restantes
+        : (padrinho.limite_vagas || 4);
+      if (padrinho.esgotado || vagasRestantes <= 0) {
+        httpErrorHandler.show(403, {
+          title: 'Vagas Esgotadas para este Mentor',
+          message: `Infelizmente as vagas para <strong>${padrinho.nome}</strong> estão esgotadas no momento. Por favor, selecione outro mentor com vagas disponíveis.`,
+          primaryBtn: {
+            text: 'Ver Outros Mentores',
+            action: () => {
+              document.getElementById('mural-padrinhos')?.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+        return;
+      }
+
+      // Abre modal de confirmação de permuta
+      this.abrirModalPermuta(padrinho);
+      return;
+    }
+
+    // Primeiro cadastro
+    const vagasRestantes = typeof padrinho.vagas_restantes === 'number'
+      ? padrinho.vagas_restantes
+      : (padrinho.limite_vagas || 4);
+    if (padrinho.esgotado || vagasRestantes <= 0) {
+      httpErrorHandler.show(403, {
+        title: 'Vagas Esgotadas para este Mentor',
+        message: `As vagas para <strong>${padrinho.nome}</strong> estão esgotadas. Por favor, selecione outro mentor com vagas disponíveis no mural.`,
+        primaryBtn: {
+          text: 'Ver Outros Mentores',
+          action: () => {
+            document.getElementById('mural-padrinhos')?.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+      return;
+    }
+
+    this.selecionarPadrinho(padrinho);
+  }
+
+  abrirModalPermuta(padrinhoAlvo) {
+    this.padrinhoPermutaAlvo = padrinhoAlvo;
+    if (this.permutaMentorAtual) {
+      this.permutaMentorAtual.textContent = this.confirmedPadrinho ? this.confirmedPadrinho.nome : 'seu padrinho atual';
+    }
+    if (this.permutaMentorNovo) {
+      this.permutaMentorNovo.textContent = padrinhoAlvo.nome;
+    }
+    if (this.permutaModal) {
+      this.permutaModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  fecharModalPermuta() {
+    if (this.permutaModal) {
+      this.permutaModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    this.padrinhoPermutaAlvo = null;
+  }
+
+  confirmarPermuta() {
+    const padrinho = this.padrinhoPermutaAlvo;
+    this.fecharModalPermuta();
+    if (!padrinho) return;
+
+    this.isPermuta = true;
+    this.selectedPadrinho = padrinho;
+    this.renderPadrinhosGrid();
+
+    // Atualiza texto do botão do formulário
+    const submitText = document.getElementById('btn-submit-text');
+    if (submitText) submitText.textContent = `Confirmar Permuta para ${padrinho.nome.split(' ')[0]}`;
+
+    this.abrirSecaoApresentacao();
+  }
+
   selecionarPadrinho(padrinho) {
+    this.isPermuta = false;
     this.selectedPadrinho = padrinho;
     // Seleção em memória para preenchimento.
     // O hero banner e o localStorage SÓ são atualizados após confirmação efetiva do formulário.
@@ -817,12 +983,38 @@ class ApadrinhamentoApp {
       const resultado = await supabaseService.registrarApadrinhamento(payload);
 
       if (resultado && resultado.success) {
-        // Atualiza contadores locais de vagas imediatamente
-        const mentorEscolhido = this.padrinhos.find(p => p.id === this.selectedPadrinho.id);
-        if (mentorEscolhido) {
-          mentorEscolhido.vagas_ocupadas = (mentorEscolhido.vagas_ocupadas || 0) + 1;
-          mentorEscolhido.vagas_restantes = Math.max(0, (mentorEscolhido.vagas_restantes || mentorEscolhido.limite_vagas) - 1);
-          mentorEscolhido.esgotado = mentorEscolhido.vagas_restantes <= 0;
+        const isPermutaRealizada = Boolean(resultado.code === 'PERMUTA_REALIZADA' || resultado.permuta === true || this.isPermuta);
+
+        if (isPermutaRealizada) {
+          // 1. Libera 1 vaga do mentor anterior
+          if (this.confirmedPadrinho) {
+            const mentorAntigo = this.padrinhos.find(p => p.id === this.confirmedPadrinho.id || (this.confirmedPadrinho.uuid && p.uuid === this.confirmedPadrinho.uuid));
+            if (mentorAntigo) {
+              mentorAntigo.vagas_ocupadas = Math.max(0, (mentorAntigo.vagas_ocupadas || 1) - 1);
+              mentorAntigo.vagas_restantes = (mentorAntigo.vagas_restantes || 0) + 1;
+              mentorAntigo.esgotado = mentorAntigo.vagas_restantes <= 0;
+            }
+          }
+
+          // 2. Ocupa 1 vaga do novo mentor
+          const mentorNovo = this.padrinhos.find(p => p.id === this.selectedPadrinho.id || (this.selectedPadrinho.uuid && p.uuid === this.selectedPadrinho.uuid));
+          if (mentorNovo) {
+            mentorNovo.vagas_ocupadas = (mentorNovo.vagas_ocupadas || 0) + 1;
+            mentorNovo.vagas_restantes = Math.max(0, (mentorNovo.vagas_restantes || mentorNovo.limite_vagas) - 1);
+            mentorNovo.esgotado = mentorNovo.vagas_restantes <= 0;
+          }
+
+          this.permutou = true;
+          this.isPermuta = false;
+        } else {
+          // Primeiro cadastro regular
+          const mentorEscolhido = this.padrinhos.find(p => p.id === this.selectedPadrinho.id || (this.selectedPadrinho.uuid && p.uuid === this.selectedPadrinho.uuid));
+          if (mentorEscolhido) {
+            mentorEscolhido.vagas_ocupadas = (mentorEscolhido.vagas_ocupadas || 0) + 1;
+            mentorEscolhido.vagas_restantes = Math.max(0, (mentorEscolhido.vagas_restantes || mentorEscolhido.limite_vagas) - 1);
+            mentorEscolhido.esgotado = mentorEscolhido.vagas_restantes <= 0;
+          }
+          this.permutou = false;
         }
 
         this.confirmedPadrinho = this.selectedPadrinho;
@@ -840,6 +1032,24 @@ class ApadrinhamentoApp {
         this.connectionSuccessCard.scrollIntoView({ behavior: 'smooth' });
         this.dispararConfetes();
 
+      } else if (resultado && resultado.code === 'LIMITE_PERMUTAS_ATINGIDO') {
+        httpErrorHandler.show(403, {
+          title: 'Limite de Permutas Atingido',
+          message: resultado.message || 'Você já utilizou sua única permuta (troca) de padrinho permitida pelo regulamento do programa.',
+          primaryBtn: {
+            text: 'Entendido',
+            action: () => {}
+          }
+        });
+      } else if (resultado && resultado.code === 'MESMO_PADRINHO') {
+        httpErrorHandler.show(403, {
+          title: 'Vínculo Já Existente',
+          message: resultado.message || 'Você já possui vínculo confirmado com este(a) padrinho/madrinha.',
+          primaryBtn: {
+            text: 'Entendido',
+            action: () => {}
+          }
+        });
       } else if (resultado && resultado.code === 'VAGAS_ESGOTADAS') {
         httpErrorHandler.show(403, {
           title: 'Vagas Esgotadas para este Mentor',
@@ -855,10 +1065,13 @@ class ApadrinhamentoApp {
       } else if (resultado && resultado.code === 'CALOURO_JA_CADASTRADO') {
         httpErrorHandler.show(403, {
           title: 'Você Já Escolheu um Mentor',
-          message: 'Constatamos que você já possui uma escolha de padrinho/madrinha registrada no sistema. Caso precise alterar, procure a coordenação do programa.',
+          message: 'Constatamos que você já possui uma escolha de padrinho/madrinha registrada no sistema. Caso deseje realizar sua permuta permitida, selecione outro mentor no mural.',
           primaryBtn: {
-            text: 'Entendido',
-            action: () => {}
+            text: 'Ver Mural de Mentores',
+            action: () => {
+              const mural = document.getElementById('mural-padrinhos');
+              if (mural) mural.scrollIntoView({ behavior: 'smooth' });
+            }
           }
         });
       } else {
@@ -867,9 +1080,10 @@ class ApadrinhamentoApp {
 
     } catch (err) {
       console.error('[ApadrinhamentoApp] Erro na submissão:', err);
+      const detalheErro = err.message ? `<p style="margin-top: 0.8rem; font-size: 0.85rem; color: #dc2626; background: #fef2f2; padding: 0.6rem; border-radius: 6px; text-align: left;"><strong>Detalhe técnico:</strong> ${err.message}</p>` : '';
       httpErrorHandler.show(500, {
         title: 'Não foi possível confirmar o apadrinhamento',
-        message: 'Ocorreu uma instabilidade momentânea na conexão. <strong>Suas respostas foram salvas no navegador</strong> e não foram perdidas.',
+        message: `Ocorreu uma instabilidade na comunicação com o banco de dados. <strong>Suas respostas foram salvas no navegador</strong> e não foram perdidas.${detalheErro}`,
         preserveData: true,
         onRetry: () => this.handleFormSubmit()
       });
@@ -877,7 +1091,7 @@ class ApadrinhamentoApp {
       if (submitBtn) {
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
-        if (submitText) submitText.textContent = 'Confirmar Escolha de Padrinho';
+        if (submitText) submitText.textContent = this.isPermuta ? 'Confirmar Permuta de Padrinho' : 'Confirmar Escolha de Padrinho';
       }
     }
   }
