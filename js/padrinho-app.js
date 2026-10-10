@@ -40,6 +40,9 @@ const quotaHeadline = document.getElementById('quota-headline');
 const quotaRemainingBadge = document.getElementById('quota-remaining-badge');
 const quotaProgressBar = document.getElementById('quota-progress-bar');
 const quotaEncouragement = document.getElementById('quota-encouragement');
+const metricAfilhadosCount = document.getElementById('metric-afilhados-count');
+const metricAfilhadosStatus = document.getElementById('metric-afilhados-status');
+const metricVagasRestantes = document.getElementById('metric-vagas-restantes');
 const afilhadosEmptyState = document.getElementById('afilhados-empty-state');
 const afilhadosGrid = document.getElementById('afilhados-grid');
 const btnRecarregar = document.getElementById('btn-recarregar-afilhados');
@@ -308,10 +311,36 @@ async function carregarAfilhados(padrinhoId) {
     const vagasRestantes = Math.max(0, limite - total);
     const porcentagem = Math.min(100, Math.round((total / limite) * 100));
 
-    // Atualiza Card de Cota
+    // Atualiza Card de Cota e Métricas
     quotaHeadline.textContent = `${total} de ${limite} afilhados vinculados`;
     quotaRemainingBadge.textContent = `${vagasRestantes} vaga${vagasRestantes !== 1 ? 's' : ''} restante${vagasRestantes !== 1 ? 's' : ''}`;
     quotaProgressBar.style.width = `${porcentagem}%`;
+
+    // Atualiza Métricas Rápidas
+    if (metricAfilhadosCount) metricAfilhadosCount.textContent = String(total);
+    if (metricVagasRestantes) metricVagasRestantes.textContent = `${vagasRestantes} restante${vagasRestantes !== 1 ? 's' : ''}`;
+    if (metricAfilhadosStatus) {
+      if (total === 0) {
+        metricAfilhadosStatus.textContent = 'Aguardando escolhas';
+        metricAfilhadosStatus.className = 'metric-hint text-warning';
+      } else if (total < limite) {
+        metricAfilhadosStatus.textContent = `${total} vinculado(s)`;
+        metricAfilhadosStatus.className = 'metric-hint text-success';
+      } else {
+        metricAfilhadosStatus.textContent = 'Cota 100% preenchida!';
+        metricAfilhadosStatus.className = 'metric-hint text-success';
+      }
+    }
+
+    // Atualiza Milestones da Barra
+    const milestoneItems = document.querySelectorAll('.milestone-item');
+    milestoneItems.forEach((item, idx) => {
+      if (idx <= total) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
 
     if (total === 0) {
       quotaEncouragement.textContent = 'Os calouros estão conhecendo os perfis no sistema e em breve farão a escolha de mentores.';
