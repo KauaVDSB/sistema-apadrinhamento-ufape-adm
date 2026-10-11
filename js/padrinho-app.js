@@ -324,11 +324,29 @@ async function carregarDadosMentor(user) {
     isUserAdmin = roleData && (roleData.role === 'admin' || roleData.role === 'coordenador');
 
     // 3. Renderizar Header do Mentor
+    const cotaMentor = mentor.limite_vagas || 4;
     if (mentorMonogram) mentorMonogram.textContent = mentor.iniciais || 'HB';
     if (mentorNameEl) mentorNameEl.textContent = mentor.nome;
     if (mentorEmailEl) mentorEmailEl.textContent = mentor.email_institucional;
     if (mentorAdminBadge) {
       mentorAdminBadge.style.display = isUserAdmin ? 'inline-flex' : 'none';
+    }
+
+    const mentorBadgePeriodo = document.getElementById('mentor-badge-periodo');
+    if (mentorBadgePeriodo) {
+      mentorBadgePeriodo.textContent = `${cotaMentor} Vagas de Acolhimento`;
+    }
+    const metricCotaTotal = document.getElementById('metric-cota-total');
+    if (metricCotaTotal) {
+      metricCotaTotal.textContent = `${cotaMentor} Vagas`;
+    }
+    const tabCardsLabel = document.getElementById('tab-cards-label');
+    if (tabCardsLabel) {
+      tabCardsLabel.textContent = `${cotaMentor} Slots de Acolhimento`;
+    }
+    const tabBadgeCards = document.getElementById('tab-badge-cards');
+    if (tabBadgeCards) {
+      tabBadgeCards.textContent = String(cotaMentor);
     }
 
     // 4. Mostrar aba de coordenação se for admin
@@ -679,7 +697,7 @@ async function carregarVisaoGeralCoordenacao() {
     });
 
     let totalGeralOcupadas = 0;
-    const totalGeralVagas = 40;
+    const totalGeralVagas = padrinhos.reduce((acc, p) => acc + (p.limite_vagas || 4), 0);
 
     coordenacaoTableBody.innerHTML = '';
 

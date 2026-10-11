@@ -187,7 +187,7 @@ export const PADRINHOS = [
     "areaDestaque": "Economia & Gestão Geral",
     "lemas": "Determinado e parceiro: o aprendizado é construído passo a passo com dedicação!",
     "resumo": "Praticante de esportes e focado no crescimento acadêmico. Enfrentou a matemática aplicada com garra e acolhe com energia positiva.",
-    "limite_vagas": 4,
+    "limite_vagas": 3,
     "respostasEsperadas": {
       "1": [
         "C",
@@ -652,7 +652,7 @@ export const PADRINHOS = [
     "areaDestaque": "Estratégia Interempresarial & Filosofia",
     "lemas": "O ambiente universitário é feito de amizades sólidas e visão estratégica de futuro!",
     "resumo": "Sociável, boleiro e focado em estratégia corporativa. Adora debater ética empresarial e aproveitar os bons momentos com os amigos.",
-    "limite_vagas": 4,
+    "limite_vagas": 3,
     "respostasEsperadas": {
       "1": [
         "B",
@@ -930,8 +930,8 @@ export const PADRINHOS = [
     "casaSlug": "grifinoria",
     "areaDestaque": "Gestão de Pessoas & Introdução à ADM",
     "lemas": "Acolhimento caloroso e amizade verdadeira: dividindo a sala com pessoas incríveis e construindo pontes!",
-    "resumo": "Sociável, alegre e empática. Tem 4 vagas e muita energia para orientar na adaptação à rotina da UFAPE.",
-    "limite_vagas": 4,
+    "resumo": "Sociável, alegre e empática. Tem 3 vagas e muita energia para orientar na adaptação à rotina da UFAPE.",
+    "limite_vagas": 3,
     "respostasEsperadas": {
       "1": [
         "B",
@@ -1103,6 +1103,99 @@ export const PADRINHOS = [
       "Introdução à Economia",
       "Empreendedorismo & Finanças",
       "Superação em Cálculo"
+    ]
+  },
+  {
+    "id": 11,
+    "nome": "Ana Alícia Lúcio da Silva",
+    "iniciais": "AL",
+    "genero": "ela",
+    "email_institucional": "alicia.lucio@ufape.edu.br",
+    "periodo": "2º Período de Administração - UFAPE",
+    "casaHogwarts": "Grifinória",
+    "casaSlug": "grifinoria",
+    "areaDestaque": "Finanças & Contabilidade",
+    "lemas": "Tem que ir né fia, contrato: dedicação diária e foco no futuro profissional!",
+    "resumo": "Focada na área financeira e contabilidade introdutória. Pratica esportes, assiste séries e acolhe os calouros com determinação e bom humor.",
+    "limite_vagas": 3,
+    "respostasEsperadas": {
+      "1": [
+        "C",
+        "A"
+      ],
+      "2": [
+        "A",
+        "D"
+      ],
+      "3": [
+        "B",
+        "C"
+      ],
+      "4": [
+        "C",
+        "A"
+      ],
+      "5": [
+        "A",
+        "D"
+      ],
+      "6": [
+        "C",
+        "E"
+      ],
+      "7": [
+        "B",
+        "A"
+      ],
+      "8": [
+        "B",
+        "C"
+      ],
+      "9": [
+        "B",
+        "C"
+      ],
+      "10": [
+        "B",
+        "C"
+      ],
+      "11": [
+        "C",
+        "B"
+      ],
+      "12": [
+        "A",
+        "B"
+      ]
+    },
+    "para_conhecer_voce": {
+      "casa_de_hogwarts": "Grifinória",
+      "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir séries e praticar esportes.",
+      "meme_que_representa_sua_personalidade": "\"Tem que ir né fia, contrato\"",
+      "figurinha_que_representou_o_primeiro_periodo": "Foco nos estudos e resiliência!",
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Beyoncé."
+    },
+    "experiencia_no_curso": {
+      "materia_preferida_no_primeiro_periodo": "Introdução à Contabilidade.",
+      "materia_que_mais_testou_a_sanidade": "Matemática Aplicada à Contabilidade.",
+      "area_da_administracao_que_mais_chama_atencao": "Financeira.",
+      "maior_choque_de_realidade": "A 'liberdade' que os professores dão aos alunos em sala."
+    },
+    "vida_universitaria": {
+      "momento_mais_engracado": "Em alguma conversa divertida com meus amigos.",
+      "momento_em_que_percebeu_que_virou_universitario": "Depois que as matérias passaram a se chamar de 'cadeiras'.",
+      "coisa_que_eliminaria_da_vida_universitaria": "A distância da faculdade até a minha casa."
+    },
+    "hobbies": [
+      "Assistir Séries",
+      "Praticar Esportes",
+      "Conversas com Amigos",
+      "Música"
+    ],
+    "habilidades_mentoria": [
+      "Introdução à Contabilidade",
+      "Gestão Financeira",
+      "Organização e Foco"
     ]
   }
 ];

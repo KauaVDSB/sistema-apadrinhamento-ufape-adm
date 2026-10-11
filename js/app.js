@@ -143,6 +143,20 @@ class ApadrinhamentoApp {
     }
   }
 
+  saveStateToStorage() {
+    try {
+      let current = {};
+      const saved = localStorage.getItem('ufape_adm_apadrinhamento');
+      if (saved) {
+        current = JSON.parse(saved);
+      }
+      current.userAnswers = this.userAnswers;
+      localStorage.setItem('ufape_adm_apadrinhamento', JSON.stringify(current));
+    } catch (e) {
+      console.warn('Erro ao salvar respostas do quiz:', e);
+    }
+  }
+
   updateConfirmedUI() {
     if (this.confirmedPadrinho) {
       // 1. Atualiza o Hero Banner com o padrinho REALMENTE confirmado
