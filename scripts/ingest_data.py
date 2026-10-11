@@ -257,7 +257,7 @@ def carregar_dados_padrinhos() -> list:
                 "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Ler livros envolventes e aprender coisas novas e aleatórias sobre o mundo.",
                 "meme_que_representa_sua_personalidade": "Clóvis de Barros Filho: 'Como pode um cara escrever uma coisa que eu não entenda? Não tem como. Eu vou ler até entender!'",
                 "figurinha_que_representou_o_primeiro_periodo": "Figurinha de determinação nos estudos.",
-                "pessoa_famosa_para_sentir_ao_lado_na_aula": "Emma Watson (inteligente, engajada e incrível para debater ideias)."
+                "pessoa_famosa_para_sentir_ao_lado_na_aula": "Taylor Swift."
             },
             "experiencia_no_curso": {
                 "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",

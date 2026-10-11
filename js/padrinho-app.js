@@ -668,7 +668,7 @@ function renderizarSlotsCardsETabela(afilhados, limite = 4) {
 }
 
 /**
- * Carrega a visão geral da Coordenação (10 Mentores • 40 Vagas)
+ * Carrega a visão geral da Coordenação (11 Mentores • 40 Vagas)
  * Garante layout auto e colunas fluidas para NÃO quebrar a página!
  */
 async function carregarVisaoGeralCoordenacao() {

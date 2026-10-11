@@ -1,7 +1,7 @@
 -- ==============================================================================
 -- SISTEMA DE APADRINHAMENTO ACADÊMICO • BACHARELADO EM ADMINISTRAÇÃO (UFAPE)
 -- Arquivo: database/seeds/01_padrinhos_reais.sql
--- Ingestão dos 10 mentores veteranos oficiais (Cota padronizada de 4 vagas cada: 40 vagas no total)
+-- Ingestão dos 11 mentores veteranos oficiais (40 vagas no total)
 -- ==============================================================================
 
 INSERT INTO public.padrinhos (

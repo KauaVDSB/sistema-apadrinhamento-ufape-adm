@@ -34,28 +34,24 @@ def test_cotas_padrinhos():
     match = re.search(r"export const PADRINHOS = (\[.*?\]);", content, re.DOTALL)
     assert match, "PADRINHOS array nao encontrado em js/data.js"
     padrinhos = json.loads(match.group(1))
-    assert len(padrinhos) in (10, 11), f"Esperado 10 ou 11 padrinhos, obtido {len(padrinhos)}"
+    assert len(padrinhos) == 11, f"Esperado exatamente 11 padrinhos, obtido {len(padrinhos)}"
     
     manoel = next((p for p in padrinhos if "MANOEL" in p["nome"].upper()), None)
     assert manoel is not None, "Mentor Manoel Frasão não encontrado em js/data.js"
     
-    # Mentores com cota 3: Adelmo, Jones, Tamires (e o 11º mentor quando adicionado)
+    # Mentores com cota 3: Adelmo, Jones, Tamires e Ana Alícia
     mentores_cota_3 = {"ADELMO", "JONES", "TAMIRES"}
     for p in padrinhos:
         primeiro_nome = p["nome"].split()[0].upper()
-        if primeiro_nome in mentores_cota_3 or (len(padrinhos) == 11 and p == padrinhos[-1]):
+        if primeiro_nome in mentores_cota_3 or p == padrinhos[-1]:
             assert p["limite_vagas"] == 3, f"Cota de {p['nome']} deve ser 3, obtido {p['limite_vagas']}"
         else:
             assert p["limite_vagas"] == 4, f"Cota de {p['nome']} deve ser 4, obtido {p['limite_vagas']}"
         assert len(p["iniciais"]) == 2, f"Iniciais de {p['nome']} devem ter 2 letras: {p['iniciais']}"
     
     total_vagas = sum(p["limite_vagas"] for p in padrinhos)
-    if len(padrinhos) == 10:
-        assert total_vagas == 37, f"Total preliminar deve ser 37 (com 3 vagas reservadas para o 11º mentor), obtido {total_vagas}"
-        print(f"  [OK] Cotas preparadas: 10 mentores ativos (37 vagas) + 3 vagas reservadas para o 11º mentor (Total: 40 vagas)")
-    else:
-        assert total_vagas == 40, f"Total de vagas deve ser exatamente 40, obtido {total_vagas}"
-        print(f"  [OK] Cotas aprovadas: 11 mentores oficiais totalizando exatamente 40 vagas")
+    assert total_vagas == 40, f"Total de vagas deve ser exatamente 40, obtido {total_vagas}"
+    print(f"  [OK] Cotas aprovadas: 11 mentores oficiais totalizando exatamente 40 vagas")
 
 def test_purga_veteranos():
     print("[TESTE 2] Auditoria da Purga de Veteranos de 2026.1...")

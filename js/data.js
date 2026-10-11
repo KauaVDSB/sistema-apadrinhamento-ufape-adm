@@ -522,7 +522,7 @@ export const PADRINHOS = [
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Gosto de ler e aprender coisas aleatórias.",
       "meme_que_representa_sua_personalidade": "Clóvis de Barros Filho: \"Como pode um cara escrever uma coisa que eu não entenda? Não tem como. Eu vou ler aquela merda até entender!\"",
       "figurinha_que_representou_o_primeiro_periodo": "Figurinha enviada à coordenação (em processamento).",
-      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Emma Watson. Acho ela muito inteligente, interessante e seria muito legal conversar com ela sobre estudos, livros e vários outros assuntos."
+      "pessoa_famosa_para_sentir_ao_lado_na_aula": "Taylor Swift."
     },
     "experiencia_no_curso": {
       "materia_preferida_no_primeiro_periodo": "Introdução à Administração.",
@@ -1172,7 +1172,7 @@ export const PADRINHOS = [
       "casa_de_hogwarts": "Grifinória",
       "o_que_gosta_de_fazer_quando_nao_esta_estudando": "Assistir séries e praticar esportes.",
       "meme_que_representa_sua_personalidade": "\"Tem que ir né fia, contrato\"",
-      "figurinha_que_representou_o_primeiro_periodo": "Foco nos estudos e resiliência!",
+      "figurinha_que_representou_o_primeiro_periodo": "Boneco se descabelando",
       "pessoa_famosa_para_sentir_ao_lado_na_aula": "Beyoncé."
     },
     "experiencia_no_curso": {
